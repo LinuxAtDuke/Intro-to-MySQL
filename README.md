@@ -18,8 +18,8 @@ Andy Ingham
 2. Login using your Duke NetId.
 3. Select "New" at the top of the page
 4. Fill out the forms to create a new VM for this class.
-  At step (3), select 'LAMP Stack' for the Server.
-  At step (5), select 'Request VM'
+  * At step (3), select 'LAMP Stack' for the Server.
+  * At step (5), select 'Request VM'
 
 The vm-manage web page will tell you the name for your VM. The web site will also tell you the initial username and password. You should connect via ssh.
 
