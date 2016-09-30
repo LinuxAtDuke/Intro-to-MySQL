@@ -39,7 +39,6 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
   * ways to stipulate database, user
   	* commandline
   	* .my.cnf
-  	* my.cnf
 
 
 
@@ -64,5 +63,17 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	|      | linux     |                                           |
 	+------+-----------+-------------------------------------------+
 	
-	mysql>> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('bitnami1');
+	mysql>> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('XXXXXXXXX');
 		<and note the difference in the output of the above "SELECT" query>
+		
+	mysql>>exit
+	
+	shell>>nano .my.cnf
+	
+	[mysql]
+	user = root
+	password = XXXXXXXXX
+
+	[mysqldump]
+	user = root
+	password = XXXXXXXXX
