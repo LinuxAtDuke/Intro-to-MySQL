@@ -10,8 +10,8 @@ Andy Ingham
 **Table of Contents**
 
 1. [Lab 0: Creating a Personal Linux VM](#lab0)
-2. [Unit 1: Access control / User management](#unit1)
-3. [Lab 1: Accessing an instance; initial user lockdown](#lab1)
+2. [Unit 1: Accessing an instance / User management](#unit1)
+3. [Lab 1: Initial user lockdown](#lab1)
 4. [creating databases](#unit2)
 5. [developing schema](#unit3)
 6. [adding/altering tables](#unit4)
@@ -35,22 +35,12 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 <a name='unit1'></a>
 ## Unit 1: Access control / User management
   * how access is controlled
-  * general structure of the DBMS
-  * ways to stipulate database, user
-  	* commandline
-  	* .my.cnf
-
-
-
-
-
-
-
-<a name='lab1'></a>
-## Lab 1 - Accessing an instance; initial user lockdown
-	https://dev.mysql.com/doc/refman/5.5/en/default-privileges.html
-	shell>> mysql -u root -p
+  
+  	shell>> mysql -u root -p
 		[initial pw = bitnami]
+		
+  	https://dev.mysql.com/doc/refman/5.5/en/default-privileges.html
+
 	mysql>> SELECT User, Host, Password FROM mysql.user;
 	+------+-----------+-------------------------------------------+
 	| User | Host      | Password                                  |
@@ -63,17 +53,32 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	|      | linux     |                                           |
 	+------+-----------+-------------------------------------------+
 	
-	mysql>> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('XXXXXXXXX');
+  * general structure of the DBMS
+  
+**mysql>>**status
+
+**mysql>>**show status;
+
+**mysql>>**show databases;
+
+**mysql>>**use *DATABASE*;
+		e.g. use test;
+
+	mysql>>show tables;
+	  	
+	*TAB COMPLETION*
+	
+	*COMMAND HISTORY*
+
+
+<a name='lab1'></a>
+## Lab 1 - Initial user lockdown
+	
+	mysql>>SET PASSWORD FOR 'root'@'localhost' = PASSWORD('XXXXXXXXX');
+		<and note the difference in the output of the above "SELECT" query>
+		
+	mysql>>DELETE FROM mysql.user WHERE User !='root' OR Host !='localhost';
 		<and note the difference in the output of the above "SELECT" query>
 		
 	mysql>>exit
 	
-	shell>>nano .my.cnf
-	
-	[mysql]
-	user = root
-	password = XXXXXXXXX
-
-	[mysqldump]
-	user = root
-	password = XXXXXXXXX
