@@ -12,7 +12,7 @@ Andy Ingham
 1. [Lab 0: Creating a Personal Linux VM](#lab0)
 2. [Unit 1: Accessing an instance / User management](#unit1)
 3. [Lab 1: Initial user lockdown](#lab1)
-4. [creating databases](#unit2)
+4. [Unit 2: Databases, schema, tables](#unit2)
 5. [developing schema](#unit3)
 6. [adding/altering tables](#unit4)
 7. [writing queries](#unit5)
@@ -37,7 +37,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
   * how access is controlled
   
   	shell>> mysql -u root -p
-		[initial pw = bitnami]
+	[initial pw = bitnami]
 		
   	https://dev.mysql.com/doc/refman/5.5/en/default-privileges.html
 
@@ -81,4 +81,28 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		<and note the difference in the output of the above "SELECT" query>
 		
 	mysql>> exit
+	
+<a name='unit2'></a>
+## Unit 2: Databases, schema, tables
+
+  * Removing, creating databases is very simple
+	mysql>> DROP DATABASE test;
+	mysql>> CREATE DATABASE class;
+	mysql>> show databases;
+	
+  * Schema development is best done via an ER diagram and a whiteboard - consider these:
+	- what are the data elements? (tables)
+	- what relationships do they have with one another?
+	- what are the important attributes of the data elements? (fields in tables)
+	- what are the data types and other metadata for the attributes
+	- what will govern uniqueness in each table? (simple or compound primary keys?)
+	- what queries are users going to run?
+	- what indexes are needed (beyond those for the primary keys)?
+	
+  * Fine-tuning of schema...
+  	- referential integrity - data types consistent across linking fields (foreign keys)
+	- data types should be as prescriptive and compact as possible
+	- index creation should be done where needed, but not elsewhere
+	- index creation always faster BEFORE data is loaded into the table
+	- verify that data is reasonably normalized (e.g., not duplicated)
 	
