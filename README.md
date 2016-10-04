@@ -94,7 +94,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	- what are the data elements? (tables)
 	- what relationships do they have with one another?
 	- what are the important attributes of the data elements? (fields in tables)
-	- what are the data types and other metadata for the attributes
+	- what are the data types and metadata (NULL allowed? defaults?) for the attributes
 	- what will govern uniqueness in each table? (simple or compound primary keys?)
 	- what queries are users going to run?
 	- what indexes are needed (beyond those for the primary keys)?
