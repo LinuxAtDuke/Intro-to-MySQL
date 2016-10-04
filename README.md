@@ -1,7 +1,7 @@
 Introduction to MySQL
 =====================
 
-*Version 1, 2016-09-27*
+*Version 1, 2016-10-04*
 
 **Instructor**
 
@@ -12,11 +12,10 @@ Andy Ingham
 1. [Lab 0: Creating a Personal Linux VM](#lab0)
 2. [Unit 1: Accessing an instance / User management](#unit1)
 3. [Lab 1: Initial user lockdown](#lab1)
-4. [Unit 2: Databases, schema, tables](#unit2)
-5. [developing schema](#unit3)
-6. [adding/altering tables](#unit4)
-7. [writing queries](#unit5)
-8. [evaluating basic security and performance](#unit6)
+4. [Unit 2: Databases, schema](#unit2)
+5. [Unit 3: adding/altering tables](#unit3)
+6. [Unit 4: writing queries](#unit4)
+7. [Unit 5: evaluating basic security and performance](#unit5)
 
 <a name='lab0'></a>
 ## Lab 0 - Creating a personal Linux VM
@@ -83,7 +82,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	mysql>> exit
 	
 <a name='unit2'></a>
-## Unit 2: Databases, schema, tables
+## Unit 2: Databases, schema
 
   * Removing, creating databases is very simple
 	mysql>> DROP DATABASE test;
@@ -104,5 +103,5 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	- data types should be as prescriptive and compact as possible
 	- index creation should be done where needed, but not elsewhere
 	- index creation always faster BEFORE data is loaded into the table
-	- verify that data is reasonably normalized (e.g., not duplicated)
+	- verify that data is reasonably normalized (e.g., data generally de-duplicated)
 	
