@@ -1,7 +1,7 @@
 Introduction to MySQL
 =====================
 
-*Version 1, 2016-10-04*
+*Version 1, 2016-10-05*
 
 **Instructor**
 
@@ -84,6 +84,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 <a name='unit2'></a>
 ## Unit 2: Databases, schema
   * Removing, creating databases is very simple
+  
 	mysql>> DROP DATABASE test;
 	mysql>> CREATE DATABASE class;
 	mysql>> show databases;
