@@ -13,7 +13,7 @@ Andy Ingham
 2. [Unit 1: Accessing an instance / User management](#unit1)
 3. [Lab 1: Initial user lockdown](#lab1)
 4. [Unit 2: Databases, schema](#unit2)
-5. [Unit 3: adding/altering tables](#unit3)
+5. [Unit 3: Adding/altering tables](#unit3)
 6. [Unit 4: writing queries](#unit4)
 7. [Unit 5: evaluating basic security and performance](#unit5)
 
@@ -83,7 +83,6 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	
 <a name='unit2'></a>
 ## Unit 2: Databases, schema
-
   * Removing, creating databases is very simple
 	mysql>> DROP DATABASE test;
 	mysql>> CREATE DATABASE class;
@@ -99,9 +98,48 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	- what indexes are needed (beyond those for the primary keys)?
 	
   * Fine-tuning of schema...
-  	- referential integrity - data types consistent across linking fields (foreign keys)
+	- referential integrity - data types consistent across linking fields (foreign keys)
 	- data types should be as prescriptive and compact as possible
 	- index creation should be done where needed, but not elsewhere
 	- index creation always faster BEFORE data is loaded into the table
 	- verify that data is reasonably normalized (e.g., data generally de-duplicated)
-	
+
+  * Some examples
+  
+	mysql>> describe LCL_genotypes;
+
+	| Field    | Type         | Null | Key | Default | Extra |
+	|:---------|:-------------|:-----|:----|:--------|:------|
+	| IID      | varchar(16)  | NO   | PRI | NULL    |       |
+	| SNPpos   | varchar(512) | NO   | PRI | NULL    |       |
+	| rsID     | varchar(256) | NO   | MUL | NULL    |       |
+	| genotype | varchar(512) | NO   |     | NULL    |       |
+
+	mysql>> describe phenotypes;
+
+	| Field             | Type           | Null | Key | Default | Extra |
+	|:------------------|:---------------|:-----|:----|:--------|:------|
+	| LCL\_ID            | varchar(16)    | NO   | PRI | NULL    |       |
+	| phenotype         | varchar(128)   | NO   | PRI | NULL    |       |
+	| phenotypic\_value1 | decimal(20,10) | YES  |     | NULL    |       |
+	| phenotypic\_value2 | decimal(20,10) | YES  |     | NULL    |       |
+	| phenotypic\_value3 | decimal(20,10) | YES  |     | NULL    |       |
+	| phenotypic_mean   | decimal(20,10) | YES  |     | NULL    |       |
+
+	mysql>> describe snp;
+
+	| Field              | Type                | Null | Key | Default | Extra |
+	|:-------------------|:--------------------|:-----|:----|:--------|:------|
+	| rsID               | varchar(256)        | NO   | PRI | NULL    |       |
+	| Chromosome         | tinyint(3) unsigned | NO   |     | NULL    |       |
+	| Position           | int(10) unsigned    | NO   |     | NULL    |       |
+	| Allele1            | varchar(128)        | NO   |     | NULL    |       |
+	| Allele2            | varchar(128)        | NO   |     | NULL    |       |
+	| DistanceToNearGene | varchar(32)         | NO   |     | NULL    |       |
+	| Gene               | varchar(32)         | NO   |     | NULL    |       |
+	| SNPtype            | varchar(64)         | NO   |     | NULL    |       |
+
+
+<a name='unit3'></a>
+## Unit 3: Adding/altering tables
+
