@@ -5,7 +5,7 @@ Introduction to MySQL
 
 **Instructor**
 
-Andy Ingham
+Andy Ingham (andy.ingham AT duke.edu)
 
 **Table of Contents**
 
@@ -14,8 +14,9 @@ Andy Ingham
 3. [Lab 1: Initial user lockdown](#lab1)
 4. [Unit 2: Databases, schema](#unit2)
 5. [Unit 3: Adding/altering tables](#unit3)
-6. [Unit 4: writing queries](#unit4)
-7. [Unit 5: evaluating basic security and performance](#unit5)
+6. [Lab 2/3: Working with databases and tables](#lab2/3)
+7. [Unit 4: writing queries](#unit4)
+8. [Unit 5: evaluating basic security and performance](#unit5)
 
 <a name='lab0'></a>
 ## Lab 0 - Creating a personal Linux VM
@@ -86,7 +87,9 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
   * Removing, creating databases is very simple
   
 	mysql>> DROP DATABASE test;
+	
 	mysql>> CREATE DATABASE class;
+
 	mysql>> show databases;
 	
   * Schema development is best done via an ER diagram and a whiteboard - consider these:
@@ -144,3 +147,35 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 <a name='unit3'></a>
 ## Unit 3: Adding/altering tables
 
+	CREATE TABLE `LCL_genotypes` (
+	`IID` varchar(16) NOT NULL,
+	`SNPpos` varchar(512) NOT NULL,
+	`rsID` varchar(256) NOT NULL,
+	`genotype` varchar(512) NOT NULL,
+	PRIMARY KEY (`IID`,`SNPpos`),
+	KEY `idx_rsID` (`rsID`)
+	) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `phenotypes` (
+  `LCL_ID` varchar(16) NOT NULL,
+  `phenotype` varchar(128) NOT NULL,
+  `phenotypic_value1` decimal(20,10) DEFAULT NULL,
+  `phenotypic_value2` decimal(20,10) DEFAULT NULL,
+  `phenotypic_value3` decimal(20,10) DEFAULT NULL,
+  `phenotypic_mean` decimal(20,10) DEFAULT NULL,
+  PRIMARY KEY (`LCL_ID`,`phenotype`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `snp` (
+  `rsID` varchar(256) NOT NULL,
+  `Chromosome` bigint(20) unsigned NOT NULL,
+  `Position` int(10) unsigned NOT NULL,
+  `Allele1` varchar(1024) NOT NULL,
+  `Allele2` varchar(1024) NOT NULL,
+  `DistanceToNearGene` varchar(1024) NOT NULL,
+  `Gene` varchar(256) NOT NULL,
+  `SNPtype` varchar(64) NOT NULL,
+  PRIMARY KEY (`rsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+	include mysqldump (and discussion of backups) in this section
