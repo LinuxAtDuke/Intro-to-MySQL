@@ -187,6 +187,13 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		PRIMARY KEY (`rsID`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+  * How was the "idx_rsID" index actually created?
+  
+	_mysql>>_ CREATE INDEX idx_rsID ON LCL_genotypes(rsID);
+
+		Query OK, 358244487 rows affected (2 hours 33 min 15.53 sec)
+		Records: 358244487  Deleted: 0  Skipped: 0  Warnings: 0
+
   * A brief tangent to discuss backups! (via 'mysqldump')
 
 	_shell>>_ mysqldump --no-data COLAB\_CLASS > COLAB\_WITHOUT\_DATA.sql	
@@ -203,3 +210,11 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	_mysql>>_ show databases;
 	
 	_mysql>>_ USE COLAB_CLASS;
+
+  * Let's cheat a little bit (and save ourselves some typing) ...
+	* grab the dump file from https://github.com/LinuxAtDuke/Intro-to-MySQL
+
+	* load the file into your MySQL instance
+	
+	_mysql>>_ mysql -u root -p < COLAB\_WITHOUT\_DATA.sql
+	_you'll be prompted for the password here_
