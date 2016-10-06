@@ -13,10 +13,11 @@ Andy Ingham (andy.ingham AT duke.edu)
 2. [Unit 1: Accessing an instance / User management](#unit1)
 3. [Lab 1: Initial user lockdown](#lab1)
 4. [Unit 2: Databases, schema](#unit2)
-5. [Unit 3: Adding/altering tables](#unit3)
+5. [Unit 3: Adding/modifying tables and indexes](#unit3)
 6. [Lab 2/3: Working with databases and tables](#lab2/3)
 7. [Unit 4: writing queries](#unit4)
 8. [Unit 5: evaluating basic security and performance](#unit5)
+
 
 <a name='lab0'></a>
 ## Lab 0 - Creating a personal Linux VM
@@ -31,6 +32,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 The vm-manage web page will tell you the name for your VM. The web site will also tell you the initial username and password. You should connect via ssh.
 
 Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompted]
+
 
 <a name='unit1'></a>
 ## Unit 1: Access control / User management
@@ -74,21 +76,24 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 <a name='lab1'></a>
 ## Lab 1 - Initial user lockdown
 	
+	shell>> mysql -u root -p
+	
 	mysql>> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('XXXXXXXXX');
-		<and note the difference in the output of the above "SELECT" query>
+
+	mysql>> SELECT User, Host, Password FROM mysql.user;
 		
 	mysql>> DELETE FROM mysql.user WHERE User !='root' OR Host !='localhost';
-		<and note the difference in the output of the above "SELECT" query>
-		
-	mysql>> exit
-	
+
+	mysql>> SELECT User, Host, Password FROM mysql.user;
+
+
 <a name='unit2'></a>
 ## Unit 2: Databases, schema
   * Removing, creating databases is very simple
   
 	mysql>> DROP DATABASE test;
 	
-	mysql>> CREATE DATABASE class;
+	mysql>> CREATE DATABASE COLAB_CLASS;
 
 	mysql>> show databases;
 	
@@ -145,7 +150,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
 
 <a name='unit3'></a>
-## Unit 3: Adding/altering tables
+## Unit 3: Adding/modifying tables and indexes
 
 	CREATE TABLE `LCL_genotypes` (
 	`IID` varchar(16) NOT NULL,
@@ -156,26 +161,38 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	KEY `idx_rsID` (`rsID`)
 	) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `phenotypes` (
-  `LCL_ID` varchar(16) NOT NULL,
-  `phenotype` varchar(128) NOT NULL,
-  `phenotypic_value1` decimal(20,10) DEFAULT NULL,
-  `phenotypic_value2` decimal(20,10) DEFAULT NULL,
-  `phenotypic_value3` decimal(20,10) DEFAULT NULL,
-  `phenotypic_mean` decimal(20,10) DEFAULT NULL,
-  PRIMARY KEY (`LCL_ID`,`phenotype`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+	CREATE TABLE `phenotypes` (
+	`LCL_ID` varchar(16) NOT NULL,
+	`phenotype` varchar(128) NOT NULL,
+	`phenotypic_value1` decimal(20,10) DEFAULT NULL,
+	`phenotypic_value2` decimal(20,10) DEFAULT NULL,
+	`phenotypic_value3` decimal(20,10) DEFAULT NULL,
+	`phenotypic_mean` decimal(20,10) DEFAULT NULL,
+	PRIMARY KEY (`LCL_ID`,`phenotype`)
+	) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `snp` (
-  `rsID` varchar(256) NOT NULL,
-  `Chromosome` bigint(20) unsigned NOT NULL,
-  `Position` int(10) unsigned NOT NULL,
-  `Allele1` varchar(1024) NOT NULL,
-  `Allele2` varchar(1024) NOT NULL,
-  `DistanceToNearGene` varchar(1024) NOT NULL,
-  `Gene` varchar(256) NOT NULL,
-  `SNPtype` varchar(64) NOT NULL,
-  PRIMARY KEY (`rsID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+	CREATE TABLE `snp` (
+	`rsID` varchar(256) NOT NULL,
+	`Chromosome` bigint(20) unsigned NOT NULL,
+	`Position` int(10) unsigned NOT NULL,
+	`Allele1` varchar(1024) NOT NULL,
+	`Allele2` varchar(1024) NOT NULL,
+	`DistanceToNearGene` varchar(1024) NOT NULL,
+	`Gene` varchar(256) NOT NULL,
+	`SNPtype` varchar(64) NOT NULL,
+	PRIMARY KEY (`rsID`)
+	) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 	include mysqldump (and discussion of backups) in this section
+	
+	
+<a name='lab2/3'></a>
+## Lab 2/3: Working with databases and tables
+
+	mysql>> DROP DATABASE test;
+	
+	mysql>> CREATE DATABASE COLAB_CLASS;
+
+	mysql>> show databases;
+	
+	mysql>> USE COLAB_CLASS;
