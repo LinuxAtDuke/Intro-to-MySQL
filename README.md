@@ -156,44 +156,46 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * Looking at the syntax for creating the above tables...
 
-		CREATE TABLE \`LCL\_genotypes\` \(
-		\\`IID\` varchar(16) NOT NULL,
-		\\`SNPpos\` varchar(512) NOT NULL,
-		\\`rsID\` varchar(256) NOT NULL,
-		\\`genotype\` varchar(512) NOT NULL,
-		PRIMARY KEY (\`IID\`,\`SNPpos\`),
-		KEY \`idx_rsID\` (\`rsID\`)
+		CREATE TABLE `LCL_genotypes` (
+		`IID` varchar(16) NOT NULL,
+		`SNPpos` varchar(512) NOT NULL,
+		`rsID` varchar(256) NOT NULL,
+		`genotype` varchar(512) NOT NULL,
+		PRIMARY KEY (`IID`,`SNPpos`),
+		KEY `idx_rsID` (`rsID`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-	CREATE TABLE `phenotypes` (
-	`LCL_ID` varchar(16) NOT NULL,
-	`phenotype` varchar(128) NOT NULL,
-	`phenotypic_value1` decimal(20,10) DEFAULT NULL,
-	`phenotypic_value2` decimal(20,10) DEFAULT NULL,
-	`phenotypic_value3` decimal(20,10) DEFAULT NULL,
-	`phenotypic_mean` decimal(20,10) DEFAULT NULL,
-	PRIMARY KEY (`LCL_ID`,`phenotype`)
-	) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+		CREATE TABLE `phenotypes` (
+		`LCL_ID` varchar(16) NOT NULL,
+		`phenotype` varchar(128) NOT NULL,
+		`phenotypic_value1` decimal(20,10) DEFAULT NULL,
+		`phenotypic_value2` decimal(20,10) DEFAULT NULL,
+		`phenotypic_value3` decimal(20,10) DEFAULT NULL,
+		`phenotypic_mean` decimal(20,10) DEFAULT NULL,
+		PRIMARY KEY (`LCL_ID`,`phenotype`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-	CREATE TABLE `snp` (
-	`rsID` varchar(256) NOT NULL,
-	`Chromosome` bigint(20) unsigned NOT NULL,
-	`Position` int(10) unsigned NOT NULL,
-	`Allele1` varchar(1024) NOT NULL,
-	`Allele2` varchar(1024) NOT NULL,
-	`DistanceToNearGene` varchar(1024) NOT NULL,
-	`Gene` varchar(256) NOT NULL,
-	`SNPtype` varchar(64) NOT NULL,
-	PRIMARY KEY (`rsID`)
-	) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+		CREATE TABLE `snp` (
+		`rsID` varchar(256) NOT NULL,
+		`Chromosome` bigint(20) unsigned NOT NULL,
+		`Position` int(10) unsigned NOT NULL,
+		`Allele1` varchar(1024) NOT NULL,
+		`Allele2` varchar(1024) NOT NULL,
+		`DistanceToNearGene` varchar(1024) NOT NULL,
+		`Gene` varchar(256) NOT NULL,
+		`SNPtype` varchar(64) NOT NULL,
+		PRIMARY KEY (`rsID`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
   * A brief tangent to discuss backups! (via 'mysqldump')
 
-	_shell>>_ mysqldump --no-data COLAB\_CLASS > _[PATH\_TO\_OUTPUT]_/COLAB\_WITHOUT\_DATA.sql	
+	_shell>>_ mysqldump --no-data COLAB\_CLASS > COLAB\_WITHOUT\_DATA.sql	
 	
 <a name='lab2/3'></a>
 ## Lab 2/3: Working with databases and tables
 
+  * Drop unneeded database, create our new one, and populate it...
+  
 	_mysql>>_ DROP DATABASE test;
 	
 	_mysql>>_ CREATE DATABASE COLAB_CLASS;
