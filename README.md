@@ -1,7 +1,7 @@
 Introduction to MySQL
 =====================
 
-*Version 1, 2016-10-05*
+*Version 6, 2016-10-06*
 
 **Instructor**
 
@@ -193,6 +193,8 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
 		Query OK, 358244487 rows affected (2 hours 33 min 15.53 sec)
 		Records: 358244487  Deleted: 0  Skipped: 0  Warnings: 0
+		
+	_mysql>>_ SHOW INDEX from LCL_genotypes;
 
   * A brief tangent to discuss backups! (via 'mysqldump')
 
@@ -217,4 +219,4 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	* load the file into your MySQL instance
 	
 	_mysql>>_ mysql -u root -p < COLAB\_WITHOUT\_DATA.sql
-	_you'll be prompted for the password here_
+	
