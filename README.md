@@ -36,14 +36,15 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
 <a name='unit1'></a>
 ## Unit 1: Access control / User management
+
   * how access is controlled
   
-  	shell>> mysql -u root -p
+  	_shell>>_ mysql -u root -p
 	[initial pw = bitnami]
 		
   	https://dev.mysql.com/doc/refman/5.5/en/default-privileges.html
 
-	mysql>> SELECT User, Host, Password FROM mysql.user;
+	_mysql>>_ SELECT User, Host, Password FROM mysql.user;
 
 	| User | Host      | Password                                  |
 	|:-----|:----------|:------------------------------------------|
@@ -57,16 +58,16 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	
   * general structure of the DBMS
   
-	mysql>> status
+	_mysql>>_ status
 
-	mysql>> show status;
+	_mysql>>_ show status;
 
-	mysql>> show databases;
+	_mysql>>_ show databases;
 
-	mysql>> use *DATABASE*;
+	_mysql>>_ use *DATABASE*;
 		e.g. use test;
 
-	mysql>> show tables;
+	_mysql>>_ show tables;
 	  	
 	*TAB COMPLETION*
 	
@@ -75,27 +76,29 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
 <a name='lab1'></a>
 ## Lab 1 - Initial user lockdown
-	
-	shell>> mysql -u root -p
-	
-	mysql>> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('XXXXXXXXX');
 
-	mysql>> SELECT User, Host, Password FROM mysql.user;
+  * Login to MySQL as 'root', change that user's password, and remove unnecessary authorizations
+	
+	_shell>>_ mysql -u root -p
+	
+	_mysql>>_ SET PASSWORD FOR 'root'@'localhost' = PASSWORD('XXXXXXXXX');
+
+	_mysql>>_ SELECT User, Host, Password FROM mysql.user;
 		
-	mysql>> DELETE FROM mysql.user WHERE User !='root' OR Host !='localhost';
+	_mysql>>_ DELETE FROM mysql.user WHERE User !='root' OR Host !='localhost';
 
-	mysql>> SELECT User, Host, Password FROM mysql.user;
+	_mysql>>_ SELECT User, Host, Password FROM mysql.user;
 
 
 <a name='unit2'></a>
 ## Unit 2: Databases, schema
   * Removing, creating databases is very simple
   
-	mysql>> DROP DATABASE test;
+	_mysql>>_ DROP DATABASE test;
 	
-	mysql>> CREATE DATABASE COLAB_CLASS;
+	_mysql>>_ CREATE DATABASE COLAB_CLASS;
 
-	mysql>> show databases;
+	_mysql>>_ show databases;
 	
   * Schema development is best done via an ER diagram and a whiteboard - consider these:
 	- what are the data elements? (tables)
@@ -115,7 +118,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * Some examples
   
-	mysql>> describe LCL_genotypes;
+	_mysql>>_ describe LCL_genotypes;
 
 	| Field    | Type         | Null | Key | Default | Extra |
 	|:---------|:-------------|:-----|:----|:--------|:------|
@@ -124,7 +127,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	| rsID     | varchar(256) | NO   | MUL | NULL    |       |
 	| genotype | varchar(512) | NO   |     | NULL    |       |
 
-	mysql>> describe phenotypes;
+	_mysql>>_ describe phenotypes;
 
 	| Field             | Type           | Null | Key | Default | Extra |
 	|:------------------|:---------------|:-----|:----|:--------|:------|
@@ -135,7 +138,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	| phenotypic\_value3 | decimal(20,10) | YES  |     | NULL    |       |
 	| phenotypic_mean   | decimal(20,10) | YES  |     | NULL    |       |
 
-	mysql>> describe snp;
+	_mysql>>_ describe snp;
 
 	| Field              | Type                | Null | Key | Default | Extra |
 	|:-------------------|:--------------------|:-----|:----|:--------|:------|
@@ -152,13 +155,15 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 <a name='unit3'></a>
 ## Unit 3: Adding/modifying tables and indexes
 
-	CREATE TABLE `LCL_genotypes` (
-	`IID` varchar(16) NOT NULL,
-	`SNPpos` varchar(512) NOT NULL,
-	`rsID` varchar(256) NOT NULL,
-	`genotype` varchar(512) NOT NULL,
-	PRIMARY KEY (`IID`,`SNPpos`),
-	KEY `idx_rsID` (`rsID`)
+  * Looking at the syntax for creating the above tables...
+
+	CREATE TABLE \`LCL\_genotypes\` \(
+	\\`IID\` varchar(16) NOT NULL,
+	\\`SNPpos\` varchar(512) NOT NULL,
+	\\`rsID\` varchar(256) NOT NULL,
+	\\`genotype\` varchar(512) NOT NULL,
+	PRIMARY KEY (\`IID\`,\`SNPpos\`),
+	KEY \`idx_rsID\` (\`rsID\`)
 	) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 	CREATE TABLE `phenotypes` (
@@ -183,16 +188,17 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	PRIMARY KEY (`rsID`)
 	) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-	include mysqldump (and discussion of backups) in this section
-	
+  * A brief tangent to discuss backups! (via 'mysqldump')
+
+	_shell>>_ mysqldump --no-data COLAB\_CLASS > [PATH\_TO\_OUTPUT]/COLAB\_WITHOUT\_DATA.sql	
 	
 <a name='lab2/3'></a>
 ## Lab 2/3: Working with databases and tables
 
-	mysql>> DROP DATABASE test;
+	_mysql>>_ DROP DATABASE test;
 	
-	mysql>> CREATE DATABASE COLAB_CLASS;
+	_mysql>>_ CREATE DATABASE COLAB_CLASS;
 
-	mysql>> show databases;
+	_mysql>>_ show databases;
 	
-	mysql>> USE COLAB_CLASS;
+	_mysql>>_ USE COLAB_CLASS;
