@@ -37,12 +37,11 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 <a name='unit1'></a>
 ## Unit 1: Access control / User management
 
-  * how access is controlled
+  * how access is controlled (https://dev.mysql.com/doc/refman/5.5/en/default-privileges.html )
   
   	_shell>>_ mysql -u root -p
-	[initial pw = bitnami]
-		
-  	https://dev.mysql.com/doc/refman/5.5/en/default-privileges.html
+  	_[initial pw = bitnami]_
+
 
 	_mysql>>_ SELECT User, Host, Password FROM mysql.user;
 
@@ -157,14 +156,14 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * Looking at the syntax for creating the above tables...
 
-	CREATE TABLE \`LCL\_genotypes\` \(
-	\\`IID\` varchar(16) NOT NULL,
-	\\`SNPpos\` varchar(512) NOT NULL,
-	\\`rsID\` varchar(256) NOT NULL,
-	\\`genotype\` varchar(512) NOT NULL,
-	PRIMARY KEY (\`IID\`,\`SNPpos\`),
-	KEY \`idx_rsID\` (\`rsID\`)
-	) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+		CREATE TABLE \`LCL\_genotypes\` \(
+		\\`IID\` varchar(16) NOT NULL,
+		\\`SNPpos\` varchar(512) NOT NULL,
+		\\`rsID\` varchar(256) NOT NULL,
+		\\`genotype\` varchar(512) NOT NULL,
+		PRIMARY KEY (\`IID\`,\`SNPpos\`),
+		KEY \`idx_rsID\` (\`rsID\`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 	CREATE TABLE `phenotypes` (
 	`LCL_ID` varchar(16) NOT NULL,
@@ -190,7 +189,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * A brief tangent to discuss backups! (via 'mysqldump')
 
-	_shell>>_ mysqldump --no-data COLAB\_CLASS > [PATH\_TO\_OUTPUT]/COLAB\_WITHOUT\_DATA.sql	
+	_shell>>_ mysqldump --no-data COLAB\_CLASS > _[PATH\_TO\_OUTPUT]_/COLAB\_WITHOUT\_DATA.sql	
 	
 <a name='lab2/3'></a>
 ## Lab 2/3: Working with databases and tables
