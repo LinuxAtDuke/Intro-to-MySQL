@@ -229,7 +229,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * load the file into your MySQL instance
 	
-		_shell>>_ mysql -u root -p colab_class < COLAB\_WITHOUT\_DATA.sql
+	_shell>>_ mysql -u root -p colab_class < COLAB\_WITHOUT\_DATA.sql
 	
   * now check out the results of the import
 	
