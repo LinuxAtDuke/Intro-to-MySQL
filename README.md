@@ -218,14 +218,15 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	* grab the dump file (COLAB\_WITHOUT\_DATA.sql) from https://github.com/LinuxAtDuke/Intro-to-MySQL
 	
 	* upload the dump file to your VM.  __FOR EXAMPLE:__
-		_shell>>_ cd Downloads/Intro-to-MySQL-master\ 2/
-		_shell>>_ sftp bitnami@colab-sbx-29.oit.duke.edu
-		bitnami@colab-sbx-29.oit.duke.edu's password: 
-		Connected to colab-sbx-29.oit.duke.edu.
-		_sftp>_ put COLAB\_WITHOUT\_DATA.sql
-		Uploading COLAB\_WITHOUT\_DATA.sql to /home/bitnami/COLAB\_WITHOUT\_DATA.sql
-		COLAB\_WITHOUT\_DATA.sql                       100% 4717     4.6KB/s   00:00    
-		_sftp>_ exit
+	
+        _shell>>_ cd Downloads/Intro-to-MySQL-master\ 2/
+        _shell>>_ sftp bitnami@colab-sbx-29.oit.duke.edu
+        bitnami@colab-sbx-29.oit.duke.edu's password: 
+        Connected to colab-sbx-29.oit.duke.edu.
+        _sftp>_ put COLAB\_WITHOUT\_DATA.sql
+        Uploading COLAB\_WITHOUT\_DATA.sql to /home/bitnami/COLAB\_WITHOUT\_DATA.sql
+        COLAB\_WITHOUT\_DATA.sql                       100% 4717     4.6KB/s   00:00    
+        _sftp>_ exit
 
 	* load the file into your MySQL instance
 	
