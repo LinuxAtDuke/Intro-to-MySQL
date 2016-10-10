@@ -15,8 +15,9 @@ Andy Ingham (andy.ingham AT duke.edu)
 4. [Unit 2: Databases, schema](#unit2)
 5. [Unit 3: Adding/modifying tables and indexes](#unit3)
 6. [Lab 2/3: Working with databases and tables](#lab2/3)
-7. [Unit 4: writing queries](#unit4)
-8. [Unit 5: evaluating basic security and performance](#unit5)
+7. [Unit 4: Populating database with data](#unit4)
+7. [Unit 5: writing queries](#unit5)
+8. [Unit 6: evaluating basic security and performance](#unit6)
 
 
 <a name='lab0'></a>
@@ -208,15 +209,45 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	_mysql>>_ DROP DATABASE test;
 	
 	_mysql>>_ CREATE DATABASE COLAB_CLASS;
-
+	
 	_mysql>>_ show databases;
 	
-	_mysql>>_ USE COLAB_CLASS;
+	_mysql>>_ exit
 
   * Let's cheat a little bit (and save ourselves some typing) ...
 	* grab the dump file from https://github.com/LinuxAtDuke/Intro-to-MySQL
 
 	* load the file into your MySQL instance
 	
-	_mysql>>_ mysql -u root -p < COLAB\_WITHOUT\_DATA.sql
+	_shell>>_ mysql -u root -p < COLAB\_WITHOUT\_DATA.sql
+	
+  * now check out the results of the import
+	
+	_shell>>_ mysql -u root -p COLAB_CLASS;
+	
+	_mysql>>_ show tables;
+	
+	_mysql>>_ DESCRIBE LCL_genotypes;
+	
+  * now manually modify the table schema
+	
+	_mysql>>_ ALTER TABLE LCL_genotypes MODIFY genotype VARCHAR(2048) NOT NULL;
+	
+	_mysql>>_ ALTER TABLE LCL_genotypes MODIFY SNPpos VARCHAR(1024) NOT NULL;
+	
+	_mysql>>_ DESCRIBE LCL_genotypes;
+	
+	_mysql>>_ DESCRIBE gwas_results;
+	
+	_mysql>>_ ALTER TABLE gwas\_results MODIFY study\_population VARCHAR(16) NOT NULL;
+		
+	_mysql>>_ DESCRIBE gwas_results;
+	
+<a name='unit4'></a>
+## Unit 4: Populating database with data
+
+..* Data can be added either record by record...
+	* INSERT INTO tbl_name () VALUES();
+	
+	* INSERT INTO tbl_name SET col_name=expr col_name=expr...
 	
