@@ -1,7 +1,7 @@
 Introduction to MySQL
 =====================
 
-*Version 6, 2016-10-06*
+*Version 9, 2016-10-10*
 
 **Instructor**
 
@@ -96,7 +96,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
   
 	_mysql>>_ DROP DATABASE test;
 	
-	_mysql>>_ CREATE DATABASE COLAB_CLASS;
+	_mysql>>_ CREATE DATABASE colab_class;
 
 	_mysql>>_ show databases;
 	
@@ -118,7 +118,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * Some examples
   
-	_mysql>>_ describe LCL_genotypes;
+	_mysql>>_ describe lcl_genotypes;
 
 	| Field    | Type         | Null | Key | Default | Extra |
 	|:---------|:-------------|:-----|:----|:--------|:------|
@@ -157,7 +157,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * Looking at the syntax for creating the above tables...
 
-		CREATE TABLE `LCL_genotypes` (
+		CREATE TABLE `lcl_genotypes` (
 		`IID` varchar(16) NOT NULL,
 		`SNPpos` varchar(512) NOT NULL,
 		`rsID` varchar(256) NOT NULL,
@@ -167,13 +167,13 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 		CREATE TABLE `phenotypes` (
-		`LCL_ID` varchar(16) NOT NULL,
+		`lcl_ID` varchar(16) NOT NULL,
 		`phenotype` varchar(128) NOT NULL,
 		`phenotypic_value1` decimal(20,10) DEFAULT NULL,
 		`phenotypic_value2` decimal(20,10) DEFAULT NULL,
 		`phenotypic_value3` decimal(20,10) DEFAULT NULL,
 		`phenotypic_mean` decimal(20,10) DEFAULT NULL,
-		PRIMARY KEY (`LCL_ID`,`phenotype`)
+		PRIMARY KEY (`lcl_ID`,`phenotype`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 		CREATE TABLE `snp` (
@@ -190,12 +190,12 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * How was the "idx_rsID" index actually created?
   
-	_mysql>>_ CREATE INDEX idx_rsID ON LCL_genotypes(rsID);
+	_mysql>>_ CREATE INDEX idx_rsID ON lcl_genotypes(rsID);
 
 		Query OK, 358244487 rows affected (2 hours 33 min 15.53 sec)
 		Records: 358244487  Deleted: 0  Skipped: 0  Warnings: 0
 		
-	_mysql>>_ SHOW INDEX from LCL_genotypes;
+	_mysql>>_ SHOW INDEX from lcl_genotypes;
 
   * A brief tangent to discuss backups! (via 'mysqldump')
 
@@ -208,34 +208,44 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
   
 	_mysql>>_ DROP DATABASE test;
 	
-	_mysql>>_ CREATE DATABASE COLAB_CLASS;
+	_mysql>>_ CREATE DATABASE colab_class;
 	
 	_mysql>>_ show databases;
 	
 	_mysql>>_ exit
 
   * Let's cheat a little bit (and save ourselves some typing) ...
-	* grab the dump file from https://github.com/LinuxAtDuke/Intro-to-MySQL
+	* grab the dump file (COLAB\_WITHOUT\_DATA.sql) from https://github.com/LinuxAtDuke/Intro-to-MySQL
+	
+	* upload the dump file to your VM.  __FOR EXAMPLE:__
+		_shell>>_ cd Downloads/Intro-to-MySQL-master\ 2/
+		_shell>>_ sftp bitnami@colab-sbx-29.oit.duke.edu
+		bitnami@colab-sbx-29.oit.duke.edu's password: 
+		Connected to colab-sbx-29.oit.duke.edu.
+		_sftp>_ put COLAB\_WITHOUT\_DATA.sql
+		Uploading COLAB\_WITHOUT\_DATA.sql to /home/bitnami/COLAB\_WITHOUT\_DATA.sql
+		COLAB\_WITHOUT\_DATA.sql                       100% 4717     4.6KB/s   00:00    
+		_sftp>_ exit
 
 	* load the file into your MySQL instance
 	
-	_shell>>_ mysql -u root -p < COLAB\_WITHOUT\_DATA.sql
+		_shell>>_ mysql -u root -p colab_class < COLAB\_WITHOUT\_DATA.sql
 	
   * now check out the results of the import
 	
-	_shell>>_ mysql -u root -p COLAB_CLASS;
+	_shell>>_ mysql -u root -p colab_class;
 	
 	_mysql>>_ show tables;
 	
-	_mysql>>_ DESCRIBE LCL_genotypes;
+	_mysql>>_ DESCRIBE lcl_genotypes;
 	
   * now manually modify the table schema
 	
-	_mysql>>_ ALTER TABLE LCL_genotypes MODIFY genotype VARCHAR(2048) NOT NULL;
+	_mysql>>_ ALTER TABLE lcl_genotypes MODIFY genotype VARCHAR(2048) NOT NULL;
 	
-	_mysql>>_ ALTER TABLE LCL_genotypes MODIFY SNPpos VARCHAR(1024) NOT NULL;
+	_mysql>>_ ALTER TABLE lcl_genotypes MODIFY SNPpos VARCHAR(767) NOT NULL;
 	
-	_mysql>>_ DESCRIBE LCL_genotypes;
+	_mysql>>_ DESCRIBE lcl_genotypes;
 	
 	_mysql>>_ DESCRIBE gwas_results;
 	
@@ -246,8 +256,11 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 <a name='unit4'></a>
 ## Unit 4: Populating database with data
 
-..* Data can be added either record by record...
+  * Data can be added either record by record...
 	* INSERT INTO tbl_name () VALUES();
 	
-	* INSERT INTO tbl_name SET col_name=expr col_name=expr...
+	* INSERT INTO tbl\_name SET col\_name=expr col\_name=expr...
+	
+  * Or in bulk (from an INFILE)
+  
 	
