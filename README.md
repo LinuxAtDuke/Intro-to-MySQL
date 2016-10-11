@@ -257,10 +257,48 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 ## Unit 4: Populating database with data
 
   * Data can be added either record by record...
-	* INSERT INTO tbl_name () VALUES();
+	* _mysql>>_ INSERT INTO tbl\_name () VALUES();
+		* E.g, _mysql>>_ INSERT INTO lcl\_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02463','10:60523:T:G','rs112920234','TT');
+		
+	* _mysql>>_ INSERT INTO tbl\_name (a,b,c) VALUES(1,2,3),(4,5,6),(7,8,9);
+		* E.g, _mysql>>_ INSERT INTO lcl_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02466','10:60523:T:G','rs112920234','TT'),('HG02563','10:60523:T:G','rs112920234','TT'),('HG02567','10:60523:T:G','rs112920234','00');
 	
-	* INSERT INTO tbl\_name SET col\_name=expr col\_name=expr...
+	* _mysql>>_ INSERT INTO tbl\_name SET col\_name=expr col\_name=expr...
 	
   * Or in bulk (from an INFILE)
-  
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+  * __WATCH OUT FOR WARNINGS!__ E.g, _mysql>>_ INSERT INTO lcl\_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG024638392382903957','10:60523:T:G','rs112920234','TT');
+
+		Query OK, 1 row affected, 1 warning (0.00 sec)
+		
+		mysql> show warnings;
+		+---------+------+------------------------------------------+
+		| Level   | Code | Message                                  |
+		+---------+------+------------------------------------------+
+		| Warning | 1265 | Data truncated for column 'IID' at row 1 |
+		+---------+------+------------------------------------------+
+		1 row in set (0.00 sec)
+
+		mysql> select * from lcl_genotypes;                                                                                           
+		+------------------+--------------+-------------+----------+
+		| IID              | SNPpos       | rsID        | genotype |
+		+------------------+--------------+-------------+----------+
+		| HG02463          | 10:60523:T:G | rs112920234 | TT       |
+		| HG02463839238290 | 10:60523:T:G | rs112920234 | TT       |
+		| HG02466          | 10:60523:T:G | rs112920234 | TT       |
+		| HG02563          | 10:60523:T:G | rs112920234 | TT       |
+		| HG02567          | 10:60523:T:G | rs112920234 | 00       |
+		+------------------+--------------+-------------+----------+
+		5 rows in set (0.00 sec)
