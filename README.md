@@ -263,8 +263,15 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	* _mysql>>_ INSERT INTO tbl\_name (a,b,c) VALUES(1,2,3),(4,5,6),(7,8,9);
 		* E.g, _mysql>>_ INSERT INTO lcl_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02466','10:60523:T:G','rs112920234','TT'),('HG02563','10:60523:T:G','rs112920234','TT'),('HG02567','10:60523:T:G','rs112920234','00');
 	
-	* _mysql>>_ INSERT INTO tbl\_name SET col\_name=expr col\_name=expr...
+	* _mysql>>_ INSERT INTO tbl\_name SET col\_name=expr, col\_name=expr, ...
 		* E.g, _mysql>>_ INSERT INTO phenotypes SET LCL\_ID='HG02461', phenotype='Cells\_ml\_after\_3\_days', phenotypic\_value1='878000', phenotypic\_value2='732000', phenotypic\_value3='805000', phenotypic_mean='805000';
+
+			 mysql> select * from phenotypes;                                                                
+			 +---------+-----------------------+-------------------+-------------------+-------------------+-------------------+
+			 | LCL_ID  | phenotype             | phenotypic_value1 | phenotypic_value2 | phenotypic_value3 | phenotypic_mean   |
+			 +---------+-----------------------+-------------------+-------------------+-------------------+-------------------+
+			 | HG02461 | Cells_ml_after_3_days | 878000.0000000000 | 732000.0000000000 | 805000.0000000000 | 805000.0000000000 |
+			 +---------+-----------------------+-------------------+-------------------+-------------------+-------------------+
 	
   * Or in bulk (from an INFILE)
 
