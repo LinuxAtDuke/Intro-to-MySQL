@@ -1,7 +1,7 @@
 Introduction to MySQL
 =====================
 
-*Version 9, 2016-10-10*
+*Version 19, 2016-10-11*
 
 **Instructor**
 
@@ -266,13 +266,6 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	* _mysql>>_ INSERT INTO tbl\_name SET col\_name=expr, col\_name=expr, ...
 		* E.g, _mysql>>_ INSERT INTO phenotypes SET LCL\_ID='HG02461', phenotype='Cells\_ml\_after\_3\_days', phenotypic\_value1='878000', phenotypic\_value2='732000', phenotypic\_value3='805000', phenotypic_mean='805000';
 
-			 mysql> select * from phenotypes;                                                                
-			 +---------+-----------------------+-------------------+-------------------+-------------------+-------------------+
-			 | LCL_ID  | phenotype             | phenotypic_value1 | phenotypic_value2 | phenotypic_value3 | phenotypic_mean   |
-			 +---------+-----------------------+-------------------+-------------------+-------------------+-------------------+
-			 | HG02461 | Cells_ml_after_3_days | 878000.0000000000 | 732000.0000000000 | 805000.0000000000 | 805000.0000000000 |
-			 +---------+-----------------------+-------------------+-------------------+-------------------+-------------------+
-	
   * Or in bulk (from an INFILE)
 
 
