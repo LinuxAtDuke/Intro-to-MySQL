@@ -264,6 +264,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		* E.g, _mysql>>_ INSERT INTO lcl_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02466','10:60523:T:G','rs112920234','TT'),('HG02563','10:60523:T:G','rs112920234','TT'),('HG02567','10:60523:T:G','rs112920234','00');
 	
 	* _mysql>>_ INSERT INTO tbl\_name SET col\_name=expr col\_name=expr...
+		* E.g, _mysql>>_ INSERT INTO phenotypes SET LCL\_ID='HG02461', phenotype='Cells\_ml\_after\_3\_days', phenotypic\_value1='878000', phenotypic\_value2='732000', phenotypic\_value3='805000', phenotypic_mean='805000';
 	
   * Or in bulk (from an INFILE)
 
