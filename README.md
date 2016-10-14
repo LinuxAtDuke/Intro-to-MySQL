@@ -317,10 +317,9 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
   
 	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
 	
-	_mysql>>_LOAD DATA LOCAL INFILE '/home/bitnami/lcl\_genotypes-data.infile' INTO TABLE lcl\_genotypes FIELDS TERMINATED BY '\t';
+	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/lcl\_genotypes-data.infile' INTO TABLE lcl\_genotypes FIELDS TERMINATED BY '\t';
 	
-	_mysql>>_LOAD DATA LOCAL INFILE '/home/bitnami/phenotypes-data.infile' INTO TABLE phenotypes FIELDS TERMINATED BY '\t';
+	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/phenotypes-data.infile' INTO TABLE phenotypes FIELDS TERMINATED BY '\t';
 
   * Voila!
-  
   
