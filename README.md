@@ -16,8 +16,9 @@ Andy Ingham (andy.ingham AT duke.edu)
 5. [Unit 3: Adding/modifying tables and indexes](#unit3)
 6. [Lab 2/3: Working with databases and tables](#lab2/3)
 7. [Unit 4: Populating database with data](#unit4)
-7. [Unit 5: writing queries](#unit5)
-8. [Unit 6: evaluating basic security and performance](#unit6)
+8. [Lab 4: Adding data to our database](#lab4)
+9. [Unit 5: writing queries](#unit5)
+10. [Unit 6: evaluating basic security and performance](#unit6)
 
 
 <a name='lab0'></a>
@@ -265,21 +266,12 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	
 	* _mysql>>_ INSERT INTO tbl\_name SET col\_name=expr, col\_name=expr, ...
 		* E.g, _mysql>>_ INSERT INTO phenotypes SET LCL\_ID='HG02461', phenotype='Cells\_ml\_after\_3\_days', phenotypic\_value1='878000', phenotypic\_value2='732000', phenotypic\_value3='805000', phenotypic_mean='805000';
-
+	
+	
   * Or in bulk (from an INFILE)
-
-
-
-
-
-
-
-
-
-
-
-
-
+	* _mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
+		
+	
   * __WATCH OUT FOR WARNINGS!__ E.g, _mysql>>_ INSERT INTO lcl\_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG024638392382903957','10:60523:T:G','rs112920234','TT');
 
 		Query OK, 1 row affected, 1 warning (0.00 sec)
@@ -303,3 +295,15 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		| HG02567          | 10:60523:T:G | rs112920234 | 00       |
 		+------------------+--------------+-------------+----------+
 		5 rows in set (0.00 sec)
+
+<a name='lab4'></a>
+## Lab 4: Adding data to our database
+
+  * Quickly add data to three tables...
+  
+	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
+
+	_mysql>>_LOAD DATA LOCAL INFILE '/home/bitnami/lcl\_genotypes-data.infile' INTO TABLE lcl\_genotypes FIELDS TERMINATED BY '\t';
+
+	_mysql>>_LOAD DATA LOCAL INFILE '/home/bitnami/phenotypes-data.infile' INTO TABLE phenotypes FIELDS TERMINATED BY '\t';
+	
