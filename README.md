@@ -312,7 +312,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		sftp> put phenotypes-data.infile
 			Uploading phenotypes-data.infile to /home/bitnami/phenotypes-data.infile		phenotypes-data.infile            100%  178     0.2KB/s   00:00
 		sftp> exit
-
+  
   * Quickly add data to three tables...
   
 	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
