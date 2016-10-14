@@ -299,6 +299,20 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 <a name='lab4'></a>
 ## Lab 4: Adding data to our database
 
+  * upload the infiles to your VM.  __FOR EXAMPLE:__
+
+		shell>> cd Downloads/Intro-to-MySQL-master/
+		shell>> sftp bitnami@colab-sbx-29.oit.duke.edu
+			bitnami@colab-sbx-29.oit.duke.edu's password: 
+			Connected to colab-sbx-29.oit.duke.edu.
+		sftp> put snp-data.infile
+			Uploading snp-data.infile to /home/bitnami/snp-data.infile		snp-data.infile            100%  303     0.3KB/s   00:00 
+		sftp> put lcl\_genotypes-data.infile
+			Uploading lcl\_genotypes-data.infile to /home/bitnami/lcl_genotypes-data.infile		lcl\_genotypes-data.infile            100%  192     0.2KB/s   00:00
+		sftp> put phenotypes-data.infile
+			Uploading phenotypes-data.infile to /home/bitnami/phenotypes-data.infile		phenotypes-data.infile            100%  178     0.2KB/s   00:00
+		sftp> exit
+
   * Quickly add data to three tables...
   
 	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
@@ -307,3 +321,4 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
 	_mysql>>_LOAD DATA LOCAL INFILE '/home/bitnami/phenotypes-data.infile' INTO TABLE phenotypes FIELDS TERMINATED BY '\t';
 	
+
