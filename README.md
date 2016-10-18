@@ -284,7 +284,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		+---------+------+------------------------------------------+
 		1 row in set (0.00 sec)
 
-		mysql> select * from lcl_genotypes;                                                                                           
+		mysql> select * from lcl_genotypes;                       
 		+------------------+--------------+-------------+----------+
 		| IID              | SNPpos       | rsID        | genotype |
 		+------------------+--------------+-------------+----------+
@@ -321,3 +321,40 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	
 	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/phenotypes-data.infile' INTO TABLE phenotypes FIELDS TERMINATED BY '\t';
 
+<a name='unit5'></a>
+## Unit 5: Writing queries to output data
+
+  * Simplest queries
+	
+		mysql> select * from lcl_genotypes;                      
+		+------------------+--------------+-------------+----------+
+		| IID              | SNPpos       | rsID        | genotype |
+		+------------------+--------------+-------------+----------+
+		| HG02463          | 10:60523:T:G | rs112920234 | TT       |
+		| HG02463839238290 | 10:60523:T:G | rs112920234 | TT       |
+		| HG02466          | 10:60523:T:G | rs112920234 | TT       |
+		| HG02563          | 10:60523:T:G | rs112920234 | TT       |
+		| HG02567          | 10:60523:T:G | rs112920234 | 00       |
+		+------------------+--------------+-------------+----------+
+		5 rows in set (0.00 sec)
+	
+		SELECT IID,rsID from lcl_genotypes WHERE genotype = 'TT';
+		+------------------+-------------+
+		| IID              | rsID        |
+		+------------------+-------------+
+		| HG02463          | rs112920234 |
+		| HG02463839238290 | rs112920234 |
+		| HG02466          | rs112920234 |
+		| HG02563          | rs112920234 |
+		+------------------+-------------+
+		4 rows in set (0.00 sec)
+	
+		mysql> SELECT COUNT(*) from snp;                                
+		+----------+
+		| COUNT(*) |
+		+----------+
+		|        5 |
+		+----------+
+		1 row in set (0.04 sec)
+	
+	
