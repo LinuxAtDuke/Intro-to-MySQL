@@ -371,8 +371,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * Slightly more complex queries
 	
-		mysql> SELECT lcl_genotypes.*,snp.* FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
-		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
+		mysql> SELECT * FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;          +------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
 		| IID              | SNPpos       | rsID        | genotype | rsID        | Chromosome | Position | Allele1 | Allele2 | DistanceToNearGene   | Gene       | SNPtype    |
 		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
 		| HG02463          | 10:60523:T:G | rs112920234 | TT       | rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
@@ -382,3 +381,30 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		| HG02567          | 10:60523:T:G | rs112920234 | 00       | rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
 		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
 		5 rows in set (0.00 sec)
+		
+		mysql> SELECT IID,Position,Gene FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
+		+------------------+----------+------------+
+		| IID              | Position | Gene       |
+		+------------------+----------+------------+
+		| HG02463          |    60523 | NONE,TUBB8 |
+		| HG02463839238290 |    60523 | NONE,TUBB8 |
+		| HG02466          |    60523 | NONE,TUBB8 |
+		| HG02563          |    60523 | NONE,TUBB8 |
+		| HG02567          |    60523 | NONE,TUBB8 |
+		+------------------+----------+------------+
+		5 rows in set (0.00 sec)
+
+		mysql> SELECT IID,Position,Gene FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID where lcl_genotypes.rsID = 'rs536478188';
+		Empty set (0.00 sec)
+
+		mysql> SELECT IID,Position,Gene FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID where snp.rsID = 'rs536478188';          
+		Empty set (0.00 sec)
+		
+		mysql> SELECT IID,Position,Gene FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID where IID = 'HG02466';                   
+		+---------+----------+------------+
+		| IID     | Position | Gene       |
+		+---------+----------+------------+
+		| HG02466 |    60523 | NONE,TUBB8 |
+		+---------+----------+------------+
+		1 row in set (0.00 sec)
+
