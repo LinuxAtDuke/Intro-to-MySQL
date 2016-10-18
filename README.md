@@ -371,7 +371,8 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * Slightly more complex queries
 	
-		mysql> SELECT * FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;          +------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
+		mysql> SELECT * FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
+		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
 		| IID              | SNPpos       | rsID        | genotype | rsID        | Chromosome | Position | Allele1 | Allele2 | DistanceToNearGene   | Gene       | SNPtype    |
 		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
 		| HG02463          | 10:60523:T:G | rs112920234 | TT       | rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
