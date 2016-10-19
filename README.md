@@ -18,7 +18,8 @@ Andy Ingham (andy.ingham AT duke.edu)
 7. [Unit 4: Populating database with data](#unit4)
 8. [Lab 4: Adding data to our database](#lab4)
 9. [Unit 5: Writing queries to retrieve data](#unit5)
-10. [Unit 6: evaluating basic security and performance](#unit6)
+10. [Lab 5: Practice with INSERT, UPDATE, DELETE, and SELECT (with JOIN!)](#lab5)
+11. [Unit 6: evaluating basic security and performance](#unit6)
 
 
 <a name='lab0'></a>
@@ -297,8 +298,8 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		5 rows in set (0.00 sec)
 	
   * Also possible (obviously) to change records that already exist (either one at a time or in bunches)...
-	* _mysql>>_ UPDATE tbl\_name SET col\_name=expr, col\_name=expr, ... WHERE where\_condition
-		* E.g., UPDATE lcl_genotypes SET IID='HG0246383' WHERE IID='HG02463839238290';
+		mysql> UPDATE tbl\_name SET col\_name=expr, col\_name=expr, ... WHERE where\_condition
+		E.g., UPDATE lcl_genotypes SET IID='HG0246383' WHERE IID='HG02463839238290';
 		Query OK, 1 row affected (0.00 sec)
 		Rows matched: 1  Changed: 1  Warnings: 0
 	
@@ -497,3 +498,11 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		HG02563	60523	NONE,TUBB8
 		HG02567	60523	NONE,TUBB8
 	
+
+
+<a name='lab5'></a>
+## Lab 5: Practice with INSERT, UPDATE, DELETE, and SELECT (with JOIN!)
+
+  * Take some free time to play around with queries we've talked about above...
+  
+  
