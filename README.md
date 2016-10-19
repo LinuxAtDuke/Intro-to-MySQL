@@ -17,7 +17,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 6. [Lab 2/3: Working with databases and tables](#lab2/3)
 7. [Unit 4: Populating database with data](#unit4)
 8. [Lab 4: Adding data to our database](#lab4)
-9. [Unit 5: writing queries](#unit5)
+9. [Unit 5: Writing queries to retrieve data](#unit5)
 10. [Unit 6: evaluating basic security and performance](#unit6)
 
 
@@ -322,7 +322,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/phenotypes-data.infile' INTO TABLE phenotypes FIELDS TERMINATED BY '\t';
 
 <a name='unit5'></a>
-## Unit 5: Writing queries to output data
+## Unit 5: Writing queries to retrieve data
 
   * Simplest queries
 	
@@ -409,3 +409,35 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		+---------+----------+------------+
 		1 row in set (0.00 sec)
 
+  * What if I want the output to go directly into a file instead of to the screen?
+	
+		mysql> SELECT * INTO OUTFILE '/tmp/colab_class_result.txt'
+		    ->   FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+		    ->   LINES TERMINATED BY '\n'
+		    ->   FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
+		Query OK, 5 rows affected (0.00 sec)
+		
+		mysql> exit
+		Bye
+		bitnami@linux:~$ cat /tmp/colab_class_result.txt
+		"HG02463","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
+		"HG02463839238290","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
+		"HG02466","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
+		"HG02563","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
+		"HG02567","10:60523:T:G","rs112920234","00","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
+	
+		mysql> SELECT IID,Position,Gene INTO OUTFILE '/tmp/colab_class_result2.txt'
+		    ->   FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '' ESCAPED BY ''
+		    ->   LINES TERMINATED BY '\n'
+		    ->   FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
+		Query OK, 5 rows affected (0.00 sec)
+		
+		mysql> exit
+		Bye
+		bitnami@linux:~$ cat /tmp/colab_class_result2.txt
+		HG02463	60523	NONE,TUBB8
+		HG02463839238290	60523	NONE,TUBB8
+		HG02466	60523	NONE,TUBB8
+		HG02563	60523	NONE,TUBB8
+		HG02567	60523	NONE,TUBB8
+	
