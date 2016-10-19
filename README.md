@@ -505,21 +505,11 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		HG02567	60523	NONE,TUBB8
 	
 
-
 <a name='lab5'></a>
 ## Lab 5: Practice with INSERT, UPDATE, DELETE, and SELECT (with JOIN!)
 
   * Take some free time to play around with queries we've talked about above...
-  
-  
-  
-  
-  bitnami@linux:~$ sudo /opt/bitnami/ctlscript.sh restart mysql
-[sudo] password for bitnami: 
-/opt/bitnami/mysql/scripts/ctl.sh : mysql stopped
-161019 19:59:05 mysqld_safe Logging to '/opt/bitnami/mysql/data/mysqld.log'.
-161019 19:59:05 mysqld_safe Starting mysqld.bin daemon with databases from /opt/bitnami/mysql/data
-/opt/bitnami/mysql/scripts/ctl.sh : mysql  started at port 3306
+
 <a name='unit6'></a>
 ## Unit 6: Evaluating basic security and performance
   * First, some basics
