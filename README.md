@@ -512,14 +512,14 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
 <a name='unit6'></a>
 ## Unit 6: Evaluating basic security and performance
-  * First, some basics
-   * sudo -- allows certain commands to be run with elevated privileges.  First, without:
+
+  * sudo -- allows certain commands to be run with elevated privileges.  First, without:
 
 		bitnami@linux:~$ /opt/bitnami/ctlscript.sh restart mysql
 		This script requires root privileges
 	
-   * And now, with:
-   
+  * And now, with:
+
 		bitnami@linux:~$ sudo /opt/bitnami/ctlscript.sh restart mysql
 		[sudo] password for bitnami: 
 		/opt/bitnami/mysql/scripts/ctl.sh : mysql stopped
