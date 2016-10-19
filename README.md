@@ -16,10 +16,10 @@ Andy Ingham (andy.ingham AT duke.edu)
 5. [Unit 3: Adding/modifying tables and indexes](#unit3)
 6. [Lab 2/3: Working with databases and tables](#lab2/3)
 7. [Unit 4: Populating database with data](#unit4)
-8. [Lab 4: Adding data to our database](#lab4)
+8. [Lab 4: Adding data to your database](#lab4)
 9. [Unit 5: Writing queries to retrieve data](#unit5)
 10. [Lab 5: Practice with INSERT, UPDATE, DELETE, and SELECT (with JOIN!)](#lab5)
-11. [Unit 6: evaluating basic security and performance](#unit6)
+11. [Unit 6: Evaluating basic security and performance](#unit6)
 
 
 <a name='lab0'></a>
@@ -206,7 +206,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 <a name='lab2/3'></a>
 ## Lab 2/3: Working with databases and tables
 
-  * Drop unneeded database, create our new one, and populate it...
+  * Drop unneeded database, create your new one, and populate it...
   
 	_mysql>>_ DROP DATABASE test;
 	
@@ -347,7 +347,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
 
 <a name='lab4'></a>
-## Lab 4: Adding data to our database
+## Lab 4: Adding data to your database
 
   * upload the infiles to your VM.  __FOR EXAMPLE:__
 
@@ -512,3 +512,63 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
   * Take some free time to play around with queries we've talked about above...
   
   
+  
+  
+  bitnami@linux:~$ sudo /opt/bitnami/ctlscript.sh restart mysql
+[sudo] password for bitnami: 
+/opt/bitnami/mysql/scripts/ctl.sh : mysql stopped
+161019 19:59:05 mysqld_safe Logging to '/opt/bitnami/mysql/data/mysqld.log'.
+161019 19:59:05 mysqld_safe Starting mysqld.bin daemon with databases from /opt/bitnami/mysql/data
+/opt/bitnami/mysql/scripts/ctl.sh : mysql  started at port 3306
+<a name='unit6'></a>
+## Unit 6: Evaluating basic security and performance
+  * First, some basics
+   * sudo -- allows certain commands to be run with elevated privileges.  First, without:
+		bitnami@linux:~$ /opt/bitnami/ctlscript.sh restart mysql
+		This script requires root privileges
+	
+   * And now, with:
+		bitnami@linux:~$ sudo /opt/bitnami/ctlscript.sh restart mysql
+		[sudo] password for bitnami: 
+		/opt/bitnami/mysql/scripts/ctl.sh : mysql stopped
+		161019 19:59:05 mysqld_safe Logging to '/opt/bitnami/mysql/data/mysqld.log'.
+		161019 19:59:05 mysqld_safe Starting mysqld.bin daemon with databases from /opt/bitnami/mysql/data
+		/opt/bitnami/mysql/scripts/ctl.sh : mysql  started at port 3306
+	
+   * To see what other options are available with that script, run it without arguments:
+		bitnami@linux:~$ sudo /opt/bitnami/ctlscript.sh
+		usage: /opt/bitnami/ctlscript.sh help
+		       /opt/bitnami/ctlscript.sh (start|stop|restart|status)
+		       /opt/bitnami/ctlscript.sh (start|stop|restart|status) mysql
+		       /opt/bitnami/ctlscript.sh (start|stop|restart|status) php-fpm
+		       /opt/bitnami/ctlscript.sh (start|stop|restart|status) apache
+
+		help       - this screen
+		start      - start the service(s)
+		stop       - stop  the service(s)
+		restart    - restart or start the service(s)
+		status     - show the status of the service(s)
+	
+   * To REBOOT the server itself: _note that this can also be done from the VM-manage webUI via "Power off" and then "Power on"_
+		bitnami@linux:~$ sudo shutdown -r now
+		Broadcast message from bitnami@linux
+		(/dev/pts/1) at 20:11 ...
+		
+		The system is going down for reboot NOW!
+		bitnami@linux:~$ 161019 20:11:39 mysqld_safe mysqld from pid file /opt/bitnami/mysql/data/mysqld.pid ended
+		Connection to colab-sbx-29.oit.duke.edu closed by remote host.
+		Connection to colab-sbx-29.oit.duke.edu closed.
+
+   * To change the configuration of the MySQL server, edit the "my.cnf" file __AND THEN RESTART THE mysql PROCESS!!__
+		bitnami@linux:~$ nano /opt/bitnami/mysql/my.cnf
+			[making necessary edits to the file and saving them]
+		bitnami@linux:~$ sudo /opt/bitnami/ctlscript.sh restart mysql
+		[sudo] password for bitnami: 
+		/opt/bitnami/mysql/scripts/ctl.sh : mysql stopped
+		161019 20:19:08 mysqld_safe Logging to '/opt/bitnami/mysql/data/mysqld.log'.
+		161019 20:19:08 mysqld_safe Starting mysqld.bin daemon with databases from /opt/bitnami/mysql/data
+		/opt/bitnami/mysql/scripts/ctl.sh : mysql  started at port 3306
+
+   * To check the error log, use "cat" or "more" or "less"...
+		bitnami@linux:~$ sudo cat /opt/bitnami/mysql/data/mysqld.log
+		
