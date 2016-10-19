@@ -259,20 +259,20 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * Data can be added either record by record...
 	* _mysql>>_ INSERT INTO tbl\_name () VALUES();
-		* E.g, _mysql>>_ INSERT INTO lcl\_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02463','10:60523:T:G','rs112920234','TT');
+		* E.g., _mysql>>_ INSERT INTO lcl\_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02463','10:60523:T:G','rs112920234','TT');
 		
 	* _mysql>>_ INSERT INTO tbl\_name (a,b,c) VALUES(1,2,3),(4,5,6),(7,8,9);
-		* E.g, _mysql>>_ INSERT INTO lcl_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02466','10:60523:T:G','rs112920234','TT'),('HG02563','10:60523:T:G','rs112920234','TT'),('HG02567','10:60523:T:G','rs112920234','00');
+		* E.g., _mysql>>_ INSERT INTO lcl_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02466','10:60523:T:G','rs112920234','TT'),('HG02563','10:60523:T:G','rs112920234','TT'),('HG02567','10:60523:T:G','rs112920234','00');
 	
 	* _mysql>>_ INSERT INTO tbl\_name SET col\_name=expr, col\_name=expr, ...
-		* E.g, _mysql>>_ INSERT INTO phenotypes SET LCL\_ID='HG02461', phenotype='Cells\_ml\_after\_3\_days', phenotypic\_value1='878000', phenotypic\_value2='732000', phenotypic\_value3='805000', phenotypic_mean='805000';
+		* E.g., _mysql>>_ INSERT INTO phenotypes SET LCL\_ID='HG02461', phenotype='Cells\_ml\_after\_3\_days', phenotypic\_value1='878000', phenotypic\_value2='732000', phenotypic\_value3='805000', phenotypic_mean='805000';
 	
 	
   * Or in bulk (from an INFILE)
 	* _mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
 		
 	
-  * __WATCH OUT FOR WARNINGS!__ E.g, _mysql>>_ INSERT INTO lcl\_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG024638392382903957','10:60523:T:G','rs112920234','TT');
+  * __WATCH OUT FOR WARNINGS!__ E.g., _mysql>>_ INSERT INTO lcl\_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG024638392382903957','10:60523:T:G','rs112920234','TT');
 
 		Query OK, 1 row affected, 1 warning (0.00 sec)
 		
@@ -295,6 +295,49 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		| HG02567          | 10:60523:T:G | rs112920234 | 00       |
 		+------------------+--------------+-------------+----------+
 		5 rows in set (0.00 sec)
+	
+  * Also possible (obviously) to change records that already exist (either one at a time or in bunches)...
+	* _mysql>>_ UPDATE tbl\_name SET col\_name=expr, col\_name=expr, ... WHERE where\_condition
+		* E.g., UPDATE lcl_genotypes SET IID='HG0246383' WHERE IID='HG02463839238290';
+		Query OK, 1 row affected (0.00 sec)
+		Rows matched: 1  Changed: 1  Warnings: 0
+	
+		mysql> select * from lcl_genotypes;                                          
+		+-----------+--------------+-------------+----------+
+		| IID       | SNPpos       | rsID        | genotype |
+		+-----------+--------------+-------------+----------+
+		| HG02463   | 10:60523:T:G | rs112920234 | TT       |
+		| HG0246383 | 10:60523:T:G | rs112920234 | TT       |
+		| HG02466   | 10:60523:T:G | rs112920234 | TT       |
+		| HG02563   | 10:60523:T:G | rs112920234 | TT       |
+		| HG02567   | 10:60523:T:G | rs112920234 | 00       |
+		+-----------+--------------+-------------+----------+
+		5 rows in set (0.00 sec)
+	
+  * Or to remove records (either one at a time or in bunches)
+		mysql> select * from phenotypes;
+		+---------+-----------------------+--------------------+--------------------+-------------------+--------------------+
+		| LCL_ID  | phenotype             | phenotypic_value1  | phenotypic_value2  | phenotypic_value3 | phenotypic_mean    |
+		+---------+-----------------------+--------------------+--------------------+-------------------+--------------------+
+		| HG02461 | Cells_ml_after_3_days |  878000.0000000000 |  732000.0000000000 | 805000.0000000000 |  805000.0000000000 |
+		| HG02462 | Cells_ml_after_3_days |  742000.0000000000 |  453000.0000000000 | 348000.0000000000 |  514333.3000000000 |
+		| HG02463 | Cells_ml_after_3_days | 1200000.0000000000 | 1140000.0000000000 | 960000.0000000000 | 1100000.0000000000 |
+		+---------+-----------------------+--------------------+--------------------+-------------------+--------------------+
+		3 rows in set (0.00 sec)
+	
+  * _mysql>>_DELETE FROM tbl\_name WHERE where\_condition; __MAKE SURE YOU SUPPLY A WHERE CLAUSE UNLESS YOU WANT TO DELETE ALL ROWS!__
+		E.g., mysql> DELETE FROM phenotypes WHERE LCL_ID='HG02463';
+		Query OK, 1 row affected (0.01 sec)
+
+		mysql> select * from phenotypes;                     
+		+---------+-----------------------+-------------------+-------------------+-------------------+-------------------+
+		| LCL_ID  | phenotype             | phenotypic_value1 | phenotypic_value2 | phenotypic_value3 | phenotypic_mean   |
+		+---------+-----------------------+-------------------+-------------------+-------------------+-------------------+
+		| HG02461 | Cells_ml_after_3_days | 878000.0000000000 | 732000.0000000000 | 805000.0000000000 | 805000.0000000000 |
+		| HG02462 | Cells_ml_after_3_days | 742000.0000000000 | 453000.0000000000 | 348000.0000000000 | 514333.3000000000 |
+		+---------+-----------------------+-------------------+-------------------+-------------------+-------------------+
+		2 rows in set (0.00 sec)		
+
 
 <a name='lab4'></a>
 ## Lab 4: Adding data to our database
@@ -338,7 +381,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		+------------------+--------------+-------------+----------+
 		5 rows in set (0.00 sec)
 	
-		SELECT IID,rsID from lcl_genotypes WHERE genotype = 'TT';
+		mysql> SELECT IID,rsID from lcl_genotypes WHERE genotype = 'TT';
 		+------------------+-------------+
 		| IID              | rsID        |
 		+------------------+-------------+
@@ -371,6 +414,16 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * Slightly more complex queries
 	
+		mysql> select * from lcl_genotypes WHERE IID LIKE 'HG0246%';                 
+		+-----------+--------------+-------------+----------+
+		| IID       | SNPpos       | rsID        | genotype |
+		+-----------+--------------+-------------+----------+
+		| HG02463   | 10:60523:T:G | rs112920234 | TT       |
+		| HG0246383 | 10:60523:T:G | rs112920234 | TT       |
+		| HG02466   | 10:60523:T:G | rs112920234 | TT       |
+		+-----------+--------------+-------------+----------+
+		3 rows in set (0.00 sec)
+
 		mysql> SELECT * FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
 		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
 		| IID              | SNPpos       | rsID        | genotype | rsID        | Chromosome | Position | Allele1 | Allele2 | DistanceToNearGene   | Gene       | SNPtype    |
@@ -426,6 +479,9 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		"HG02563","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
 		"HG02567","10:60523:T:G","rs112920234","00","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
 	
+		bitnami@linux:~$ mysql -u root -p colab_class
+		Enter password: 
+		
 		mysql> SELECT IID,Position,Gene INTO OUTFILE '/tmp/colab_class_result2.txt'
 		    ->   FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '' ESCAPED BY ''
 		    ->   LINES TERMINATED BY '\n'
