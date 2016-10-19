@@ -526,8 +526,9 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		161019 19:59:05 mysqld_safe Logging to '/opt/bitnami/mysql/data/mysqld.log'.
 		161019 19:59:05 mysqld_safe Starting mysqld.bin daemon with databases from /opt/bitnami/mysql/data
 		/opt/bitnami/mysql/scripts/ctl.sh : mysql  started at port 3306
-	
-   * To see what other options are available with that script, run it without arguments:
+
+  * To see what other options are available with that script, run it without arguments:
+
 		bitnami@linux:~$ sudo /opt/bitnami/ctlscript.sh
 		usage: /opt/bitnami/ctlscript.sh help
 		       /opt/bitnami/ctlscript.sh (start|stop|restart|status)
@@ -541,7 +542,8 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		restart    - restart or start the service(s)
 		status     - show the status of the service(s)
 	
-   * To REBOOT the server itself: _note that this can also be done from the VM-manage webUI via "Power off" and then "Power on"_
+  * To REBOOT the server itself: _note that this can also be done from the VM-manage webUI via "Power off" and then "Power on"_
+
 		bitnami@linux:~$ sudo shutdown -r now
 		Broadcast message from bitnami@linux
 		(/dev/pts/1) at 20:11 ...
@@ -550,8 +552,9 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		bitnami@linux:~$ 161019 20:11:39 mysqld_safe mysqld from pid file /opt/bitnami/mysql/data/mysqld.pid ended
 		Connection to colab-sbx-29.oit.duke.edu closed by remote host.
 		Connection to colab-sbx-29.oit.duke.edu closed.
+	
+  * To change the configuration of the MySQL server, edit the "my.cnf" file __AND THEN RESTART THE mysql PROCESS!!__
 
-   * To change the configuration of the MySQL server, edit the "my.cnf" file __AND THEN RESTART THE mysql PROCESS!!__
 		bitnami@linux:~$ nano /opt/bitnami/mysql/my.cnf
 			[making necessary edits to the file and saving them]
 		bitnami@linux:~$ sudo /opt/bitnami/ctlscript.sh restart mysql
@@ -560,7 +563,8 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		161019 20:19:08 mysqld_safe Logging to '/opt/bitnami/mysql/data/mysqld.log'.
 		161019 20:19:08 mysqld_safe Starting mysqld.bin daemon with databases from /opt/bitnami/mysql/data
 		/opt/bitnami/mysql/scripts/ctl.sh : mysql  started at port 3306
+	
+  * To check the error log, use "cat" or "more" or "less"...
 
-   * To check the error log, use "cat" or "more" or "less"...
 		bitnami@linux:~$ sudo cat /opt/bitnami/mysql/data/mysqld.log
-		
+	
