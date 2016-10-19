@@ -328,9 +328,12 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		+---------+-----------------------+--------------------+--------------------+-------------------+--------------------+
 		3 rows in set (0.00 sec)
 	
-	mysql> DELETE FROM tbl\_name WHERE where\_condition; __MAKE SURE YOU SUPPLY A WHERE CLAUSE UNLESS YOU WANT TO DELETE ALL ROWS!__
-		E.g., mysql> DELETE FROM phenotypes WHERE LCL_ID='HG02463';
+  * Now remove...
+	* _mysql>_> DELETE FROM tbl\_name WHERE where\_condition; __MAKE SURE YOU SUPPLY A WHERE CLAUSE UNLESS YOU WANT TO DELETE ALL ROWS!__
+		* E.g., mysql> DELETE FROM phenotypes WHERE LCL_ID='HG02463';
 		Query OK, 1 row affected (0.01 sec)
+
+  * How does it look now?
 
 		mysql> select * from phenotypes;                     
 		+---------+-----------------------+-------------------+-------------------+-------------------+-------------------+
