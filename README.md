@@ -519,6 +519,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		This script requires root privileges
 	
    * And now, with:
+   
 		bitnami@linux:~$ sudo /opt/bitnami/ctlscript.sh restart mysql
 		[sudo] password for bitnami: 
 		/opt/bitnami/mysql/scripts/ctl.sh : mysql stopped
