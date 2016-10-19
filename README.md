@@ -1,7 +1,7 @@
 Introduction to MySQL
 =====================
 
-*Version 19, 2016-10-11*
+*Version 1, 2016-10-24*
 
 **Instructor**
 
@@ -284,7 +284,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		| Warning | 1265 | Data truncated for column 'IID' at row 1 |
 		+---------+------+------------------------------------------+
 		1 row in set (0.00 sec)
-
+		
 		mysql> select * from lcl_genotypes;                       
 		+------------------+--------------+-------------+----------+
 		| IID              | SNPpos       | rsID        | genotype |
@@ -296,8 +296,9 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		| HG02567          | 10:60523:T:G | rs112920234 | 00       |
 		+------------------+--------------+-------------+----------+
 		5 rows in set (0.00 sec)
-	
+		
   * Also possible (obviously) to change records that already exist (either one at a time or in bunches)...
+
 		mysql> UPDATE tbl\_name SET col\_name=expr, col\_name=expr, ... WHERE where\_condition
 		E.g., UPDATE lcl_genotypes SET IID='HG0246383' WHERE IID='HG02463839238290';
 		Query OK, 1 row affected (0.00 sec)
@@ -315,7 +316,8 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		+-----------+--------------+-------------+----------+
 		5 rows in set (0.00 sec)
 	
-  * Or to remove records (either one at a time or in bunches)
+  * Or to remove records (either one at a time or in bunches)...
+
 		mysql> select * from phenotypes;
 		+---------+-----------------------+--------------------+--------------------+-------------------+--------------------+
 		| LCL_ID  | phenotype             | phenotypic_value1  | phenotypic_value2  | phenotypic_value3 | phenotypic_mean    |
