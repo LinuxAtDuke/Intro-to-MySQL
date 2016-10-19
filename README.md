@@ -316,7 +316,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		+-----------+--------------+-------------+----------+
 		5 rows in set (0.00 sec)
 	
-  * Or to remove records (either one at a time or in bunches)...
+  * Or to remove records (either one at a time or in bunches).  [First lets look at the table contents BEFOREHAND]
 
 		mysql> select * from phenotypes;
 		+---------+-----------------------+--------------------+--------------------+-------------------+--------------------+
@@ -328,7 +328,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		+---------+-----------------------+--------------------+--------------------+-------------------+--------------------+
 		3 rows in set (0.00 sec)
 	
-  * _mysql>>_DELETE FROM tbl\_name WHERE where\_condition; __MAKE SURE YOU SUPPLY A WHERE CLAUSE UNLESS YOU WANT TO DELETE ALL ROWS!__
+	mysql> DELETE FROM tbl\_name WHERE where\_condition; __MAKE SURE YOU SUPPLY A WHERE CLAUSE UNLESS YOU WANT TO DELETE ALL ROWS!__
 		E.g., mysql> DELETE FROM phenotypes WHERE LCL_ID='HG02463';
 		Query OK, 1 row affected (0.01 sec)
 
