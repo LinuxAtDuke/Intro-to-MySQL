@@ -368,8 +368,8 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * upload the infiles to your VM.  __FOR EXAMPLE:__
 
-		shell>> cd Downloads/Intro-to-MySQL-master/
-		shell>> sftp bitnami@colab-sbx-29.oit.duke.edu
+		WORKSTATION>> cd Downloads/Intro-to-MySQL-master/
+		WORKSTATION>> sftp bitnami@colab-sbx-29.oit.duke.edu
 			bitnami@colab-sbx-29.oit.duke.edu's password: 
 			Connected to colab-sbx-29.oit.duke.edu.
 		sftp> put snp-data.infile
