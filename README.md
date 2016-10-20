@@ -226,7 +226,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	
 	_mysql>>_ exit
 
-  * grab the dump file (COLAB\_WITHOUT\_DATA.sql) from https://github.com/LinuxAtDuke/Intro-to-MySQL
+  * grab the dump file (COLAB\_WITHOUT\_DATA.sql) from https://github.com/LinuxAtDuke/Intro-to-MySQL ["Clone or download" > "DOWNLOAD ZIP"]
 
   * upload the dump file to your VM.  __FOR EXAMPLE:__
 
