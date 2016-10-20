@@ -233,8 +233,8 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * upload the dump file to your VM.  __FOR EXAMPLE:__
 
-		shell>> cd Downloads/Intro-to-MySQL-master/
-		shell>> sftp bitnami@colab-sbx-29.oit.duke.edu
+		WORKSTATION>> cd Downloads/Intro-to-MySQL-master/
+		WORKSTATION>> sftp bitnami@colab-sbx-29.oit.duke.edu
 			bitnami@colab-sbx-29.oit.duke.edu's password: 
 			Connected to colab-sbx-29.oit.duke.edu.
 		sftp> put COLAB_WITHOUT_DATA.sql
@@ -261,12 +261,16 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	_mysql>>_ ALTER TABLE lcl_genotypes MODIFY SNPpos VARCHAR(767) NOT NULL;
 	
 	_mysql>>_ DESCRIBE lcl_genotypes;
+		
+		[take note of what changed in the output here as opposed to before]
 	
 	_mysql>>_ DESCRIBE gwas_results;
 	
 	_mysql>>_ ALTER TABLE gwas\_results MODIFY study\_population VARCHAR(16) NOT NULL;
 		
 	_mysql>>_ DESCRIBE gwas_results;
+		
+		[take note of what changed in the output here as opposed to before]
 	
 <a name='unit4'></a>
 ## Unit 4: Populating database with data
