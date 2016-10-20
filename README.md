@@ -226,7 +226,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	
 	_mysql>>_ exit
 
-  * grab the dump file (COLAB\_WITHOUT\_DATA.sql) from https://github.com/LinuxAtDuke/Intro-to-MySQL ["Clone or download" > "DOWNLOAD ZIP"]
+  * grab the dump file (COLAB\_WITHOUT\_DATA.sql) from https://github.com/LinuxAtDuke/Intro-to-MySQL ["Clone or download" > "Download ZIP"]
 
   * upload the dump file to your VM.  __FOR EXAMPLE:__
 
@@ -309,7 +309,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		
   * Also possible (obviously) to change records that already exist (either one at a time or in bunches)...
 
-		mysql> UPDATE tbl\_name SET col\_name=expr, col\_name=expr, ... WHERE where\_condition
+		mysql> UPDATE tbl_name SET col_name=expr, col_name=expr, ... WHERE where_condition
 		E.g., UPDATE lcl_genotypes SET IID='HG0246383' WHERE IID='HG02463839238290';
 		Query OK, 1 row affected (0.00 sec)
 		Rows matched: 1  Changed: 1  Warnings: 0
@@ -367,8 +367,8 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 			Connected to colab-sbx-29.oit.duke.edu.
 		sftp> put snp-data.infile
 			Uploading snp-data.infile to /home/bitnami/snp-data.infile		snp-data.infile            100%  303     0.3KB/s   00:00 
-		sftp> put lcl\_genotypes-data.infile
-			Uploading lcl\_genotypes-data.infile to /home/bitnami/lcl_genotypes-data.infile		lcl\_genotypes-data.infile            100%  192     0.2KB/s   00:00
+		sftp> put lcl_genotypes-data.infile
+			Uploading lcl_genotypes-data.infile to /home/bitnami/lcl_genotypes-data.infile		lcl_genotypes-data.infile            100%  192     0.2KB/s   00:00
 		sftp> put phenotypes-data.infile
 			Uploading phenotypes-data.infile to /home/bitnami/phenotypes-data.infile		phenotypes-data.infile            100%  178     0.2KB/s   00:00
 		sftp> exit
