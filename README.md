@@ -2,6 +2,7 @@ Introduction to MySQL
 =====================
 
 *Version 1, 2016-10-24*
+*https://github.com/LinuxAtDuke/Intro-to-MySQL/README.md*
 
 **Instructor**
 
@@ -10,7 +11,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 **Table of Contents**
 
 1. [Lab 0: Creating a Personal Linux VM](#lab0)
-2. [Unit 1: Accessing an instance / User management](#unit1)
+2. [Unit 1: Access control / User management](#unit1)
 3. [Lab 1: Initial user lockdown](#lab1)
 4. [Unit 2: Databases, schema](#unit2)
 5. [Unit 3: Adding/modifying tables and indexes](#unit3)
@@ -19,7 +20,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 8. [Lab 4: Adding data to your database](#lab4)
 9. [Unit 5: Writing queries to retrieve data](#unit5)
 10. [Lab 5: Practice with INSERT, UPDATE, DELETE, and SELECT (with JOIN!)](#lab5)
-11. [Unit 6: Evaluating basic security and performance](#unit6)
+11. [Unit 6: Useful ancillary information](#unit6)
 
 
 <a name='lab0'></a>
@@ -94,7 +95,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
 <a name='unit2'></a>
 ## Unit 2: Databases, schema
-  * Removing, creating databases is very simple
+  * Removing or creating databases is very simple
   
 	_mysql>>_ DROP DATABASE test;
 	
@@ -115,7 +116,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	- referential integrity - data types consistent across linking fields (foreign keys)
 	- data types should be as prescriptive and compact as possible
 	- index creation should be done where needed, but not elsewhere
-	- index creation always faster BEFORE data is loaded into the table
+	- index creation is always faster BEFORE data is loaded into the table
 	- verify that data is reasonably normalized (e.g., data generally de-duplicated)
 
   * Some examples
@@ -196,8 +197,17 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
 		Query OK, 358244487 rows affected (2 hours 33 min 15.53 sec)
 		Records: 358244487  Deleted: 0  Skipped: 0  Warnings: 0
-		
+  
 	_mysql>>_ SHOW INDEX from lcl_genotypes;
+
+		+---------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+		| Table         | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
+		+---------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+		| lcl_genotypes |          0 | PRIMARY  |            1 | IID         | A         |           5 |     NULL | NULL   |      | BTREE      |         |               |
+		| lcl_genotypes |          0 | PRIMARY  |            2 | SNPpos      | A         |           5 |     NULL | NULL   |      | BTREE      |         |               |
+		| lcl_genotypes |          1 | idx_rsID |            1 | rsID        | A         |           2 |     NULL | NULL   |      | BTREE      |         |               |
+		+---------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+		3 rows in set (0.00 sec)
 
   * A brief tangent to discuss backups! (via 'mysqldump')
 
@@ -511,7 +521,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
   * Take some free time to play around with queries we've talked about above...
 
 <a name='unit6'></a>
-## Unit 6: Evaluating basic security and performance
+## Unit 6: Useful ancillary information
 
   * sudo -- allows certain commands to be run with elevated privileges.  First, without:
 
