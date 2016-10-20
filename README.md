@@ -106,7 +106,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
 	_mysql>>_ show databases;
 	
-  * Schema development is best done via an ER diagram and a whiteboard - consider these:
+  * Schema development is best done via an ER diagram and/or a whiteboard - consider these:
 	- what are the data elements? (tables)
 	- what relationships do they have with one another?
 	- what are the important attributes of the data elements? (fields in tables)
@@ -117,10 +117,10 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	
   * Fine-tuning of schema...
 	- referential integrity - data types consistent across linking fields (foreign keys)
-	- data types should be as prescriptive and compact as possible
+	- data types (https://dev.mysql.com/doc/refman/5.5/en/data-types.html) should be as prescriptive and compact as possible
 	- index creation should be done where needed, but not elsewhere
 	- index creation is always faster BEFORE data is loaded into the table
-	- verify that data is reasonably normalized (e.g., data generally de-duplicated)
+	- verify that data is "reasonably" normalized (e.g., data generally de-duplicated)
 
   * Some examples
   
