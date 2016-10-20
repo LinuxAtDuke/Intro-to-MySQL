@@ -88,7 +88,9 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	_mysql>>_ SET PASSWORD FOR 'root'@'localhost' = PASSWORD('XXXXXXXXX');
 
 	_mysql>>_ SELECT User, Host, Password FROM mysql.user;
-		
+	
+		[take note of what changed in the output here as opposed to before]
+	
 	_mysql>>_ DELETE FROM mysql.user WHERE User !='root' OR Host !='localhost';
 
 	_mysql>>_ SELECT User, Host, Password FROM mysql.user;
