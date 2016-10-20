@@ -2,6 +2,7 @@ Introduction to MySQL
 =====================
 
 *Version 1, 2016-10-24*
+
 *https://github.com/LinuxAtDuke/Intro-to-MySQL/README.md*
 
 **Instructor**
