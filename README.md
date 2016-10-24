@@ -107,12 +107,12 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	_mysql>>_ show databases;
 	
   * Schema development is best done via an ER diagram and/or a whiteboard - consider these:
-	- what are the data elements? (tables)
+	- what are the entities?
 	- what relationships do they have with one another?
-	- what are the important attributes of the data elements? (fields in tables)
-	- what are the data types and metadata (NULL allowed? defaults?) for the attributes
+	- what are the important attributes of the data elements?
+	- what are the data types and metadata (is NULL allowed? defaults?) for the attributes
 	- what will govern uniqueness in each table? (simple or compound primary keys?)
-	- what queries are users going to run?
+	- what queries are users going to run? (which will inform index creation)
 	- what indexes are needed (beyond those for the primary keys)?
 	
   * Fine-tuning of schema...
