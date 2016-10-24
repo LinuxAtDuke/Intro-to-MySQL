@@ -506,10 +506,10 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		bitnami@linux:~$ mysql -u root -p colab_class
 		Enter password: 
 		
-		mysql> SELECT IID,Position,Gene INTO OUTFILE '/tmp/colab_class_result2.txt'
-		    ->   FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '' ESCAPED BY ''
-		    ->   LINES TERMINATED BY '\n'
-		    ->   FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
+		mysql> SELECT IID,Position,Gene INTO OUTFILE '/tmp/colab_class_result2.txt' \
+		         FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '' ESCAPED BY '' \
+		         LINES TERMINATED BY '\n' \
+		         FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
 		Query OK, 5 rows affected (0.00 sec)
 		
 		mysql> exit
