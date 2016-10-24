@@ -34,7 +34,7 @@ Andy Ingham (andy.ingham AT duke.edu)
   * At step (3), select 'LAMP Stack' for the Server.
   * At step (5), select 'Request VM'
 
-The vm-manage web page will tell you the name for your VM. The web site will also tell you the initial username and password. You should connect via ssh.
+The vm-manage web page will tell you the name for your VM. The web site will also tell you the initial username and password. __You should connect via ssh.__
 
 Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompted]
 
