@@ -122,6 +122,8 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	- index creation is always faster BEFORE data is loaded into the table
 	- verify that data is "reasonably" normalized (e.g., data generally de-duplicated)
 
+  * A tutorial to help with schema development:  http://www.anchor.com.au/hosting/support/CreatingAQuickMySQLRelationalDatabase
+
   * Some examples
   
 	_mysql>>_ describe lcl_genotypes;
