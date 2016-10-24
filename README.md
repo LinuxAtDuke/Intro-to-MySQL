@@ -85,7 +85,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	
 	_shell>>_ mysql -u root -p
 	
-	_mysql>>_ SET PASSWORD FOR 'root'@'localhost' = PASSWORD('XXXXXXXXX');
+	_mysql>>_ SET PASSWORD FOR 'root'@'localhost' = PASSWORD('YOUR\_SUPER\_GREAT\_PASSWORD\_HERE');
 
 	_mysql>>_ SELECT User, Host, Password FROM mysql.user;
 	
