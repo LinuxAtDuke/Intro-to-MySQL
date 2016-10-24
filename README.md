@@ -393,7 +393,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * Simplest queries
 	
-		mysql> select * from lcl_genotypes;                      
+		mysql> select * from lcl_genotypes;
 		+------------------+--------------+-------------+----------+
 		| IID              | SNPpos       | rsID        | genotype |
 		+------------------+--------------+-------------+----------+
@@ -416,7 +416,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		+------------------+-------------+
 		4 rows in set (0.00 sec)
 	
-		mysql> SELECT COUNT(*) from snp;                                
+		mysql> SELECT COUNT(*) from snp;
 		+----------+
 		| COUNT(*) |
 		+----------+
@@ -434,7 +434,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		| rs536478188 |         10 |    60803 | G       | T       | dist=NONE;dist=32025 | NONE,TUBB8 | intergenic |
 		| rs569167217 |         10 |    60684 | C       | A       | dist=NONE;dist=32144 | NONE,TUBB8 | intergenic |
 		+-------------+------------+----------+---------+---------+----------------------+------------+------------+
-5 rows in set (0.00 sec)
+		5 rows in set (0.00 sec)
 
   * Slightly more complex queries
 	
@@ -475,10 +475,10 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 		mysql> SELECT IID,Position,Gene FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID where lcl_genotypes.rsID = 'rs536478188';
 		Empty set (0.00 sec)
 
-		mysql> SELECT IID,Position,Gene FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID where snp.rsID = 'rs536478188';          
+		mysql> SELECT IID,Position,Gene FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID where snp.rsID = 'rs536478188';
 		Empty set (0.00 sec)
 		
-		mysql> SELECT IID,Position,Gene FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID where IID = 'HG02466';                   
+		mysql> SELECT IID,Position,Gene FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID where IID = 'HG02466';
 		+---------+----------+------------+
 		| IID     | Position | Gene       |
 		+---------+----------+------------+
@@ -488,10 +488,10 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 
   * What if I want the output to go directly into a file instead of to the screen?
 	
-		mysql> SELECT * INTO OUTFILE '/tmp/colab_class_result.txt'
-		    ->   FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
-		    ->   LINES TERMINATED BY '\n'
-		    ->   FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
+		mysql> SELECT * INTO OUTFILE '/tmp/colab_class_result.txt' \
+		         FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' \
+		         LINES TERMINATED BY '\n' \
+		         FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
 		Query OK, 5 rows affected (0.00 sec)
 		
 		mysql> exit
