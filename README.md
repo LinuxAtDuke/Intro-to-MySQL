@@ -231,22 +231,13 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	
 	_mysql>>_ exit
 
-  * grab the dump file (COLAB\_WITHOUT\_DATA.sql) from https://github.com/LinuxAtDuke/Intro-to-MySQL ["Clone or download" > "Download ZIP"]
-
-  * upload the dump file to your VM.  __FOR EXAMPLE:__
-
-		WORKSTATION>> cd Downloads/Intro-to-MySQL-master/
-		WORKSTATION>> sftp bitnami@colab-sbx-29.oit.duke.edu
-			bitnami@colab-sbx-29.oit.duke.edu's password: 
-			Connected to colab-sbx-29.oit.duke.edu.
-		sftp> put COLAB_WITHOUT_DATA.sql
-			Uploading COLAB_WITHOUT_DATA.sql to /home/bitnami/COLAB_WITHOUT_DATA.sql
-			COLAB_WITHOUT_DATA.sql                       100% 4717     4.6KB/s   00:00    
-		sftp> exit
+  * grab the class files from the github repository
+  
+	_shell>>_ git clone https://github.com/LinuxAtDuke/Intro-to-MySQL.git
 
   * load the file into your MySQL instance
 	
-	_shell>>_ mysql -u root -p colab_class < COLAB\_WITHOUT\_DATA.sql
+	_shell>>_ mysql -u root -p colab_class < /home/bitnami/Intro-to-MySQL/COLAB\_WITHOUT\_DATA.sql
 	
   * now check out the results of the import
 	
@@ -289,7 +280,7 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 	
 	
   * Or in bulk (from an INFILE)
-	* _mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
+	* _mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/Intro-to-MySQL/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
 		
 	
   * __WATCH OUT FOR WARNINGS!__ E.g., _mysql>>_ INSERT INTO lcl\_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG024638392382903957','10:60523:T:G','rs112920234','TT');
@@ -368,27 +359,13 @@ Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompte
 <a name='lab4'></a>
 ## Lab 4: Adding data to your database
 
-  * upload the infiles to your VM.  __FOR EXAMPLE:__
-
-		WORKSTATION>> cd Downloads/Intro-to-MySQL-master/
-		WORKSTATION>> sftp bitnami@colab-sbx-29.oit.duke.edu
-			bitnami@colab-sbx-29.oit.duke.edu's password: 
-			Connected to colab-sbx-29.oit.duke.edu.
-		sftp> put snp-data.infile
-			Uploading snp-data.infile to /home/bitnami/snp-data.infile		snp-data.infile            100%  303     0.3KB/s   00:00 
-		sftp> put lcl_genotypes-data.infile
-			Uploading lcl_genotypes-data.infile to /home/bitnami/lcl_genotypes-data.infile		lcl_genotypes-data.infile            100%  192     0.2KB/s   00:00
-		sftp> put phenotypes-data.infile
-			Uploading phenotypes-data.infile to /home/bitnami/phenotypes-data.infile		phenotypes-data.infile            100%  178     0.2KB/s   00:00
-		sftp> exit
-  
   * Quickly add data to three tables...
   
-	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
+	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/Intro-to-MySQL/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
 	
-	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/lcl\_genotypes-data.infile' INTO TABLE lcl\_genotypes FIELDS TERMINATED BY '\t';
+	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/Intro-to-MySQL/lcl\_genotypes-data.infile' INTO TABLE lcl\_genotypes FIELDS TERMINATED BY '\t';
 	
-	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/phenotypes-data.infile' INTO TABLE phenotypes FIELDS TERMINATED BY '\t';
+	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/Intro-to-MySQL/phenotypes-data.infile' INTO TABLE phenotypes FIELDS TERMINATED BY '\t';
 
 <a name='unit5'></a>
 ## Unit 5: Writing queries to retrieve data
