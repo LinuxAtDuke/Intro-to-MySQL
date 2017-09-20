@@ -75,9 +75,11 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 ## Lab 1 - Initial user lockdown
 
   * Login to MySQL as 'root', change that user's password, and remove unnecessary authorizations
-	
-	_shell>>_ mysql -u root -p
-	
+  
+  	_shell>>_ sudo -i
+
+  	_shell>>_ mysql -u root *(_NO INITIAL PASSWORD EXISTS_)*
+
 	_mysql>>_ SET PASSWORD FOR 'root'@'localhost' = PASSWORD('_SUPER\_GREAT\_PASSWORD\_HERE_');
 
 	_mysql>>_ SELECT User, Host, Password FROM mysql.user;
@@ -533,7 +535,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 		restart    - restart or start the service(s)
 		status     - show the status of the service(s)
 	
-  * To REBOOT the server itself: _note that this can also be done from the VM-manage webUI via "Power off" and then "Power on"_
+  * To REBOOT the server itself: _note that this can also be done from the VCM webUI via "Power off" and then "Power on"_
 
 		bitnami@linux:~$ sudo shutdown -r now
 		Broadcast message from bitnami@linux
