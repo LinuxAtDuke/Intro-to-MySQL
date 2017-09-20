@@ -61,7 +61,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Entering the password behind "View Pass
 	_mysql>>_ show databases;
 
 	_mysql>>_ use *DATABASE*;
-		e.g. use test;
+		e.g. use mysql;
 
 	_mysql>>_ show tables;
 	  	
