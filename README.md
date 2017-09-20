@@ -1,7 +1,7 @@
 Introduction to MySQL
 =====================
 
-*Version 2, 2017-03-13*
+*Version 3, 2017-09-20*
 
 *https://github.com/LinuxAtDuke/Intro-to-MySQL/*
 
@@ -27,37 +27,30 @@ Andy Ingham (andy.ingham AT duke.edu)
 <a name='lab0'></a>
 ## Lab 0 - Creating a personal Linux VM
 
-1. Using a web browser, go to *https://vm-manage.oit.duke.edu*
+1. Using a web browser, go to *https://vcm.duke.edu/*
 2. Login using your Duke NetId.
-3. Select "New" at the top of the page
-4. Fill out the forms to create a new VM for this class.
-  * At step (3), select 'LAMP Stack' for the Server.
-  * At step (5), select 'Request VM'
+3. Select "Reserve a VM" (near the middle of the page)
+4. On the next screen, select "Lamp Stack" in the dropdown list (under Linux AppStacks) and then "Reserve"
+4. After agreeing to the Terms of Use, the VCM web page will display the name of your VM along with available usernames. __You should connect via ssh as the Admin User (vcm).__
 
-The vm-manage web page will tell you the name for your VM. The web site will also tell you the initial username and password. __You should connect via ssh.__
-
-Example: `ssh bitnami@colab-sbx-89.oit.duke.edu` [Entering password when prompted]
+Example: `ssh vcm@vcm-1473.vm.duke.edu` [Entering the password behind "View Password"]
 
 
 <a name='unit1'></a>
 ## Unit 1: Access control / User management
 
-  * how access is controlled (https://dev.mysql.com/doc/refman/5.5/en/default-privileges.html )
+  * how access is controlled (https://dev.mysql.com/doc/refman/5.7/en/default-privileges.html )
   
-  	_shell>>_ mysql -u root -p
-  	_[initial pw = bitnami]_
+  	_shell>>_ sudo -i
+  	_shell>>_ mysql -u root
+  	_NO INITIAL PASSWORD EXISTS_
 
 
-	_mysql>>_ SELECT User, Host, Password FROM mysql.user;
+	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
 
-	| User | Host      | Password                                  |
-	|:-----|:----------|:------------------------------------------|
-	| root | localhost | *3792637D0995C22FC1AEF939DA506C5011EF2856 |
-	| root | linux     | *3792637D0995C22FC1AEF939DA506C5011EF2856 |
-	| root | 127.0.0.1 | *3792637D0995C22FC1AEF939DA506C5011EF2856 |
-	| root | ::1       | *3792637D0995C22FC1AEF939DA506C5011EF2856 |
-	|      | localhost |                                           |
-	|      | linux     |                                           |
+	| Host      | User | plugin      | authentication\_string |
+	|:----------|:-----|:------------|:-----------------------|
+	| localhost | root | auth_socket |                        |
 
 	
   * general structure of the DBMS
