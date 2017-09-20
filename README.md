@@ -32,8 +32,8 @@ Andy Ingham (andy.ingham AT duke.edu)
 3. Select "Reserve a VM" (near the middle of the page)
 4. On the next screen, select "Lamp Stack" in the dropdown list (under Linux AppStacks) and then "Reserve"
 4. After agreeing to the Terms of Use, the VCM web page will display the name of your VM along with available usernames. __You should connect via ssh as the Admin User (vcm).__
-
-Example: `ssh vcm@vcm-1473.vm.duke.edu` [Entering the password behind "View Password"]
+		  
+Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you want to continue connecting (yes/no)?" and then entering the password behind "View Password" when prompted]
 
 
 <a name='unit1'></a>
@@ -42,7 +42,8 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Entering the password behind "View Pass
   * how access is controlled (https://dev.mysql.com/doc/refman/5.7/en/default-privileges.html )
   
   	_shell>>_ sudo -i
-  	_shell>>_ mysql -u root (*_NO INITIAL PASSWORD EXISTS_*)
+
+  	_shell>>_ mysql -u root *(_NO INITIAL PASSWORD EXISTS_)*
 
 
 	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
