@@ -42,8 +42,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Entering the password behind "View Pass
   * how access is controlled (https://dev.mysql.com/doc/refman/5.7/en/default-privileges.html )
   
   	_shell>>_ sudo -i
-  	_shell>>_ mysql -u root
-  	_NO INITIAL PASSWORD EXISTS_
+  	_shell>>_ mysql -u root (*_NO INITIAL PASSWORD EXISTS_*)
 
 
 	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
