@@ -80,9 +80,15 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 
   	_shell>>_ mysql -u root *(_NO INITIAL PASSWORD EXISTS_)*
 
-	_mysql>>_ SET PASSWORD FOR 'root'@'localhost' = PASSWORD('_SUPER\_GREAT\_PASSWORD\_HERE_');
+	_mysql>>_ use mysql
 
-	_mysql>>_ SELECT User, Host, Password FROM mysql.user;
+	_mysql>>_ update user set plugin='mysql_native_password' where user='root' and host='localhost';
+
+	_mysql>>_ flush privileges;
+
+	_mysql>>_ SET PASSWORD FOR 'root'@'localhost' = 'SUPER_GREAT_PASSWORD_HERE';
+
+	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
 	
 		[take note of what changed in the output here as opposed to before]
 	
