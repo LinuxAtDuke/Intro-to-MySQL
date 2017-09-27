@@ -114,7 +114,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 	
   * Fine-tuning of schema...
 	- referential integrity - data types consistent across linking fields (foreign keys)
-	- data types (https://dev.mysql.com/doc/refman/5.5/en/data-types.html) should be as prescriptive and compact as possible
+	- data types (https://dev.mysql.com/doc/refman/5.7/en/data-types.html) should be as prescriptive and compact as possible
 	- index creation should be done where needed, but not elsewhere
 	- index creation is always faster BEFORE data is loaded into the table
 	- verify that data is "reasonably" normalized (e.g., data generally de-duplicated)
@@ -234,7 +234,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 
   * load the file into your MySQL instance
 	
-	_shell>>_ mysql -u root -p colab_class < /home/bitnami/Intro-to-MySQL/COLAB\_WITHOUT\_DATA.sql
+	_shell>>_ mysql -u root -p colab\_class < /root/Intro-to-MySQL/COLAB\_WITHOUT\_DATA.sql
 	
   * now check out the results of the import
 	
@@ -242,7 +242,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 	
 	_mysql>>_ show tables;
 	
-	_mysql>>_ DESCRIBE lcl_genotypes;
+	_mysql>>_ DESCRIBE LCL_genotypes;
 	
   * now manually modify the table schema
 	
