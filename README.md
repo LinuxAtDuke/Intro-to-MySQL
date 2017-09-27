@@ -358,7 +358,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
   
 	_mysql>>_ LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
 	
-	_mysql>>_ LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/LCL\_genotypes-data.infile' INTO TABLE LCL\_genotypes FIELDS TERMINATED BY '\t';
+	_mysql>>_ LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/lcl\_genotypes-data.infile' INTO TABLE LCL\_genotypes FIELDS TERMINATED BY '\t';
 		
 	_mysql>>_ show warnings;
 	
