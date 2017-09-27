@@ -86,7 +86,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 
 	_mysql>>_ flush privileges;
 
-	_mysql>>_ SET PASSWORD FOR 'root'@'localhost' = 'SUPER_GREAT_PASSWORD_HERE';
+	_mysql>>_ SET PASSWORD FOR 'root'@'localhost' = '_SUPER\_GREAT\_PASSWORD\_HERE_';
 
 	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
 	
