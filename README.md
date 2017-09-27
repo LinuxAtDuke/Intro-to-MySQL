@@ -218,10 +218,8 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 <a name='lab2/3'></a>
 ## Lab 2/3: Working with databases and tables
 
-  * Drop unneeded database, create your new one, and populate it...
+  * Create new database and populate it...
   
-	_mysql>>_ DROP DATABASE test;
-	
 	_mysql>>_ CREATE DATABASE colab_class;
 	
 	_mysql>>_ show databases;
@@ -277,10 +275,10 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 	
 	
   * Or in bulk (from an INFILE)
-	* _mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/Intro-to-MySQL/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
+	* _mysql>>_ LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
 		
 	
-  * __WATCH OUT FOR WARNINGS!__ E.g., _mysql>>_ INSERT INTO LCL\_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG024638392382903957','10:60523:T:G','rs112920234','TT');
+  * __WATCH OUT FOR WARNINGS!__ [_NOTE: As of MySQL version 5.7, THIS COMMAND RETURNS A FATAL ERROR AS OPPOSED TO A WARNING_] E.g., _mysql>>_ INSERT INTO LCL\_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG024638392382903957','10:60523:T:G','rs112920234','TT');
 
 		Query OK, 1 row affected, 1 warning (0.00 sec)
 		
@@ -358,13 +356,13 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 
   * Quickly add data to three tables...
   
-	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/Intro-to-MySQL/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
+	_mysql>>_ LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
 	
-	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/Intro-to-MySQL/LCL\_genotypes-data.infile' INTO TABLE LCL\_genotypes FIELDS TERMINATED BY '\t';
+	_mysql>>_ LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/LCL\_genotypes-data.infile' INTO TABLE LCL\_genotypes FIELDS TERMINATED BY '\t';
 		
 	_mysql>>_ show warnings;
 	
-	_mysql>>_ LOAD DATA LOCAL INFILE '/home/bitnami/Intro-to-MySQL/phenotypes-data.infile' INTO TABLE phenotypes FIELDS TERMINATED BY '\t';
+	_mysql>>_ LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/phenotypes-data.infile' INTO TABLE phenotypes FIELDS TERMINATED BY '\t';
 
 <a name='unit5'></a>
 ## Unit 5: Writing queries to retrieve data
