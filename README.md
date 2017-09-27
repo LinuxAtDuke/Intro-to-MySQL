@@ -123,7 +123,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 
   * Some examples
   
-	_mysql>>_ describe lcl_genotypes;
+	_mysql>>_ describe LCL_genotypes;
 
 	| Field    | Type         | Null | Key | Default | Extra |
 	|:---------|:-------------|:-----|:----|:--------|:------|
@@ -162,7 +162,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 
   * Looking at the syntax for creating the above tables...
 
-		CREATE TABLE `lcl_genotypes` (
+		CREATE TABLE `LCL_genotypes` (
 		`IID` varchar(16) NOT NULL,
 		`SNPpos` varchar(512) NOT NULL,
 		`rsID` varchar(256) NOT NULL,
@@ -195,19 +195,19 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 
   * How was the "idx_rsID" index actually created?
   
-	_mysql>>_ CREATE INDEX idx_rsID ON lcl_genotypes(rsID);
+	_mysql>>_ CREATE INDEX idx_rsID ON LCL_genotypes(rsID);
 
 		Query OK, 358244487 rows affected (2 hours 33 min 15.53 sec)
 		Records: 358244487  Deleted: 0  Skipped: 0  Warnings: 0
   
-	_mysql>>_ SHOW INDEX from lcl_genotypes;
+	_mysql>>_ SHOW INDEX from LCL_genotypes;
 
 		+---------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
 		| Table         | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
 		+---------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
-		| lcl_genotypes |          0 | PRIMARY  |            1 | IID         | A         |           5 |     NULL | NULL   |      | BTREE      |         |               |
-		| lcl_genotypes |          0 | PRIMARY  |            2 | SNPpos      | A         |           5 |     NULL | NULL   |      | BTREE      |         |               |
-		| lcl_genotypes |          1 | idx_rsID |            1 | rsID        | A         |           2 |     NULL | NULL   |      | BTREE      |         |               |
+		| LCL_genotypes |          0 | PRIMARY  |            1 | IID         | A         |           5 |     NULL | NULL   |      | BTREE      |         |               |
+		| LCL_genotypes |          0 | PRIMARY  |            2 | SNPpos      | A         |           5 |     NULL | NULL   |      | BTREE      |         |               |
+		| LCL_genotypes |          1 | idx_rsID |            1 | rsID        | A         |           2 |     NULL | NULL   |      | BTREE      |         |               |
 		+---------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
 		3 rows in set (0.00 sec)
 
@@ -246,11 +246,11 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 	
   * now manually modify the table schema
 	
-	_mysql>>_ ALTER TABLE lcl_genotypes MODIFY genotype VARCHAR(2048) NOT NULL;
+	_mysql>>_ ALTER TABLE LCL_genotypes MODIFY genotype VARCHAR(2048) NOT NULL;
 	
-	_mysql>>_ ALTER TABLE lcl_genotypes MODIFY SNPpos VARCHAR(767) NOT NULL;
+	_mysql>>_ ALTER TABLE LCL_genotypes MODIFY SNPpos VARCHAR(767) NOT NULL;
 	
-	_mysql>>_ DESCRIBE lcl_genotypes;
+	_mysql>>_ DESCRIBE LCL_genotypes;
 		
 		[take note of what changed in the output here as opposed to before]
 	
@@ -270,7 +270,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 		* E.g., _mysql>>_ INSERT INTO lcl\_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02463','10:60523:T:G','rs112920234','TT');
 		
 	* _mysql>>_ INSERT INTO tbl\_name (a,b,c) VALUES(1,2,3),(4,5,6),(7,8,9);
-		* E.g., _mysql>>_ INSERT INTO lcl_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02466','10:60523:T:G','rs112920234','TT'),('HG02563','10:60523:T:G','rs112920234','TT'),('HG02567','10:60523:T:G','rs112920234','00');
+		* E.g., _mysql>>_ INSERT INTO LCL_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02466','10:60523:T:G','rs112920234','TT'),('HG02563','10:60523:T:G','rs112920234','TT'),('HG02567','10:60523:T:G','rs112920234','00');
 	
 	* _mysql>>_ INSERT INTO tbl\_name SET col\_name=expr, col\_name=expr, ...
 		* E.g., _mysql>>_ INSERT INTO phenotypes SET LCL\_ID='HG02461', phenotype='Cells\_ml\_after\_3\_days', phenotypic\_value1='878000', phenotypic\_value2='732000', phenotypic\_value3='805000', phenotypic_mean='805000';
@@ -292,7 +292,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 		+---------+------+------------------------------------------+
 		1 row in set (0.00 sec)
 		
-		mysql> select * from lcl_genotypes;                       
+		mysql> select * from LCL_genotypes;                       
 		+------------------+--------------+-------------+----------+
 		| IID              | SNPpos       | rsID        | genotype |
 		+------------------+--------------+-------------+----------+
@@ -307,11 +307,11 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
   * Also possible (obviously) to change records that already exist (either one at a time or in bunches)...
 
 		mysql> UPDATE tbl_name SET col_name=expr, col_name=expr, ... WHERE where_condition
-		E.g., UPDATE lcl_genotypes SET IID='HG0246383' WHERE IID='HG02463839238290';
+		E.g., UPDATE LCL_genotypes SET IID='HG0246383' WHERE IID='HG02463839238290';
 		Query OK, 1 row affected (0.00 sec)
 		Rows matched: 1  Changed: 1  Warnings: 0
 	
-		mysql> select * from lcl_genotypes;                                          
+		mysql> select * from LCL_genotypes;                                          
 		+-----------+--------------+-------------+----------+
 		| IID       | SNPpos       | rsID        | genotype |
 		+-----------+--------------+-------------+----------+
@@ -371,7 +371,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 
   * Simplest queries
 	
-		mysql> select * from lcl_genotypes;
+		mysql> select * from LCL_genotypes;
 		+------------------+--------------+-------------+----------+
 		| IID              | SNPpos       | rsID        | genotype |
 		+------------------+--------------+-------------+----------+
@@ -383,7 +383,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 		+------------------+--------------+-------------+----------+
 		5 rows in set (0.00 sec)
 	
-		mysql> SELECT IID,rsID from lcl_genotypes WHERE genotype = 'TT';
+		mysql> SELECT IID,rsID from LCL_genotypes WHERE genotype = 'TT';
 		+------------------+-------------+
 		| IID              | rsID        |
 		+------------------+-------------+
@@ -416,7 +416,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 
   * Slightly more complex queries
 	
-		mysql> select * from lcl_genotypes WHERE IID LIKE 'HG0246%';                 
+		mysql> select * from LCL_genotypes WHERE IID LIKE 'HG0246%';                 
 		+-----------+--------------+-------------+----------+
 		| IID       | SNPpos       | rsID        | genotype |
 		+-----------+--------------+-------------+----------+
@@ -426,7 +426,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 		+-----------+--------------+-------------+----------+
 		3 rows in set (0.00 sec)
 
-		mysql> SELECT * FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
+		mysql> SELECT * FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
 		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
 		| IID              | SNPpos       | rsID        | genotype | rsID        | Chromosome | Position | Allele1 | Allele2 | DistanceToNearGene   | Gene       | SNPtype    |
 		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
@@ -438,7 +438,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
 		5 rows in set (0.00 sec)
 		
-		mysql> SELECT IID,Position,Gene FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
+		mysql> SELECT IID,Position,Gene FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
 		+------------------+----------+------------+
 		| IID              | Position | Gene       |
 		+------------------+----------+------------+
@@ -450,13 +450,13 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 		+------------------+----------+------------+
 		5 rows in set (0.00 sec)
 
-		mysql> SELECT IID,Position,Gene FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID where lcl_genotypes.rsID = 'rs536478188';
+		mysql> SELECT IID,Position,Gene FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID where LCL_genotypes.rsID = 'rs536478188';
 		Empty set (0.00 sec)
 
-		mysql> SELECT IID,Position,Gene FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID where snp.rsID = 'rs536478188';
+		mysql> SELECT IID,Position,Gene FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID where snp.rsID = 'rs536478188';
 		Empty set (0.00 sec)
 		
-		mysql> SELECT IID,Position,Gene FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID where IID = 'HG02466';
+		mysql> SELECT IID,Position,Gene FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID where IID = 'HG02466';
 		+---------+----------+------------+
 		| IID     | Position | Gene       |
 		+---------+----------+------------+
@@ -469,7 +469,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 		mysql> SELECT * INTO OUTFILE '/tmp/colab_class_result.txt' \
 		         FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' \
 		         LINES TERMINATED BY '\n' \
-		         FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
+		         FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
 		Query OK, 5 rows affected (0.00 sec)
 		
 		mysql> exit
@@ -487,7 +487,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 		mysql> SELECT IID,Position,Gene INTO OUTFILE '/tmp/colab_class_result2.txt' \
 		         FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '' ESCAPED BY '' \
 		         LINES TERMINATED BY '\n' \
-		         FROM lcl_genotypes JOIN snp ON lcl_genotypes.rsID = snp.rsID;
+		         FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
 		Query OK, 5 rows affected (0.00 sec)
 		
 		mysql> exit
