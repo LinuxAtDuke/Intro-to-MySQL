@@ -472,14 +472,14 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 		
 		mysql> exit
 		Bye
-		bitnami@linux:~$ cat /var/lib/mysql-files/colab\_class\_result.txt
+		root@vcm-XXXX:~$ cat /var/lib/mysql-files/colab\_class\_result.txt
 		"HG02463","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
 		"HG02463839238290","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
 		"HG02466","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
 		"HG02563","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
 		"HG02567","10:60523:T:G","rs112920234","00","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
 	
-		bitnami@linux:~$ mysql -u root -p colab_class
+		root@vcm-XXXX:~$ mysql -u root -p colab_class
 		Enter password: 
 		
 		mysql> SELECT IID,Position,Gene INTO OUTFILE '/var/lib/mysql-files/colab_class_result2.txt' \
@@ -490,7 +490,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 		
 		mysql> exit
 		Bye
-		bitnami@linux:~$ cat /tmp/colab_class_result2.txt
+		root@vcm-XXXX:~$ cat /var/lib/mysql-files/colab_class_result2.txt
 		HG02463	60523	NONE,TUBB8
 		HG02463839238290	60523	NONE,TUBB8
 		HG02466	60523	NONE,TUBB8
@@ -508,12 +508,12 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 
   * sudo -- allows certain commands to be run with elevated privileges.  First, without:
 
-		bitnami@linux:~$ /opt/bitnami/ctlscript.sh restart mysql
+		root@vcm-XXXX:~$ /opt/bitnami/ctlscript.sh restart mysql
 		This script requires root privileges
 	
   * And now, with:
 
-		bitnami@linux:~$ sudo /opt/bitnami/ctlscript.sh restart mysql
+		root@vcm-XXXX:~$ sudo /opt/bitnami/ctlscript.sh restart mysql
 		[sudo] password for bitnami: 
 		/opt/bitnami/mysql/scripts/ctl.sh : mysql stopped
 		161019 19:59:05 mysqld_safe Logging to '/opt/bitnami/mysql/data/mysqld.log'.
@@ -522,7 +522,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 
   * To see what other options are available with that script, run it without arguments:
 
-		bitnami@linux:~$ sudo /opt/bitnami/ctlscript.sh
+		root@vcm-XXXX:~$ sudo /opt/bitnami/ctlscript.sh
 		usage: /opt/bitnami/ctlscript.sh help
 		       /opt/bitnami/ctlscript.sh (start|stop|restart|status)
 		       /opt/bitnami/ctlscript.sh (start|stop|restart|status) mysql
@@ -537,20 +537,20 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 	
   * To REBOOT the server itself: _note that this can also be done from the VCM webUI via "Power off" and then "Power on"_
 
-		bitnami@linux:~$ sudo shutdown -r now
-		Broadcast message from bitnami@linux
+		root@vcm-XXXX:~$ sudo shutdown -r now
+		Broadcast message from root@vcm-XXXX
 		(/dev/pts/1) at 20:11 ...
 		
 		The system is going down for reboot NOW!
-		bitnami@linux:~$ 161019 20:11:39 mysqld_safe mysqld from pid file /opt/bitnami/mysql/data/mysqld.pid ended
+		root@vcm-XXXX:~$ 161019 20:11:39 mysqld_safe mysqld from pid file /opt/bitnami/mysql/data/mysqld.pid ended
 		Connection to colab-sbx-29.oit.duke.edu closed by remote host.
 		Connection to colab-sbx-29.oit.duke.edu closed.
 	
   * To change the configuration of the MySQL server, edit the "my.cnf" file __AND THEN RESTART THE mysql PROCESS!!__
 
-		bitnami@linux:~$ nano /opt/bitnami/mysql/my.cnf
+		root@vcm-XXXX:~$ nano /opt/bitnami/mysql/my.cnf
 			[making necessary edits to the file and saving them]
-		bitnami@linux:~$ sudo /opt/bitnami/ctlscript.sh restart mysql
+		root@vcm-XXXX:~$ sudo /opt/bitnami/ctlscript.sh restart mysql
 		[sudo] password for bitnami: 
 		/opt/bitnami/mysql/scripts/ctl.sh : mysql stopped
 		161019 20:19:08 mysqld_safe Logging to '/opt/bitnami/mysql/data/mysqld.log'.
@@ -559,5 +559,5 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 	
   * To check the error log, use "cat" or "more" or "less"...
 
-		bitnami@linux:~$ sudo cat /opt/bitnami/mysql/data/mysqld.log
+		root@vcm-XXXX:~$ sudo cat /opt/bitnami/mysql/data/mysqld.log
 	
