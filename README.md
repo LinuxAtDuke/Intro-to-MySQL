@@ -1,7 +1,7 @@
 Introduction to MySQL
 =====================
 
-*Version 3, 2017-09-20*
+*Version 3, 2017-09-28*
 
 *https://github.com/LinuxAtDuke/Intro-to-MySQL/*
 
@@ -508,56 +508,31 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 
   * sudo -- allows certain commands to be run with elevated privileges.  First, without:
 
-		root@vcm-XXXX:~$ /opt/bitnami/ctlscript.sh restart mysql
-		This script requires root privileges
+		vcm@vcm-XXXX:~$ service mysql restart
+		==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+		Authentication is required to restart 'mysql.service'.
+		Authenticating as: root
+		Password: *(_PASSWORD IS UNKNOWN TO US_)*
 	
   * And now, with:
 
-		root@vcm-XXXX:~$ sudo /opt/bitnami/ctlscript.sh restart mysql
-		[sudo] password for bitnami: 
-		/opt/bitnami/mysql/scripts/ctl.sh : mysql stopped
-		161019 19:59:05 mysqld_safe Logging to '/opt/bitnami/mysql/data/mysqld.log'.
-		161019 19:59:05 mysqld_safe Starting mysqld.bin daemon with databases from /opt/bitnami/mysql/data
-		/opt/bitnami/mysql/scripts/ctl.sh : mysql  started at port 3306
+		vcm@vcm-XXXX:~$ sudo service mysql restart
+		*(_sudo IS CONFIGURED TO NOT REQUIRE A PASSWORD FOR THE vcm USER; VERIFY RESTART..._)*
+		ps -aef | grep mysql *(_AND NOTE THE TIMESTAMP_)*
 
-  * To see what other options are available with that script, run it without arguments:
-
-		root@vcm-XXXX:~$ sudo /opt/bitnami/ctlscript.sh
-		usage: /opt/bitnami/ctlscript.sh help
-		       /opt/bitnami/ctlscript.sh (start|stop|restart|status)
-		       /opt/bitnami/ctlscript.sh (start|stop|restart|status) mysql
-		       /opt/bitnami/ctlscript.sh (start|stop|restart|status) php-fpm
-		       /opt/bitnami/ctlscript.sh (start|stop|restart|status) apache
-
-		help       - this screen
-		start      - start the service(s)
-		stop       - stop  the service(s)
-		restart    - restart or start the service(s)
-		status     - show the status of the service(s)
-	
   * To REBOOT the server itself: _note that this can also be done from the VCM webUI via "Power off" and then "Power on"_
 
-		root@vcm-XXXX:~$ sudo shutdown -r now
-		Broadcast message from root@vcm-XXXX
-		(/dev/pts/1) at 20:11 ...
-		
-		The system is going down for reboot NOW!
-		root@vcm-XXXX:~$ 161019 20:11:39 mysqld_safe mysqld from pid file /opt/bitnami/mysql/data/mysqld.pid ended
-		Connection to colab-sbx-29.oit.duke.edu closed by remote host.
-		Connection to colab-sbx-29.oit.duke.edu closed.
+		vcm@vcm-XXXX:~$ sudo shutdown -r now
+		Connection to vcm-XXXX.vm.duke.edu closed by remote host.
+		Connection to vcm-XXXX.vm.duke.edu closed
 	
   * To change the configuration of the MySQL server, edit the "my.cnf" file __AND THEN RESTART THE mysql PROCESS!!__
 
-		root@vcm-XXXX:~$ nano /opt/bitnami/mysql/my.cnf
+		vcm@vcm-XXXX:~$ sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 			[making necessary edits to the file and saving them]
-		root@vcm-XXXX:~$ sudo /opt/bitnami/ctlscript.sh restart mysql
-		[sudo] password for bitnami: 
-		/opt/bitnami/mysql/scripts/ctl.sh : mysql stopped
-		161019 20:19:08 mysqld_safe Logging to '/opt/bitnami/mysql/data/mysqld.log'.
-		161019 20:19:08 mysqld_safe Starting mysqld.bin daemon with databases from /opt/bitnami/mysql/data
-		/opt/bitnami/mysql/scripts/ctl.sh : mysql  started at port 3306
+		vcm@vcm-XXXX:~$ sudo service mysql restart
 	
-  * To check the error log, use "cat" or "more" or "less"...
+  * To check the error log, use "cat" (or "more" or "less"...)
 
-		root@vcm-XXXX:~$ sudo cat /opt/bitnami/mysql/data/mysqld.log
+		vcm@vcm-XXXX:~$ sudo cat /var/log/mysql/error.log
 	
