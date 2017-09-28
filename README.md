@@ -464,7 +464,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 
   * What if I want the output to go directly into a file instead of to the screen?
 	
-		mysql> SELECT * INTO OUTFILE '/var/lib/mysql-files/colab\_class\_result.txt' \
+		mysql> SELECT * INTO OUTFILE '/var/lib/mysql-files/colab_class_result.txt' \
 		         FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' \
 		         LINES TERMINATED BY '\n' \
 		         FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
@@ -482,7 +482,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 		bitnami@linux:~$ mysql -u root -p colab_class
 		Enter password: 
 		
-		mysql> SELECT IID,Position,Gene INTO OUTFILE '/var/lib/mysql-files/colab\_class\_result2.txt' \
+		mysql> SELECT IID,Position,Gene INTO OUTFILE '/var/lib/mysql-files/colab_class_result2.txt' \
 		         FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '' ESCAPED BY '' \
 		         LINES TERMINATED BY '\n' \
 		         FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
