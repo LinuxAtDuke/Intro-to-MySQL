@@ -512,13 +512,12 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 		==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
 		Authentication is required to restart 'mysql.service'.
 		Authenticating as: root
-		Password: *(_PASSWORD IS UNKNOWN TO US_)*
+		Password:
 	
   * And now, with:
 
 		vcm@vcm-XXXX:~$ sudo service mysql restart
-		*(_sudo IS CONFIGURED TO NOT REQUIRE A PASSWORD FOR THE vcm USER; VERIFY RESTART..._)*
-		ps -aef | grep mysql *(_AND NOTE THE TIMESTAMP_)*
+		vcm@vcm-XXXX:~$ ps -aef | grep mysql 
 
   * To REBOOT the server itself: _note that this can also be done from the VCM webUI via "Power off" and then "Power on"_
 
