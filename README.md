@@ -111,15 +111,15 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 	- what will govern uniqueness in each table? (simple or compound primary keys?)
 	- what queries are users going to run? (which will inform index creation)
 	- what indexes are needed (beyond those for the primary keys)?
-	
+
+  * A tutorial to help with schema development:  http://www.anchor.com.au/hosting/support/CreatingAQuickMySQLRelationalDatabase
+
   * Fine-tuning of schema...
 	- referential integrity - data types consistent across linking fields (foreign keys)
 	- data types (https://dev.mysql.com/doc/refman/5.7/en/data-types.html) should be as prescriptive and compact as possible
 	- index creation should be done where needed, but not elsewhere
 	- index creation is always faster BEFORE data is loaded into the table
 	- verify that data is "reasonably" normalized (e.g., data generally de-duplicated)
-
-  * A tutorial to help with schema development:  http://www.anchor.com.au/hosting/support/CreatingAQuickMySQLRelationalDatabase
 
   * Some examples
   
