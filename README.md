@@ -1,7 +1,7 @@
 Introduction to MySQL
 =====================
 
-*Version 3, 2017-09-28*
+*Version 4, 2018-02-19*
 
 *https://github.com/LinuxAtDuke/Intro-to-MySQL/*
 
@@ -97,7 +97,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 ## Unit 2: Databases, schema
   * Removing or creating databases is very simple
   
-	_mysql>>_ DROP DATABASE test;
+	_mysql>>_ DROP DATABASE letodms;
 	
 	_mysql>>_ CREATE DATABASE colab_class;
 
@@ -501,7 +501,7 @@ Example: `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you wa
 <a name='lab5'></a>
 ## Lab 5: Practice with INSERT, UPDATE, DELETE, and SELECT (with JOIN!)
 
-  * Take some free time to play around with queries we've talked about above...
+  * Take some time to play around with queries we've talked about above...
 
 <a name='unit6'></a>
 ## Unit 6: Useful ancillary information
