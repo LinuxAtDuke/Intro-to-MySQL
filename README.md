@@ -111,6 +111,12 @@ Andy Ingham (andy.ingham AT duke.edu)
 	- what will govern uniqueness in each table? (simple or compound primary keys?)
 	- what queries are users going to run? (which will inform index creation)
 	- what indexes are needed (beyond those for the primary keys)?
+	
+  * Some examples:	
+	
+	https://www.edrawsoft.com/templates/pdf/pet-store-er-diagram.pdf
+	http://studiootb.com/entity-relationship-diagram-examples/entity-relationship-diagram-examples-erdiagramexample-example-template/
+	https://www.safaribooksonline.com/library/view/learning-mysql/0596008643/ch04s04.html
 
   * A tutorial to help with schema development:  http://www.anchor.com.au/hosting/support/CreatingAQuickMySQLRelationalDatabase
 
