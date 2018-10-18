@@ -114,11 +114,11 @@ Andy Ingham (andy.ingham AT duke.edu)
 	
   * Some examples:
 	- https://www.edrawsoft.com/templates/pdf/pet-store-er-diagram.pdf
-		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schema\_Owner.pdf
-		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schema\_Pet.pdf
-		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schema\_Pet\_Clinic.pdf
-		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schema\_Pet\_Store.pdf
-		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schema\_Treatments.pdf
+		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaOwner.pdf
+		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPet.pdf
+		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPetClinic.pdf
+		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPetStore.pdf
+		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaTreatments.pdf
 	- http://studiootb.com/entity-relationship-diagram-examples/entity-relationship-diagram-examples-erdiagramexample-example-template/
 	- https://www.safaribooksonline.com/library/view/learning-mysql/0596008643/ch04s04.html
 
