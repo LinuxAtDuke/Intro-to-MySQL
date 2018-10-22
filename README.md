@@ -108,7 +108,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 	- what relationships do they have with one another?
 	- what are the important attributes of the data elements?
 	- what are the data types and metadata (is NULL allowed? defaults?) for the attributes
-	- what will govern uniqueness in each table? (simple or compound primary keys?)
+	- what will determine uniqueness in each table? (simple or compound primary keys?)
 	- what queries are users going to run? (which will inform index creation)
 	- what indexes are needed (beyond those for the primary keys)?
 	
