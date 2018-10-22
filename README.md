@@ -24,6 +24,10 @@ Andy Ingham (andy.ingham AT duke.edu)
 11. [Unit 6: Useful ancillary information](#unit6)
 
 
+  * A brief tangent to discuss architecture
+
+	https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/client-server-architecture.pdf
+
 <a name='lab0'></a>
 ## Lab 0 - Creating a personal Linux VM
 
