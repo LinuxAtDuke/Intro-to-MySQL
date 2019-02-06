@@ -23,11 +23,6 @@ Andy Ingham (andy.ingham AT duke.edu)
 10. [Lab 5: Practice with INSERT, UPDATE, DELETE, and SELECT (with JOIN!)](#lab5)
 11. [Unit 6: Useful ancillary information](#unit6)
 
-
-  * A brief tangent to discuss architecture
-
-	https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/client-server-architecture.pdf
-
 <a name='lab0'></a>
 ## Lab 0 - Creating a personal Linux VM
 
@@ -95,6 +90,11 @@ Andy Ingham (andy.ingham AT duke.edu)
 		[take note of what changed in the output here as opposed to before]
 	
 	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user;
+
+
+  * A brief tangent to discuss architecture
+
+	https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/client-server-architecture.pdf
 
 
 <a name='unit2'></a>
