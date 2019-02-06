@@ -228,7 +228,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 
   * A brief tangent to discuss backups! (via 'mysqldump')
 
-	_shell>>_ mysqldump --no-data COLAB\_CLASS > COLAB\_WITHOUT\_DATA.sql	
+	_shell>>_ mysqldump -p --no-data colab\_class > COLAB\_WITHOUT\_DATA.sql	
 	
 <a name='lab2/3'></a>
 ## Lab 2/3: Working with databases and tables
