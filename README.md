@@ -70,6 +70,12 @@ Andy Ingham (andy.ingham AT duke.edu)
 	*COMMAND HISTORY*
 
 
+  * A brief tangent to discuss architecture
+
+	https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/client-server-architecture.pdf
+
+
+
 <a name='lab1'></a>
 ## Lab 1 - Initial user lockdown
 
@@ -90,11 +96,6 @@ Andy Ingham (andy.ingham AT duke.edu)
 		[take note of what changed in the output here as opposed to before]
 	
 	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user;
-
-
-  * A brief tangent to discuss architecture
-
-	https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/client-server-architecture.pdf
 
 
 <a name='unit2'></a>
