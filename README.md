@@ -124,7 +124,6 @@ Andy Ingham (andy.ingham AT duke.edu)
 		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPetClinic.pdf
 		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPetStore.pdf
 		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaTreatments.pdf
-	- http://studiootb.com/entity-relationship-diagram-examples/entity-relationship-diagram-examples-erdiagramexample-example-template/
 	- https://www.safaribooksonline.com/library/view/learning-mysql/0596008643/ch04s04.html
 
   * A tutorial to help with schema development:
