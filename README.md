@@ -442,6 +442,8 @@ Andy Ingham (andy.ingham AT duke.edu)
   
   * MORE "JOIN" GUIDANCE:  https://www.javatpoint.com/mysql-join
   
+  * (The default "JOIN" in MySQL is an "INNER JOIN")
+  
 		mysql> SELECT * FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
 		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
 		| IID              | SNPpos       | rsID        | genotype | rsID        | Chromosome | Position | Allele1 | Allele2 | DistanceToNearGene   | Gene       | SNPtype    |
