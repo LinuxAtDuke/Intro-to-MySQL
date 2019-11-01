@@ -427,7 +427,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 		5 rows in set (0.00 sec)
 
   * Slightly more complex queries
-	
+  
 		mysql> select * from LCL_genotypes WHERE IID LIKE 'HG0246%';                 
 		+-----------+--------------+-------------+----------+
 		| IID       | SNPpos       | rsID        | genotype |
@@ -438,6 +438,10 @@ Andy Ingham (andy.ingham AT duke.edu)
 		+-----------+--------------+-------------+----------+
 		3 rows in set (0.00 sec)
 
+  * SOME "JOIN" GUIDANCE:  https://stackoverflow.com/questions/6294778/mysql-quick-breakdown-of-the-types-of-joins
+  
+  * SOME MORE "JOIN" GUIDANCE:  https://www.javatpoint.com/mysql-join
+  
 		mysql> SELECT * FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
 		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
 		| IID              | SNPpos       | rsID        | genotype | rsID        | Chromosome | Position | Allele1 | Allele2 | DistanceToNearGene   | Gene       | SNPtype    |
@@ -483,6 +487,13 @@ Andy Ingham (andy.ingham AT duke.edu)
 		         LINES TERMINATED BY '\n' \
 		         FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
 		Query OK, 5 rows affected (0.00 sec)
+
+
+		mysql> SELECT IID,Position,Gene INTO OUTFILE '/var/lib/mysql-files/colab_class_result2.txt' \
+		         FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '' ESCAPED BY '' \
+		         LINES TERMINATED BY '\n' \
+		         FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
+		Query OK, 5 rows affected (0.00 sec)
 		
 		mysql> exit
 		Bye
@@ -492,18 +503,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 		"HG02466","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
 		"HG02563","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
 		"HG02567","10:60523:T:G","rs112920234","00","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
-	
-		root@vcm-XXXX:~$ mysql -u root -p colab_class
-		Enter password: 
-		
-		mysql> SELECT IID,Position,Gene INTO OUTFILE '/var/lib/mysql-files/colab_class_result2.txt' \
-		         FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '' ESCAPED BY '' \
-		         LINES TERMINATED BY '\n' \
-		         FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
-		Query OK, 5 rows affected (0.00 sec)
-		
-		mysql> exit
-		Bye
+
 		root@vcm-XXXX:~$ cat /var/lib/mysql-files/colab_class_result2.txt
 		HG02463	60523	NONE,TUBB8
 		HG02463839238290	60523	NONE,TUBB8
