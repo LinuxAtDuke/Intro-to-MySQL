@@ -34,6 +34,10 @@ Andy Ingham (andy.ingham AT duke.edu)
 		  
 *Example:* `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you want to continue connecting (yes/no)?" and then entering the password behind "View Password" when prompted]
 
+  * A brief tangent to discuss architecture
+
+	https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/client-server-architecture.pdf
+
 
 <a name='unit1'></a>
 ## Unit 1: Access control / User management
@@ -68,11 +72,6 @@ Andy Ingham (andy.ingham AT duke.edu)
 	*TAB COMPLETION*
 	
 	*COMMAND HISTORY*
-
-
-  * A brief tangent to discuss architecture
-
-	https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/client-server-architecture.pdf
 
 
 
@@ -520,6 +519,8 @@ Andy Ingham (andy.ingham AT duke.edu)
 
 <a name='unit6'></a>
 ## Unit 6: Useful ancillary information
+
+  * please note that VCM VMs now default to powering down every morning at 06:00 am, so if you can't connect (starting tomorrow), the first thing to do is to login to https://vcm.duke.edu to verify that your VM is actually powered on.
 
   * sudo -- allows certain commands to be run with elevated privileges.  First, without:
 
