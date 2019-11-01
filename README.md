@@ -65,7 +65,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 	_mysql>>_ show databases;
 
 	_mysql>>_ use *DATABASE*;
-		e.g. use mysql;
+		(e.g. use mysql;)
 
 	_mysql>>_ show tables;
 	  	
@@ -92,7 +92,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 
 	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
 	
-		[take note of what changed in the output here as opposed to before]
+		[take note of how this output looks different than it did before]
 	
 	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user;
 
@@ -264,7 +264,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 	
 	_mysql>>_ DESCRIBE LCL_genotypes;
 		
-		[take note of what changed in the output here as opposed to before]
+		[take note of how this output looks different than it did before]
 	
 	_mysql>>_ DESCRIBE gwas_results;
 	
@@ -272,7 +272,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 		
 	_mysql>>_ DESCRIBE gwas_results;
 		
-		[take note of what changed in the output here as opposed to before]
+		[take note of how this output looks different than it did before]
 	
 <a name='unit4'></a>
 ## Unit 4: Populating database with data
