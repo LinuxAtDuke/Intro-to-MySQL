@@ -1,7 +1,7 @@
-Introduction to MySQL
+Introduction to MySQL (aka "Working with mySQL")
 =====================
 
-*Version 6, 2019-02-06*
+*Version 7, 2019-11-05*
 
 *https://github.com/LinuxAtDuke/Intro-to-MySQL/*
 
