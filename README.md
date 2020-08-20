@@ -32,10 +32,12 @@ Andy Ingham (andy.ingham AT duke.edu)
 1. Using a web browser, go to *https://vcm.duke.edu/*
 2. Login using your Duke NetId.
 3. Select "Reserve a VM" (near the middle of the page)
-4. On the next screen, select "Lamp Stack" in the dropdown list (under Linux AppStacks) and then "Reserve"
-5. After agreeing to the Terms of Use, the VCM web page will display the name of your VM along with available usernames. __You must first connect to the University VPN (if not "on campus"), THEN initiate an ssh session as the Admin User (vcm) -- do this via the "Terminal" app on your Mac or via "PuTTY" (available at https://www.chiark.greenend.org.uk/~sgtatham/putty/ ) on your Windows machine.__
+4. On the next screen, select the "Lamp Stack" link from the list under "Linux Apps"
+5. On the pop-up window about SSH keys, select the "I know this is wrong but I accept the risks" button.  [Because this is a new feature, I'm recommending continuing in the "old" way for now]
+6. After agreeing to the Terms of Use, the VCM web page will display the name of your VM along with available usernames. __You must first connect to the University VPN (if not "on campus"), THEN initiate an ssh session as the Admin User (vcm) -- do this via the "Terminal" app on your Mac or via "PuTTY" (available at https://www.chiark.greenend.org.uk/~sgtatham/putty/ ) on your Windows machine.__
 		  
 *Example (after establishing a University VPN session, if off campus):* `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you want to continue connecting (yes/no)?" and then entering the password behind "View Password" when prompted]
+
 
 
 <a name='unit1'></a>
