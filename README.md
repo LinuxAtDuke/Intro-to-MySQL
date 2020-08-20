@@ -26,6 +26,9 @@ Andy Ingham (andy.ingham AT duke.edu)
 <a name='lab0'></a>
 ## Lab 0 - Creating a personal Linux VM
 
+  * A brief tangent to discuss architecture == https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/client-server-architecture.pdf
+
+
 1. Using a web browser, go to *https://vcm.duke.edu/*
 2. Login using your Duke NetId.
 3. Select "Reserve a VM" (near the middle of the page)
@@ -33,10 +36,6 @@ Andy Ingham (andy.ingham AT duke.edu)
 5. After agreeing to the Terms of Use, the VCM web page will display the name of your VM along with available usernames. __You must first connect to the University VPN (if not "on campus"), THEN initiate an ssh session as the Admin User (vcm) -- do this via the "Terminal" app on your Mac or via "PuTTY" (available at https://www.chiark.greenend.org.uk/~sgtatham/putty/ ) on your Windows machine.__
 		  
 *Example (after establishing a University VPN session, if off campus):* `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you want to continue connecting (yes/no)?" and then entering the password behind "View Password" when prompted]
-
-  * A brief tangent to discuss architecture
-
-	https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/client-server-architecture.pdf
 
 
 <a name='unit1'></a>
