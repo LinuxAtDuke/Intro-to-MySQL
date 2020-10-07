@@ -117,7 +117,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 	- what queries are users going to run? (which will inform index creation)
 	- what indexes are needed (beyond those for the primary keys)?
 	
-  * Some examples:
+  * Some (albeit simple and somewhat silly) examples:
 	- https://www.edrawsoft.com/templates/pdf/pet-store-er-diagram.pdf
 		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaOwner.pdf
 		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPet.pdf
