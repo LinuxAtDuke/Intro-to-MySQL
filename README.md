@@ -43,12 +43,14 @@ Andy Ingham (andy.ingham AT duke.edu)
 <a name='unit1'></a>
 ## Unit 1: Access control / User management
 
-  * how access is controlled (https://dev.mysql.com/doc/refman/5.7/en/default-privileges.html )
+  * how access is controlled (https://dev.mysql.com/doc/refman/8.0/en/default-privileges.html )
   
   	_shell>>_ sudo -i
 
   	_shell>>_ mysql -u root *(_NO INITIAL PASSWORD EXISTS_)*
 
+	NOTE that MySQL may not be installed.  If an error is encountered here, install mysql with:
+	_shell>>_ apt install mysql-server
 
 	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
 
@@ -102,10 +104,12 @@ Andy Ingham (andy.ingham AT duke.edu)
 ## Unit 2: Databases, schema
   * Removing or creating databases is very simple
   
-	_mysql>>_ DROP DATABASE letodms;
-	
 	_mysql>>_ CREATE DATABASE colab_class;
 
+	_mysql>>_ show databases;
+	
+	_mysql>>_ DROP DATABASE colab_class;
+	
 	_mysql>>_ show databases;
 	
   * Schema development is best done via an ER diagram and/or a whiteboard - consider these:
@@ -131,7 +135,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 
   * Fine-tuning of schema...
 	- referential integrity - data types consistent across linking fields (foreign keys)
-	- data types (https://dev.mysql.com/doc/refman/5.7/en/data-types.html) should be as prescriptive and compact as possible
+	- data types (https://dev.mysql.com/doc/refman/8.0/en/data-types.html) should be as prescriptive and compact as possible
 	- index creation should be done where needed, but not elsewhere
 	- index creation is always faster BEFORE data is loaded into the table
 	- verify that data is "reasonably" normalized (e.g., data generally de-duplicated)
