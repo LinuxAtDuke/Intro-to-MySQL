@@ -454,15 +454,15 @@ Andy Ingham (andy.ingham AT duke.edu)
 		5 rows in set (0.00 sec)
 
   * Slightly more complex queries
-  
-		mysql> select * from LCL_genotypes WHERE IID LIKE 'HG0246%';                 
-		+-----------+--------------+-------------+----------+
-		| IID       | SNPpos       | rsID        | genotype |
-		+-----------+--------------+-------------+----------+
-		| HG02463   | 10:60523:T:G | rs112920234 | TT       |
-		| HG0246383 | 10:60523:T:G | rs112920234 | TT       |
-		| HG02466   | 10:60523:T:G | rs112920234 | TT       |
-		+-----------+--------------+-------------+----------+
+                   
+		mysql> select * from LCL_genotypes WHERE IID LIKE 'HG0246%'; 
+		+------------------+--------------+-------------+----------+
+		| IID              | SNPpos       | rsID        | genotype |
+		+------------------+--------------+-------------+----------+
+		| HG02463          | 10:60523:T:G | rs112920234 | TT       |
+		| HG02463839238290 | 10:60523:T:G | rs112920234 | TT       |
+		| HG02466          | 10:60523:T:G | rs112920234 | TT       |
+		+------------------+--------------+-------------+----------+
 		3 rows in set (0.00 sec)
 
   * "JOIN" GUIDANCE:  https://stackoverflow.com/questions/6294778/mysql-quick-breakdown-of-the-types-of-joins
