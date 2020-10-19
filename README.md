@@ -51,7 +51,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 
 	__NOTE that MySQL may not be installed.  If an error is encountered here, install mysql with:__
 	
-		apt install -y mysql-server
+	_mysql>>_ apt install -y mysql-server
 
 	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
 
@@ -376,9 +376,9 @@ Andy Ingham (andy.ingham AT duke.edu)
 
   * First, make the necessary configuration change to allow this functionality:
   
-  		set global local_infile=true;
+  	_mysql>>_ set global local_infile=true;
   		
-  		show global variables like 'local_infile';
+  	_mysql>>_ show global variables like 'local_infile';
   		
   		+---------------+-------+
 		| Variable_name | Value |
@@ -389,7 +389,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 		
   * Re-launch mysql client with ability enabled from the client:
   
-  _shell>>_ mysql --local\_infile=1 -u root -p colab_class;
+  	_shell>>_ mysql --local\_infile=1 -u root -p colab_class;
 
   * Quickly add data to three tables...
   
