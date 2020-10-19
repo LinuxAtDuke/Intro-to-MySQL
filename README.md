@@ -49,10 +49,12 @@ Andy Ingham (andy.ingham AT duke.edu)
 
   	_shell>>_ mysql -u root *(_NO INITIAL PASSWORD EXISTS_)*
 
-	__NOTE that MySQL may not be installed.  If an error is encountered here, install mysql with:__
+		__NOTE that MySQL may not be installed.  If an error is encountered here, install mysql with:__
 	
-	_mysql>>_ apt install -y mysql-server
-
+		_shell>>_ apt install -y mysql-server
+	
+		_shell>>_ mysql -u root *(_NO INITIAL PASSWORD EXISTS_)*
+	
 	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
 
 	| Host      | User | plugin      | authentication\_string |
