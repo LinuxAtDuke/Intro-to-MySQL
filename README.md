@@ -374,6 +374,23 @@ Andy Ingham (andy.ingham AT duke.edu)
 <a name='lab4'></a>
 ## Lab 4: Adding data to your database
 
+  * First, make the necessary configuration change to allow this functionality:
+  
+  		set global local_infile=true;
+  		
+  		show global variables like 'local_infile';
+  		
+  		+---------------+-------+
+		| Variable_name | Value |
+		+---------------+-------+
+		| local_infile  | ON    |
+		+---------------+-------+
+		1 row in set (0.00 sec)
+		
+  * Re-launch mysql client with ability enabled from the client:
+  
+  _shell>>_ mysql --local\_infile=1 -u root -p colab_class;
+
   * Quickly add data to three tables...
   
 	_mysql>>_ LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
