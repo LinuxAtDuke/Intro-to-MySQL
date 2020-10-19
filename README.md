@@ -51,7 +51,7 @@ Andy Ingham (andy.ingham AT duke.edu)
 
 	__NOTE that MySQL may not be installed.  If an error is encountered here, install mysql with:__
 	
-		apt install mysql-server
+		apt install -y mysql-server
 
 	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
 
