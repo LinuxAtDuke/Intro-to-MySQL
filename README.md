@@ -393,6 +393,8 @@ Andy Ingham (andy.ingham AT duke.edu)
 		
   * Re-launch mysql client with ability enabled from the client:
   
+	_mysql>>_ exit
+  
   	_shell>>_ mysql --local\_infile=1 -u root -p colab_class;
 
   * Quickly add data to three tables...
