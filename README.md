@@ -118,21 +118,22 @@ Andy Ingham (andy.ingham AT duke.edu)
 	_mysql>>_ show databases;
 	
   * Schema development is best done via an ER diagram and/or a whiteboard - consider these:
-	- what are the entities?
+	- what are the entities? _(the "things" or "concepts" that form the basis of our data)_
 	- what relationships do they have with one another?
-	- what are the important attributes of the data elements?
-	- what are the data types and metadata (is NULL allowed? defaults?) for the attributes
-	- what will determine uniqueness in each table? (simple or compound primary keys?)
-	- what queries are users going to run? (which will inform index creation)
-	- what indexes are needed (beyond those for the primary keys)?
+	- what are the important attributes of the entities?
+	- what are the data types and metadata _(is NULL allowed? are there default values?)_ for those attributes?
+	- what will determine uniqueness in each table? _(will the primary key be simple or compound?)_
+	- what queries are users likely to run? _(this will inform index creation)_
+	- what indexes are needed? _(to supplement the primary key)_	
 	
-  * Some (albeit simple and somewhat silly) examples:
+ * Some (albeit simple and somewhat silly) examples:
 	- https://www.edrawsoft.com/templates/pdf/pet-store-er-diagram.pdf
 		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaOwner.pdf
 		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPet.pdf
 		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPetClinic.pdf
+		- ESPECIALLY PROBLEMATIC: https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaTreatments.pdf
+		- IN LIGHT OF THE ABOVE: https://dzone.com/articles/how-to-handle-a-many-to-many-relationship-in-datab
 		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPetStore.pdf
-		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaTreatments.pdf
 	- https://www.safaribooksonline.com/library/view/learning-mysql/0596008643/ch04s04.html
 
   * A tutorial to help with schema development:
