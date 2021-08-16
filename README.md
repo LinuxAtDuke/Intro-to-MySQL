@@ -36,14 +36,19 @@ Mary Clair Thompson
 5. If you encounter a pop-up window about SSH keys (which displays if you do not have them set up for your netID), you may need to select the less secure option until you've done that step (which is outside the scope of this class).
 6. After agreeing to the Terms of Use, the VCM web page will display the name of your VM along with available usernames. __You must first connect to the University VPN (if not "on campus"), THEN initiate an ssh session as the Admin User (vcm) -- do this via the "Terminal" app on your Mac or via "PuTTY" (available at https://www.chiark.greenend.org.uk/~sgtatham/putty/ ) on your Windows machine.__
 		  
-*Example (after establishing a University VPN session, if off campus):* `ssh vcm@vcm-1473.vm.duke.edu` [Answering "yes" to "Are you sure you want to continue connecting (yes/no)?" and then entering the password behind "View Password" when prompted]
+*Example (after establishing a University VPN session, if off campus):* 
+
+
+	ssh vcm@vcm-1473.vm.duke.edu
+
+  * Answer "yes" to "Are you sure you want to continue connecting (yes/no)?" and enter your password when prompted.
 
 
 
 <a name='unit1'></a>
 ## Unit 1: Access control / User management
  
-  * Change to root so that you can install software
+  * Change your user to root so that you can install software
 
 
     shell>> sudo -i
@@ -109,7 +114,7 @@ Mary Clair Thompson
 
     mysql>> flush privileges;
 
-    mysql>> SET PASSWORD FOR 'root'@'localhost' = '<YOUR PASSWORD>';
+    mysql>> SET PASSWORD FOR 'root'@'localhost' = 'INSERT YOUR PASSWORD HERE';
 
   * Rerun the following command, and note that the output is different:
 
@@ -130,7 +135,7 @@ Mary Clair Thompson
 	shell>> mysql -u root -p
 	shell>> Enter password: 
 
-  * Let's run one more command that we'll need for later. This will allow us to load data from a local source:
+  * Let's run one more command that we'll need later. This will allow us to load data from a local source near the end of the lab:
 
 
 	mysql>> SET GLOBAL local_infile=1;
@@ -252,6 +257,7 @@ Mary Clair Thompson
 
   * How was the "idx_rsID" index actually created?
   
+
 	mysql>> CREATE INDEX idx_rsID ON LCL_genotypes(rsID);
 
 		Query OK, 358244487 rows affected (2 hours 33 min 15.53 sec)
@@ -270,6 +276,7 @@ Mary Clair Thompson
 
   * A brief tangent to discuss backups! (via 'mysqldump')
 
+	
 	shell>> mysqldump -p --no-data colab\_class > COLAB\_WITHOUT\_DATA.sql	
 	
 <a name='lab2/3'></a>
@@ -395,7 +402,7 @@ Notice the difference in the output above from earlier!
       * (value_11, value_12, ..., value_1n),...,(value_m1, value_m2, ..., value_mn) are the m records we wish to add to the table. The order of the values in each record must match the specified order of the columns.
       
     
-	mysql>> INSERT INTO tbl_name (column_1, column_2, ..., column_n) VALUES(value_11, value_12, ..., value_1n),...,(value_m1, value_m2, ..., value_mn);
+	INSERT INTO tbl_name (column_1, column_2, ..., column_n) VALUES(value_11, value_12, ..., value_1n),...,(value_m1, value_m2, ..., value_mn);
 	
   * Here are a couple of examples you can try:
 
@@ -405,13 +412,13 @@ Notice the difference in the output above from earlier!
 	mysql>> INSERT INTO LCL_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02466','10:60523:T:G','rs112920234','TT'),('HG02563','10:60523:T:G','rs112920234','TT'),('HG02567','10:60523:T:G','rs112920234','00');
 	
 
-  * We can also add data in bulk (from an local file). The syntax follows, where:
+  * We can also add data in bulk (from a local file). The syntax follows, where:
     * tbl_name is the name of the table into which we wish to load data
     * '/path/to/filename' is the _full path_ to the name of the file where data is located
-    * '<column delimiter>' indicates the character(s) separating fields data file
+    * '\<column delimiter\>' indicates the character(s) separating fields in the data
     
 
-	mysql>> LOAD DATA LOCAL INFILE '/path/to/filename' INTO TABLE tbl_name FIELDS TERMINATED BY '<column delimiter>';
+	LOAD DATA LOCAL INFILE '/path/to/filename' INTO TABLE tbl_name FIELDS TERMINATED BY '<column delimiter>';
 
   * You can try running the following example yourself to load data:
     
@@ -445,7 +452,7 @@ Notice the difference in the output above from earlier!
   * In addition to adding records, we can also change records that already exist (either one at a time or in groups). The syntax follows:
 
         
-    mysql> UPDATE tbl_name SET col_name1=expr, col_name2=expr, ... WHERE where_condition
+    UPDATE tbl_name SET col_name1=expr1, col_name2=expr2, ... WHERE where_condition;
         
   * You can try the following example yourself:
 
@@ -484,7 +491,7 @@ Notice the difference in the output above from earlier!
   * The syntax for dropping a record follows. I _strongly_ recommend that you supply a where clause when you wish to drop records from a table--otherwise the delete command will drop _all_ records in the table!
 
   
-	mysql>> DELETE FROM tbl_name WHERE where_condition;
+	DELETE FROM tbl_name WHERE where_condition;
  
 
   * Try running the following command:
