@@ -1,13 +1,13 @@
 Introduction to MySQL (aka "Working with mySQL")
 =====================
 
-*Version 10, 2021-01-27*
+*Version 11, 2021-09-09*
 
 *https://github.com/LinuxAtDuke/Intro-to-MySQL/*
 
 **Instructor**
 
-Andy Ingham (andy.ingham AT duke.edu)
+Mary Clair Thompson
 
 **Table of Contents**
 
@@ -29,8 +29,8 @@ Andy Ingham (andy.ingham AT duke.edu)
   * A brief tangent to discuss architecture == https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/client-server-architecture.pdf
 
 
-1. Using a web browser, go to *https://vcm.duke.edu/*
-2. Login using your Duke NetId.
+1. Navigate to *https://vcm.duke.edu/* in a browser
+2. Login using your Duke NetId
 3. Select "Reserve a VM" (near the middle of the page)
 4. On the next screen, select the "Lamp Stack" link from the list under "Linux Apps"
 5. If you encounter a pop-up window about SSH keys (which displays if you do not have them set up for your netID), you may need to select the less secure option until you've done that step (which is outside the scope of this class).
@@ -42,144 +42,176 @@ Andy Ingham (andy.ingham AT duke.edu)
 
 <a name='unit1'></a>
 ## Unit 1: Access control / User management
+ 
+  * Change to root so that you can install software
 
-  * how access is controlled (https://dev.mysql.com/doc/refman/8.0/en/default-privileges.html )
+
+    shell>> sudo -i
+
+  * Install MySql
+	
+
+    shell>> apt-get install mysql-server
   
-  	_shell>>_ sudo -i
+  * Access MySql as root user (root has All The Permissions)
 
-  	_shell>>_ mysql -u root *(_NO INITIAL PASSWORD EXISTS_)*
 
-	\[<br/><br/>
-	__NOTE that MySQL may not be installed.  If an error is encountered here, install mysql with:__
-	
-	_shell>>_ apt install -y mysql-server
-	
-	_shell>>_ mysql -u root *(_NO INITIAL PASSWORD EXISTS_)*
-	<br/><br/>\]
+    shell>> mysql -u root
 
-	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
+  * Now you're able to interact with MySql. You should see a mysql prompt:
 
-	| Host      | User | plugin      | authentication\_string |
-	|:----------|:-----|:------------|:-----------------------|
-	| localhost | root | auth_socket |                        |
 
-	
-  * general structure of the DBMS
+	mysql>>
+
+  * You were able to access MySql _without_ a password, which is less than ideal (we'll change that momentarily). For more information about default privileges, see https://dev.mysql.com/doc/refman/8.0/en/default-privileges.html
+
+  * Run the command below to verify that there is currently no authentication required to access your database.
   
-	_mysql>>_ status
+      
 
-	_mysql>>_ show status;
+    mysql>> SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
 
-	_mysql>>_ show databases;
+    | Host      | User | plugin      | authentication\_string |
+    |:----------|:-----|:------------|:-----------------------|
+    | localhost | root | auth_socket |                        |
 
-	_mysql>>_ use *DATABASE*;
-		(e.g. use mysql;)
-
-	_mysql>>_ show tables;
-	  	
-	*TAB COMPLETION*
 	
-	*COMMAND HISTORY*
+  * Here are a few other commands you can run to get a feel for the general structure of the DBMS:
+  
+
+	mysql>> status
+
+	mysql>> show status;
+
+	mysql>> show databases;
+
+  * Notice that there's a database named 'mysql'. You can switch focus to that database with:
+
+
+    mysql>> use mysql;
+
+  * Now you can easily see tables within mysql:
+
+
+    mysql>> show tables;
+
 
 
 
 <a name='lab1'></a>
 ## Lab 1 - Initial user lockdown
 
-  * Login to MySQL as 'root', change that user's password, and remove unnecessary authorizations
+  * Let's change the root user's password and remove unnecessary authorizations:
+
   
-  	_shell>>_ sudo -i
 
-  	_shell>>_ mysql -u root *(_NO INITIAL PASSWORD EXISTS_)*
+    mysql>> update mysql.user set plugin='mysql_native_password' where user='root' and host='localhost';
 
-	_mysql>>_ update mysql.user set plugin='mysql_native_password' where user='root' and host='localhost';
+    mysql>> flush privileges;
 
-	_mysql>>_ flush privileges;
+    mysql>> SET PASSWORD FOR 'root'@'localhost' = '<YOUR PASSWORD>';
 
-	_mysql>>_ SET PASSWORD FOR 'root'@'localhost' = '_SUPER\_GREAT\_PASSWORD\_HERE_';
+  * Rerun the following command, and note that the output is different:
 
-	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
+
+    mysql>> SELECT Host, User, plugin, authentication_string from mysql.user where User='root';
 	
-		[take note of how this output looks different than it did before]
-	
-	_mysql>>_ SELECT Host, User, plugin, authentication_string from mysql.user;
+    mysql>> SELECT Host, User, plugin, authentication_string from mysql.user;
 
+  * Let's exit mysql and confirm that the password has been updated.
+
+
+	mysql>> quit
+	shell>> mysql -u root
+
+  * You should get an 'access denied' message. From now on, you'll need to input your password when you want to access the database. The '-p' flag indicates to mysql that you want to access the database with a password:
+
+
+	shell>> mysql -u root -p
+	shell>> Enter password: 
+
+  * Let's run one more command that we'll need for later. This will allow us to load data from a local source:
+
+
+	mysql>> SET GLOBAL local_infile=1;
+
+
+  
 
 <a name='unit2'></a>
 ## Unit 2: Databases, schema
-  * Removing or creating databases is very simple
-  
-	_mysql>>_ CREATE DATABASE colab_class;
+  * The following commands illustrate how to add and remove databases:
 
-	_mysql>>_ show databases;
-	
-	_mysql>>_ DROP DATABASE colab_class;
-	
-	_mysql>>_ show databases;
+  
+    mysql>> CREATE DATABASE colab_class;
+	mysql>> show databases;
+    mysql>> DROP DATABASE colab_class;
+    mysql>> show databases;
 	
   * Schema development is best done via an ER diagram and/or a whiteboard - consider these:
-	- what are the entities? _(the "things" or "concepts" that form the basis of our data)_
-	- what relationships do they have with one another?
-	- what are the important attributes of the entities?
-	- what are the data types and metadata _(is NULL allowed? are there default values?)_ for those attributes?
-	- what will determine uniqueness in each table? _(will the primary key be simple or compound?)_
-	- what queries are users likely to run? _(this will inform index creation)_
-	- what indexes are needed? _(to supplement the primary key)_	
+    - what are the entities? _(the "things" or "concepts" that form the basis of our data)_
+    - what relationships do they have with one another?
+    - what are the important attributes of the entities?
+    - what are the data types and metadata _(is NULL allowed? are there default values?)_ for those attributes?
+    - what will determine uniqueness in each table? _(will the primary key be simple or compound?)_
+    - what queries are users likely to run? _(this will inform index creation)_
+    - what indexes are needed? _(to supplement the primary key)_	
 	
- * Some (albeit simple and somewhat silly) examples:
-	- https://www.edrawsoft.com/templates/pdf/pet-store-er-diagram.pdf
-		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaOwner.pdf
-		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPet.pdf
-		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPetClinic.pdf
-		- ESPECIALLY PROBLEMATIC: https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaTreatments.pdf
-		- IN LIGHT OF THE ABOVE: https://dzone.com/articles/how-to-handle-a-many-to-many-relationship-in-datab
-		- https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPetStore.pdf
-	- https://www.safaribooksonline.com/library/view/learning-mysql/0596008643/ch04s04.html
+  * Some (albeit simple and somewhat silly) examples:
+     - https://www.edrawsoft.com/templates/pdf/pet-store-er-diagram.pdf
+         - https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaOwner.pdf
+         - https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPet.pdf
+         - https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPetClinic.pdf
+         - ESPECIALLY PROBLEMATIC: https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaTreatments.pdf
+         - IN LIGHT OF THE ABOVE: https://dzone.com/articles/how-to-handle-a-many-to-many-relationship-in-datab
+         - https://github.com/LinuxAtDuke/Intro-to-MySQL/blob/master/pet-store-example-schemaPetStore.pdf
+     - https://www.safaribooksonline.com/library/view/learning-mysql/0596008643/ch04s04.html
 
   * A tutorial to help with schema development:
-  	- http://www.anchor.com.au/hosting/support/CreatingAQuickMySQLRelationalDatabase
+      - http://www.anchor.com.au/hosting/support/CreatingAQuickMySQLRelationalDatabase
 
   * Fine-tuning of schema...
-	- referential integrity - data types consistent across linking fields (foreign keys)
-	- data types (https://dev.mysql.com/doc/refman/8.0/en/data-types.html) should be as prescriptive and compact as possible
-	- index creation should be done where needed, but not elsewhere
-	- index creation is always faster BEFORE data is loaded into the table
-	- verify that data is "reasonably" normalized (e.g., data generally de-duplicated)
+    - referential integrity - data types consistent across linking fields (foreign keys)
+    - data types (https://dev.mysql.com/doc/refman/8.0/en/data-types.html) should be as prescriptive and compact as possible
+    - index creation should be done where needed, but not elsewhere
+    - index creation is always faster BEFORE data is loaded into the table
+    - verify that data is "reasonably" normalized (e.g., data generally de-duplicated)
 
-  * Some examples
+  * You can use the 'describe' keyword to examine table schemas. The examples below won't work in your database as we haven't added tables yet, but they illustrate some of the preceding concepts.
   
-	_mysql>>_ describe LCL_genotypes;
 
-	| Field    | Type         | Null | Key | Default | Extra |
-	|:---------|:-------------|:-----|:----|:--------|:------|
-	| IID      | varchar(16)  | NO   | PRI | NULL    |       |
-	| SNPpos   | varchar(512) | NO   | PRI | NULL    |       |
-	| rsID     | varchar(256) | NO   | MUL | NULL    |       |
-	| genotype | varchar(512) | NO   |     | NULL    |       |
+    mysql>> describe LCL_genotypes;
 
-	_mysql>>_ describe phenotypes;
+    | Field    | Type         | Null | Key | Default | Extra |
+    |:---------|:-------------|:-----|:----|:--------|:------|
+    | IID      | varchar(16)  | NO   | PRI | NULL    |       |
+    | SNPpos   | varchar(512) | NO   | PRI | NULL    |       |
+    | rsID     | varchar(256) | NO   | MUL | NULL    |       |
+    | genotype | varchar(512) | NO   |     | NULL    |       |
 
-	| Field             | Type           | Null | Key | Default | Extra |
-	|:------------------|:---------------|:-----|:----|:--------|:------|
-	| LCL\_ID            | varchar(16)    | NO   | PRI | NULL    |       |
-	| phenotype         | varchar(128)   | NO   | PRI | NULL    |       |
-	| phenotypic\_value1 | decimal(20,10) | YES  |     | NULL    |       |
-	| phenotypic\_value2 | decimal(20,10) | YES  |     | NULL    |       |
-	| phenotypic\_value3 | decimal(20,10) | YES  |     | NULL    |       |
-	| phenotypic_mean   | decimal(20,10) | YES  |     | NULL    |       |
+    mysql>> describe phenotypes;
 
-	_mysql>>_ describe snp;
+    | Field             | Type           | Null | Key | Default | Extra |
+    |:------------------|:---------------|:-----|:----|:--------|:------|
+    | LCL\_ID            | varchar(16)    | NO   | PRI | NULL    |       |
+    | phenotype         | varchar(128)   | NO   | PRI | NULL    |       |
+    | phenotypic\_value1 | decimal(20,10) | YES  |     | NULL    |       |
+    | phenotypic\_value2 | decimal(20,10) | YES  |     | NULL    |       |
+    | phenotypic\_value3 | decimal(20,10) | YES  |     | NULL    |       |
+    | phenotypic_mean   | decimal(20,10) | YES  |     | NULL    |       |
 
-	| Field              | Type                | Null | Key | Default | Extra |
-	|:-------------------|:--------------------|:-----|:----|:--------|:------|
-	| rsID               | varchar(256)        | NO   | PRI | NULL    |       |
-	| Chromosome         | tinyint(3) unsigned | NO   |     | NULL    |       |
-	| Position           | int(10) unsigned    | NO   |     | NULL    |       |
-	| Allele1            | varchar(128)        | NO   |     | NULL    |       |
-	| Allele2            | varchar(128)        | NO   |     | NULL    |       |
-	| DistanceToNearGene | varchar(32)         | NO   |     | NULL    |       |
-	| Gene               | varchar(32)         | NO   |     | NULL    |       |
-	| SNPtype            | varchar(64)         | NO   |     | NULL    |       |
+    mysql>> describe snp;
+
+    | Field              | Type                | Null | Key | Default | Extra |
+    |:-------------------|:--------------------|:-----|:----|:--------|:------|
+    | rsID               | varchar(256)        | NO   | PRI | NULL    |       |
+    | Chromosome         | tinyint(3) unsigned | NO   |     | NULL    |       |
+    | Position           | int(10) unsigned    | NO   |     | NULL    |       |
+    | Allele1            | varchar(128)        | NO   |     | NULL    |       |
+    | Allele2            | varchar(128)        | NO   |     | NULL    |       |
+    | DistanceToNearGene | varchar(32)         | NO   |     | NULL    |       |
+    | Gene               | varchar(32)         | NO   |     | NULL    |       |
+    | SNPtype            | varchar(64)         | NO   |     | NULL    |       |
 
 
 <a name='unit3'></a>
@@ -220,12 +252,12 @@ Andy Ingham (andy.ingham AT duke.edu)
 
   * How was the "idx_rsID" index actually created?
   
-	_mysql>>_ CREATE INDEX idx_rsID ON LCL_genotypes(rsID);
+	mysql>> CREATE INDEX idx_rsID ON LCL_genotypes(rsID);
 
 		Query OK, 358244487 rows affected (2 hours 33 min 15.53 sec)
 		Records: 358244487  Deleted: 0  Skipped: 0  Warnings: 0
   
-	_mysql>>_ SHOW INDEX from LCL_genotypes;
+	mysql>> SHOW INDEX from LCL_genotypes;
 
 		+---------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
 		| Table         | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
@@ -238,309 +270,364 @@ Andy Ingham (andy.ingham AT duke.edu)
 
   * A brief tangent to discuss backups! (via 'mysqldump')
 
-	_shell>>_ mysqldump -p --no-data colab\_class > COLAB\_WITHOUT\_DATA.sql	
+	shell>> mysqldump -p --no-data colab\_class > COLAB\_WITHOUT\_DATA.sql	
 	
 <a name='lab2/3'></a>
 ## Lab 2/3: Working with databases and tables
 
-  * Create new database and populate it...
+  * Let's create a database and add some data!
   
-	_mysql>>_ CREATE DATABASE colab_class;
-	
-	_mysql>>_ show databases;
-	
-	_mysql>>_ exit
 
-  * grab the class files from the github repository
+	mysql>> CREATE DATABASE colab_class;
+	mysql>> show databases;
+	
+
+  * We need data to add to our database--grab the class files from the github repository
   
-	_shell>>_ git clone https://github.com/LinuxAtDuke/Intro-to-MySQL.git
+	
+	mysql>> quit
+	shell>> cd
+	shell>> git clone https://github.com/LinuxAtDuke/Intro-to-MySQL.git
 
-  * load the file into your MySQL instance
+  * Load the file into your MySQL instance:
 	
-	_shell>>_ mysql -u root -p colab\_class < /root/Intro-to-MySQL/COLAB\_WITHOUT\_DATA.sql
+
+	shell>> mysql -u root -p colab_class < /root/Intro-to-MySQL/COLAB\_WITHOUT\_DATA.sql
 	
-  * now check out the results of the import
+  * Let's take a look at the results of the manual import. We'll dive straight into the colab_class database by including the db name at the end of our login string. We'll also include the --local-infile tag with value 1 to indicate to mysql that we are going to allow loading data from local files.
+
 	
-	_shell>>_ mysql -u root -p colab_class;
+    shell>> mysql --local-infile=1 -u root -p colab_class;
+	shell>> Enter password:
+    mysql>> show tables;
 	
-	_mysql>>_ show tables;
+	+-----------------------+
+	| Tables_in_colab_class |
+	+-----------------------+
+	| LCL_characteristics   |
+	| LCL_genotypes         |
+	| eQTL                  |
+	| gwas_results          |
+	| phenotypes            |
+	| snp                   |
+	+-----------------------+
+	6 rows in set (0.00 sec)
+
+  * Let's take a look at the schema for one of the tables:
+
+
+    mysql>> DESCRIBE LCL_genotypes;
+
+    +----------+--------------+------+-----+---------+-------+
+	| Field    | Type         | Null | Key | Default | Extra |
+	+----------+--------------+------+-----+---------+-------+
+	| IID      | varchar(16)  | NO   | PRI | NULL    |       |
+	| SNPpos   | varchar(512) | NO   | PRI | NULL    |       |
+	| rsID     | varchar(256) | NO   | MUL | NULL    |       |
+	| genotype | varchar(512) | NO   |     | NULL    |       |
+	+----------+--------------+------+-----+---------+-------+
+	4 rows in set (0.00 sec)
+
+
+  * Notice that there's no data in the table yet:
+
+
+	mysql>> SELECT * from LCL_genotypes;
+
+	Empty set (0.00 sec)
+  * Before we add data, let's practice editing the table schema. We'll change data types for two columns to allow them to hold larger strings.
 	
-	_mysql>>_ DESCRIBE LCL_genotypes;
+
+    mysql>> ALTER TABLE LCL_genotypes MODIFY genotype VARCHAR(2048) NOT NULL;
 	
-  * now manually modify the table schema
+    mysql>> ALTER TABLE LCL_genotypes MODIFY SNPpos VARCHAR(767) NOT NULL;
 	
-	_mysql>>_ ALTER TABLE LCL_genotypes MODIFY genotype VARCHAR(2048) NOT NULL;
-	
-	_mysql>>_ ALTER TABLE LCL_genotypes MODIFY SNPpos VARCHAR(767) NOT NULL;
-	
-	_mysql>>_ DESCRIBE LCL_genotypes;
+    mysql>> DESCRIBE LCL_genotypes;
+
+	+----------+---------------+------+-----+---------+-------+
+	| Field    | Type          | Null | Key | Default | Extra |
+	+----------+---------------+------+-----+---------+-------+
+	| IID      | varchar(16)   | NO   | PRI | NULL    |       |
+	| SNPpos   | varchar(767)  | NO   | PRI | NULL    |       |
+	| rsID     | varchar(256)  | NO   | MUL | NULL    |       |
+	| genotype | varchar(2048) | NO   |     | NULL    |       |
+	+----------+---------------+------+-----+---------+-------+
+	4 rows in set (0.01 sec)
 		
-		[take note of how this output looks different than it did before]
+Notice the difference in the output above from earlier!
 	
-	_mysql>>_ DESCRIBE gwas_results;
+    mysql>> DESCRIBE gwas_results;
+
+	+------------------+--------------+------+-----+---------+-------+
+	| Field            | Type         | Null | Key | Default | Extra |
+	+------------------+--------------+------+-----+---------+-------+
+	| rsID             | varchar(256) | NO   | PRI | NULL    |       |
+	| phenotype        | varchar(128) | NO   | PRI | NULL    |       |
+	| study_population | varchar(8)   | NO   | PRI | NULL    |       |
+	| EMPpvalue        | double       | YES  |     | NULL    |       |
+	| beta             | double       | YES  |     | NULL    |       |
+	+------------------+--------------+------+-----+---------+-------+
+	5 rows in set (0.00 sec)
 	
-	_mysql>>_ ALTER TABLE gwas\_results MODIFY study\_population VARCHAR(16) NOT NULL;
+    mysql>> ALTER TABLE gwas_results MODIFY study_population VARCHAR(16) NOT NULL;
 		
-	_mysql>>_ DESCRIBE gwas_results;
+    mysql>> DESCRIBE gwas_results;
+
+	+------------------+--------------+------+-----+---------+-------+
+	| Field            | Type         | Null | Key | Default | Extra |
+	+------------------+--------------+------+-----+---------+-------+
+	| rsID             | varchar(256) | NO   | PRI | NULL    |       |
+	| phenotype        | varchar(128) | NO   | PRI | NULL    |       |
+	| study_population | varchar(16)  | NO   | PRI | NULL    |       |
+	| EMPpvalue        | double       | YES  |     | NULL    |       |
+	| beta             | double       | YES  |     | NULL    |       |
+	+------------------+--------------+------+-----+---------+-------+
+	5 rows in set (0.01 sec)
 		
-		[take note of how this output looks different than it did before]
 	
 <a name='unit4'></a>
 ## Unit 4: Populating database with data
 
-  * Data can be added either record by record...
-	* _mysql>>_ INSERT INTO tbl\_name () VALUES();
-		* E.g., _mysql>>_ INSERT INTO LCL\_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02463','10:60523:T:G','rs112920234','TT');
-		
-	* _mysql>>_ INSERT INTO tbl\_name (a,b,c) VALUES(1,2,3),(4,5,6),(7,8,9);
-		* E.g., _mysql>>_ INSERT INTO LCL_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02466','10:60523:T:G','rs112920234','TT'),('HG02563','10:60523:T:G','rs112920234','TT'),('HG02567','10:60523:T:G','rs112920234','00');
+  * There are a number of ways we can get data into a table. 
+    * We can add data record by record; the syntax below shows the format of this command, where:
+      * tbl_name is the name of the table into which we wish to add data
+      * column_1, ..., column_n are the names of the columns to which we want to add data
+      * (value_11, value_12, ..., value_1n),...,(value_m1, value_m2, ..., value_mn) are the m records we wish to add to the table. The order of the values in each record must match the specified order of the columns.
+      
+    
+	mysql>> INSERT INTO tbl_name (column_1, column_2, ..., column_n) VALUES(value_11, value_12, ..., value_1n),...,(value_m1, value_m2, ..., value_mn);
 	
-	* _mysql>>_ INSERT INTO tbl\_name SET col\_name=expr, col\_name=expr, ...
-		* E.g., _mysql>>_ INSERT INTO phenotypes SET LCL\_ID='HG02461', phenotype='Cells\_ml\_after\_3\_days', phenotypic\_value1='878000', phenotypic\_value2='732000', phenotypic\_value3='805000', phenotypic_mean='805000';
-	
-	
-  * Or in bulk (from an INFILE)
-	* _mysql>>_ LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
-		
-	
-  * __WATCH OUT FOR WARNINGS!__ [_NOTE: As of MySQL version 5.7, THIS COMMAND RETURNS A FATAL ERROR AS OPPOSED TO A WARNING_] E.g., _mysql>>_ INSERT INTO LCL\_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG024638392382903957','10:60523:T:G','rs112920234','TT');
+  * Here are a couple of examples you can try:
 
-		Query OK, 1 row affected, 1 warning (0.00 sec)
-		
-		mysql> show warnings;
-		+---------+------+------------------------------------------+
-		| Level   | Code | Message                                  |
-		+---------+------+------------------------------------------+
-		| Warning | 1265 | Data truncated for column 'IID' at row 1 |
-		+---------+------+------------------------------------------+
-		1 row in set (0.00 sec)
-		
-		mysql> select * from LCL_genotypes;                       
-		+------------------+--------------+-------------+----------+
-		| IID              | SNPpos       | rsID        | genotype |
-		+------------------+--------------+-------------+----------+
-		| HG02463          | 10:60523:T:G | rs112920234 | TT       |
-		| HG02463839238290 | 10:60523:T:G | rs112920234 | TT       |
-		| HG02466          | 10:60523:T:G | rs112920234 | TT       |
-		| HG02563          | 10:60523:T:G | rs112920234 | TT       |
-		| HG02567          | 10:60523:T:G | rs112920234 | 00       |
-		+------------------+--------------+-------------+----------+
-		5 rows in set (0.00 sec)
-		
-  * Also possible (obviously) to change records that already exist (either one at a time or in bunches)...
 
-		mysql> UPDATE tbl_name SET col_name=expr, col_name=expr, ... WHERE where_condition
-		E.g., UPDATE LCL_genotypes SET IID='HG0246383' WHERE IID='HG02463839238290';
-		Query OK, 1 row affected (0.00 sec)
-		Rows matched: 1  Changed: 1  Warnings: 0
+	mysql>> INSERT INTO LCL_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02463','10:60523:T:G','rs112920234','TT');
+		
+	mysql>> INSERT INTO LCL_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG02466','10:60523:T:G','rs112920234','TT'),('HG02563','10:60523:T:G','rs112920234','TT'),('HG02567','10:60523:T:G','rs112920234','00');
 	
-		mysql> select * from LCL_genotypes;                                          
-		+-----------+--------------+-------------+----------+
-		| IID       | SNPpos       | rsID        | genotype |
-		+-----------+--------------+-------------+----------+
-		| HG02463   | 10:60523:T:G | rs112920234 | TT       |
-		| HG0246383 | 10:60523:T:G | rs112920234 | TT       |
-		| HG02466   | 10:60523:T:G | rs112920234 | TT       |
-		| HG02563   | 10:60523:T:G | rs112920234 | TT       |
-		| HG02567   | 10:60523:T:G | rs112920234 | 00       |
-		+-----------+--------------+-------------+----------+
-		5 rows in set (0.00 sec)
-	
-  * Or to remove records (either one at a time or in bunches).  [First lets look at the table contents BEFOREHAND]
 
-		mysql> select * from phenotypes;
-		+---------+-----------------------+--------------------+--------------------+-------------------+--------------------+
-		| LCL_ID  | phenotype             | phenotypic_value1  | phenotypic_value2  | phenotypic_value3 | phenotypic_mean    |
-		+---------+-----------------------+--------------------+--------------------+-------------------+--------------------+
-		| HG02461 | Cells_ml_after_3_days |  878000.0000000000 |  732000.0000000000 | 805000.0000000000 |  805000.0000000000 |
-		| HG02462 | Cells_ml_after_3_days |  742000.0000000000 |  453000.0000000000 | 348000.0000000000 |  514333.3000000000 |
-		| HG02463 | Cells_ml_after_3_days | 1200000.0000000000 | 1140000.0000000000 | 960000.0000000000 | 1100000.0000000000 |
-		+---------+-----------------------+--------------------+--------------------+-------------------+--------------------+
-		3 rows in set (0.00 sec)
+  * We can also add data in bulk (from an local file). The syntax follows, where:
+    * tbl_name is the name of the table into which we wish to load data
+    * '/path/to/filename' is the _full path_ to the name of the file where data is located
+    * '<column delimiter>' indicates the character(s) separating fields data file
+    
+
+	mysql>> LOAD DATA LOCAL INFILE '/path/to/filename' INTO TABLE tbl_name FIELDS TERMINATED BY '<column delimiter>';
+
+  * You can try running the following example yourself to load data:
+    
+  
+	mysql>> LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
+	mysql>> select * from snp;	
 	
-  * Now remove...
-	* _mysql>_> DELETE FROM tbl\_name WHERE where\_condition; __MAKE SURE YOU SUPPLY A WHERE CLAUSE UNLESS YOU WANT TO DELETE ALL ROWS!__
-		* E.g., mysql> DELETE FROM phenotypes WHERE LCL_ID='HG02463';
+
+  * It's not uncommon to run across errors when trying to load data:
+  
+	
+	mysql>> INSERT INTO LCL_genotypes (IID,SNPpos,rsID,Genotype) VALUES('HG024638392382903957','10:60523:T:G','rs112920234','TT');
+	mysql>> ERROR 1406 (22001): Data too long for column 'IID' at row 1
 		
-		Query OK, 1 row affected (0.01 sec)
+  * This error indicates that the table schema is incompatible with this entry. Let's take a look:
 
-  * How does it look now?
 
-		mysql> select * from phenotypes;                     
-		+---------+-----------------------+-------------------+-------------------+-------------------+-------------------+
-		| LCL_ID  | phenotype             | phenotypic_value1 | phenotypic_value2 | phenotypic_value3 | phenotypic_mean   |
-		+---------+-----------------------+-------------------+-------------------+-------------------+-------------------+
-		| HG02461 | Cells_ml_after_3_days | 878000.0000000000 | 732000.0000000000 | 805000.0000000000 | 805000.0000000000 |
-		| HG02462 | Cells_ml_after_3_days | 742000.0000000000 | 453000.0000000000 | 348000.0000000000 | 514333.3000000000 |
-		+---------+-----------------------+-------------------+-------------------+-------------------+-------------------+
-		2 rows in set (0.00 sec)		
+	mysql> describe LCL_genotypes;
+	+----------+---------------+------+-----+---------+-------+
+	| Field    | Type          | Null | Key | Default | Extra |
+	+----------+---------------+------+-----+---------+-------+
+	| IID      | varchar(16)   | NO   | PRI | NULL    |       |
+	| SNPpos   | varchar(767)  | NO   | PRI | NULL    |       |
+	| rsID     | varchar(256)  | NO   | MUL | NULL    |       |
+	| genotype | varchar(2048) | NO   |     | NULL    |       |
+	+----------+---------------+------+-----+---------+-------+
+	4 rows in set (0.01 sec)
+		
+  * Notice that the IID field only allows 16 characters, but the entry 'HG024638392382903957' is significantly longer than that! MySQL won't allow you to insert this value as-is. If you'd like, you can change the table schema to allow more characters in IID (similar to the syntax we saw above).
+		
+  * In addition to adding records, we can also change records that already exist (either one at a time or in groups). The syntax follows:
+
+        
+    mysql> UPDATE tbl_name SET col_name1=expr, col_name2=expr, ... WHERE where_condition
+        
+  * You can try the following example yourself:
+
+
+ 	mysql> UPDATE snp SET Position='60524' WHERE rsID='rs112920234';
+    Query OK, 1 row affected (0.01 sec)
+    Rows matched: 1  Changed: 1  Warnings: 0
+	
+    mysql> select rsID, Position from snp;                                          
+    +-------------+----------+
+	| rsID        | Position |
+	+-------------+----------+
+	| rs112920234 |    60524 |
+	| rs147855157 |    61372 |
+	| rs536439816 |    61386 |
+	| rs536478188 |    60803 |
+	| rs569167217 |    60684 |
+	+-------------+----------+
+	5 rows in set (0.01 sec)
+	
+  * We can also remove records (either one at a time or in bunches).
+
+        
+	mysql> select * from snp;
+	+-------------+------------+----------+---------+---------+----------------------+------------+------------+
+	| rsID        | Chromosome | Position | Allele1 | Allele2 | DistanceToNearGene   | Gene       | SNPtype    |
+	+-------------+------------+----------+---------+---------+----------------------+------------+------------+
+	| rs112920234 |         10 |    60524 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
+	| rs147855157 |         10 |    61372 | CA      | C       | .                    | .          | .          |
+	| rs536439816 |         10 |    61386 | A       | G       | dist=NONE;dist=31442 | NONE,TUBB8 | intergenic |
+	| rs536478188 |         10 |    60803 | G       | T       | dist=NONE;dist=32025 | NONE,TUBB8 | intergenic |
+	| rs569167217 |         10 |    60684 | C       | A       | dist=NONE;dist=32144 | NONE,TUBB8 | intergenic |
+	+-------------+------------+----------+---------+---------+----------------------+------------+------------+
+	5 rows in set (0.00 sec)
+	
+  * The syntax for dropping a record follows. I _strongly_ recommend that you supply a where clause when you wish to drop records from a table--otherwise the delete command will drop _all_ records in the table!
+
+  
+	mysql>> DELETE FROM tbl_name WHERE where_condition;
+ 
+
+  * Try running the following command:
+
+
+    mysql>> DELETE FROM snp WHERE rsID='rs112920234';
+	Query OK, 1 row affected (0.01 sec)
+
+	mysql> select * from snp;                     
+	+-------------+------------+----------+---------+---------+----------------------+------------+------------+
+	| rsID        | Chromosome | Position | Allele1 | Allele2 | DistanceToNearGene   | Gene       | SNPtype    |
+	+-------------+------------+----------+---------+---------+----------------------+------------+------------+
+	| rs147855157 |         10 |    61372 | CA      | C       | .                    | .          | .          |
+	| rs536439816 |         10 |    61386 | A       | G       | dist=NONE;dist=31442 | NONE,TUBB8 | intergenic |
+	| rs536478188 |         10 |    60803 | G       | T       | dist=NONE;dist=32025 | NONE,TUBB8 | intergenic |
+	| rs569167217 |         10 |    60684 | C       | A       | dist=NONE;dist=32144 | NONE,TUBB8 | intergenic |
+	+-------------+------------+----------+---------+---------+----------------------+------------+------------+
+	4 rows in set (0.00 sec)		
 
 
 <a name='lab4'></a>
-## Lab 4: Adding data to your database
+## Lab 4: Add more data to your database
 
-  * First, make the necessary configuration change to allow this functionality:
-  
-  	_mysql>>_ set global local_infile=true;
-  		
-  	_mysql>>_ show global variables like 'local_infile';
-  		
-  		+---------------+-------+
-		| Variable_name | Value |
-		+---------------+-------+
-		| local_infile  | ON    |
-		+---------------+-------+
-		1 row in set (0.00 sec)
-		
-  * Re-launch mysql client with ability enabled from the client:
-  
-	_mysql>>_ exit
-  
-  	_shell>>_ mysql --local\_infile=1 -u root -p colab_class;
 
-  * Quickly add data to three tables...
+  * Let's add data to three tables...
   
-	_mysql>>_ LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
+
+	mysql>> LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/snp-data.infile' INTO TABLE snp FIELDS TERMINATED BY '\t';
 	
-	_mysql>>_ LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/lcl\_genotypes-data.infile' INTO TABLE LCL\_genotypes FIELDS TERMINATED BY '\t';
+	mysql>> LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/lcl_genotypes-data.infile' INTO TABLE LCL_genotypes FIELDS TERMINATED BY '\t';
 		
-	_mysql>>_ show warnings;
-	
-	_mysql>>_ LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/phenotypes-data.infile' INTO TABLE phenotypes FIELDS TERMINATED BY '\t';
+	mysql>> LOAD DATA LOCAL INFILE '/root/Intro-to-MySQL/phenotypes-data.infile' INTO TABLE phenotypes FIELDS TERMINATED BY '\t';
 
 <a name='unit5'></a>
 ## Unit 5: Writing queries to retrieve data
 
-  * Simplest queries
+  * Below are some examples of simple queries you can try yourself:
 	
-		mysql> select * from LCL_genotypes;
-		+------------------+--------------+-------------+----------+
-		| IID              | SNPpos       | rsID        | genotype |
-		+------------------+--------------+-------------+----------+
-		| HG02463          | 10:60523:T:G | rs112920234 | TT       |
-		| HG02463839238290 | 10:60523:T:G | rs112920234 | TT       |
-		| HG02466          | 10:60523:T:G | rs112920234 | TT       |
-		| HG02563          | 10:60523:T:G | rs112920234 | TT       |
-		| HG02567          | 10:60523:T:G | rs112920234 | 00       |
-		+------------------+--------------+-------------+----------+
-		5 rows in set (0.00 sec)
-	
-		mysql> SELECT IID,rsID from LCL_genotypes WHERE genotype = 'TT';
-		+------------------+-------------+
-		| IID              | rsID        |
-		+------------------+-------------+
-		| HG02463          | rs112920234 |
-		| HG02463839238290 | rs112920234 |
-		| HG02466          | rs112920234 |
-		| HG02563          | rs112920234 |
-		+------------------+-------------+
-		4 rows in set (0.00 sec)
-	
-		mysql> SELECT COUNT(*) from snp;
-		+----------+
-		| COUNT(*) |
-		+----------+
-		|        5 |
-		+----------+
-		1 row in set (0.04 sec)
-	
-		mysql> select * from snp;
-		+-------------+------------+----------+---------+---------+----------------------+------------+------------+
-		| rsID        | Chromosome | Position | Allele1 | Allele2 | DistanceToNearGene   | Gene       | SNPtype    |
-		+-------------+------------+----------+---------+---------+----------------------+------------+------------+
-		| rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
-		| rs147855157 |         10 |    61372 | CA      | C       | .                    | .          | .          |
-		| rs536439816 |         10 |    61386 | A       | G       | dist=NONE;dist=31442 | NONE,TUBB8 | intergenic |
-		| rs536478188 |         10 |    60803 | G       | T       | dist=NONE;dist=32025 | NONE,TUBB8 | intergenic |
-		| rs569167217 |         10 |    60684 | C       | A       | dist=NONE;dist=32144 | NONE,TUBB8 | intergenic |
-		+-------------+------------+----------+---------+---------+----------------------+------------+------------+
-		5 rows in set (0.00 sec)
 
-  * Slightly more complex queries
-                   
-		mysql> select * from LCL_genotypes WHERE IID LIKE 'HG0246%'; 
-		+------------------+--------------+-------------+----------+
-		| IID              | SNPpos       | rsID        | genotype |
-		+------------------+--------------+-------------+----------+
-		| HG02463          | 10:60523:T:G | rs112920234 | TT       |
-		| HG02463839238290 | 10:60523:T:G | rs112920234 | TT       |
-		| HG02466          | 10:60523:T:G | rs112920234 | TT       |
-		+------------------+--------------+-------------+----------+
-		3 rows in set (0.00 sec)
+	mysql> select * from LCL_genotypes;
+	+------------------+--------------+-------------+----------+
+	| IID              | SNPpos       | rsID        | genotype |
+	+------------------+--------------+-------------+----------+
+	| HG02463          | 10:60523:T:G | rs112920234 | TT       |
+	| HG02463839238290 | 10:60523:T:G | rs112920234 | TT       |
+	| HG02466          | 10:60523:T:G | rs112920234 | TT       |
+	| HG02563          | 10:60523:T:G | rs112920234 | TT       |
+	| HG02567          | 10:60523:T:G | rs112920234 | 00       |
+	+------------------+--------------+-------------+----------+
+	5 rows in set (0.00 sec)
+	
+	mysql> SELECT IID,rsID from LCL_genotypes WHERE genotype = 'TT';
+	+------------------+-------------+
+	| IID              | rsID        |
+	+------------------+-------------+
+	| HG02463          | rs112920234 |
+	| HG02463839238290 | rs112920234 |
+	| HG02466          | rs112920234 |
+	| HG02563          | rs112920234 |
+	+------------------+-------------+
+	4 rows in set (0.00 sec)
+	
+	mysql> SELECT COUNT(*) from snp;
+	+----------+
+	| COUNT(*) |
+	+----------+
+	|        5 |
+	+----------+
+	1 row in set (0.04 sec)
 
-  * "JOIN" GUIDANCE:  https://stackoverflow.com/questions/6294778/mysql-quick-breakdown-of-the-types-of-joins
+
+  * Here's a slightly more complex query:
+         
+          
+	mysql> select * from LCL_genotypes WHERE IID LIKE 'HG0246%'; 
+	+------------------+--------------+-------------+----------+
+	| IID              | SNPpos       | rsID        | genotype |
+	+------------------+--------------+-------------+----------+
+	| HG02463          | 10:60523:T:G | rs112920234 | TT       |
+	| HG02463839238290 | 10:60523:T:G | rs112920234 | TT       |
+	| HG02466          | 10:60523:T:G | rs112920234 | TT       |
+	+------------------+--------------+-------------+----------+
+	3 rows in set (0.00 sec)
+
+  * JOIN guidance:  https://stackoverflow.com/questions/6294778/mysql-quick-breakdown-of-the-types-of-joins
   
-  * MORE "JOIN" GUIDANCE:  https://www.javatpoint.com/mysql-join
+  * More JOIN guidance:  https://www.javatpoint.com/mysql-join
   
-  * (The default "JOIN" in MySQL is an "INNER JOIN")
+  * The default JOIN in MySQL is an INNER JOIN
   
-		mysql> SELECT * FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
-		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
-		| IID              | SNPpos       | rsID        | genotype | rsID        | Chromosome | Position | Allele1 | Allele2 | DistanceToNearGene   | Gene       | SNPtype    |
-		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
-		| HG02463          | 10:60523:T:G | rs112920234 | TT       | rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
-		| HG02463839238290 | 10:60523:T:G | rs112920234 | TT       | rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
-		| HG02466          | 10:60523:T:G | rs112920234 | TT       | rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
-		| HG02563          | 10:60523:T:G | rs112920234 | TT       | rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
-		| HG02567          | 10:60523:T:G | rs112920234 | 00       | rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
-		+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
-		5 rows in set (0.00 sec)
+
+	mysql> SELECT * FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
+	+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
+	| IID              | SNPpos       | rsID        | genotype | rsID        | Chromosome | Position | Allele1 | Allele2 | DistanceToNearGene   | Gene       | SNPtype    |
+	+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
+	| HG02463          | 10:60523:T:G | rs112920234 | TT       | rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
+	| HG02463839238290 | 10:60523:T:G | rs112920234 | TT       | rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
+	| HG02466          | 10:60523:T:G | rs112920234 | TT       | rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
+	| HG02563          | 10:60523:T:G | rs112920234 | TT       | rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
+	| HG02567          | 10:60523:T:G | rs112920234 | 00       | rs112920234 |         10 |    60523 | G       | T       | dist=NONE;dist=32305 | NONE,TUBB8 | intergenic |
+	+------------------+--------------+-------------+----------+-------------+------------+----------+---------+---------+----------------------+------------+------------+
+	5 rows in set (0.00 sec)
 		
-		mysql> SELECT IID,Position,Gene FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
-		+------------------+----------+------------+
-		| IID              | Position | Gene       |
-		+------------------+----------+------------+
-		| HG02463          |    60523 | NONE,TUBB8 |
-		| HG02463839238290 |    60523 | NONE,TUBB8 |
-		| HG02466          |    60523 | NONE,TUBB8 |
-		| HG02563          |    60523 | NONE,TUBB8 |
-		| HG02567          |    60523 | NONE,TUBB8 |
-		+------------------+----------+------------+
-		5 rows in set (0.00 sec)
+	mysql> SELECT IID,Position,Gene FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
+	+------------------+----------+------------+
+	| IID              | Position | Gene       |
+	+------------------+----------+------------+
+	| HG02463          |    60523 | NONE,TUBB8 |
+	| HG02463839238290 |    60523 | NONE,TUBB8 |
+	| HG02466          |    60523 | NONE,TUBB8 |
+	| HG02563          |    60523 | NONE,TUBB8 |
+	| HG02567          |    60523 | NONE,TUBB8 |
+	+------------------+----------+------------+
+	5 rows in set (0.00 sec)
 
-		mysql> SELECT IID,Position,Gene FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID where LCL_genotypes.rsID = 'rs536478188';
-		Empty set (0.00 sec)
+	mysql> SELECT IID,Position,Gene FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID where LCL_genotypes.rsID = 'rs536478188';
+	Empty set (0.00 sec)
 
-		mysql> SELECT IID,Position,Gene FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID where snp.rsID = 'rs536478188';
-		Empty set (0.00 sec)
-		
-		mysql> SELECT IID,Position,Gene FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID where IID = 'HG02466';
-		+---------+----------+------------+
-		| IID     | Position | Gene       |
-		+---------+----------+------------+
-		| HG02466 |    60523 | NONE,TUBB8 |
-		+---------+----------+------------+
-		1 row in set (0.00 sec)
-
-  * What if I want the output to go directly into a file instead of to the screen?
+	mysql> SELECT IID,Position,Gene FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID where snp.rsID = 'rs536478188';
+	Empty set (0.00 sec)
 	
-		mysql> SELECT * INTO OUTFILE '/var/lib/mysql-files/colab_class_result.txt' \
-		         FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' \
-		         LINES TERMINATED BY '\n' \
-		         FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
-		Query OK, 5 rows affected (0.00 sec)
+	mysql> SELECT IID,Position,Gene FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID where IID = 'HG02466';
+	+---------+----------+------------+
+	| IID     | Position | Gene       |
+	+---------+----------+------------+
+	| HG02466 |    60523 | NONE,TUBB8 |
+	+---------+----------+------------+
+	1 row in set (0.00 sec)
 
-		mysql> SELECT IID,Position,Gene INTO OUTFILE '/var/lib/mysql-files/colab_class_result2.txt' \
-		         FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '' ESCAPED BY '' \
-		         LINES TERMINATED BY '\n' \
-		         FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
-		Query OK, 5 rows affected (0.00 sec)
-		
-		mysql> exit
-		Bye
-		root@vcm-XXXX:~$ cat /var/lib/mysql-files/colab_class_result.txt
-		"HG02463","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
-		"HG02463839238290","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
-		"HG02466","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
-		"HG02563","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
-		"HG02567","10:60523:T:G","rs112920234","00","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
+  * You can write output from your queries directly to a file on your machine!
+	
 
-		root@vcm-XXXX:~$ cat /var/lib/mysql-files/colab_class_result2.txt
-		HG02463	60523	NONE,TUBB8
-		HG02463839238290	60523	NONE,TUBB8
-		HG02466	60523	NONE,TUBB8
-		HG02563	60523	NONE,TUBB8
-		HG02567	60523	NONE,TUBB8
+	mysql> SELECT * INTO OUTFILE '/var/lib/mysql-files/colab_class_result.txt' FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' FROM LCL_genotypes JOIN snp ON LCL_genotypes.rsID = snp.rsID;
+	Query OK, 5 rows affected (0.00 sec)
+	
+	mysql> quit
+	Bye
+	root@vcm-XXXX:~$ cat /var/lib/mysql-files/colab_class_result.txt
+	"HG02463","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
+	"HG02463839238290","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
+	"HG02466","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
+	"HG02563","10:60523:T:G","rs112920234","TT","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
+	"HG02567","10:60523:T:G","rs112920234","00","rs112920234",10,60523,"G","T","dist=NONE;dist=32305","NONE,TUBB8","intergenic"
 	
 
 <a name='lab5'></a>
