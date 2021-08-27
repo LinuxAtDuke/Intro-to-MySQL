@@ -39,7 +39,7 @@ Mary Clair Thompson
 *Example (after establishing a University VPN session, if off campus):* 
 
 
-	ssh vcm@vcm-1473.vm.duke.edu
+	ssh <YOUR NETID>@vcm-<YOUR VCM ID>.vm.duke.edu
 
   * Answer "yes" to "Are you sure you want to continue connecting (yes/no)?" and enter your password when prompted.
 
@@ -127,18 +127,17 @@ Mary Clair Thompson
 
 
 	mysql>> quit
+
 	shell>> mysql -u root
 
   * You should get an 'access denied' message. From now on, you'll need to input your password when you want to access the database. The '-p' flag indicates to mysql that you want to access the database with a password:
 
 
 	shell>> mysql -u root -p
+
 	shell>> Enter password: 
 
-  * Let's run one more command that we'll need later. This will allow us to load data from a local source near the end of the lab:
 
-
-	mysql>> SET GLOBAL local_infile=1;
 
 
   
@@ -149,8 +148,11 @@ Mary Clair Thompson
 
   
     mysql>> CREATE DATABASE colab_class;
+
 	mysql>> show databases;
+
     mysql>> DROP DATABASE colab_class;
+
     mysql>> show databases;
 	
   * Schema development is best done via an ER diagram and/or a whiteboard - consider these:
@@ -287,6 +289,11 @@ Mary Clair Thompson
 
 	mysql>> CREATE DATABASE colab_class;
 	mysql>> show databases;
+
+  * Before we grab some data, we need to run one more command that will help us out later. This will allow us to load data from a local source near the end of the lab:
+
+
+	mysql>> SET GLOBAL local_infile=1;
 	
 
   * We need data to add to our database--grab the class files from the github repository
