@@ -12,7 +12,7 @@ Mary Clair Thompson
 **Table of Contents**
 
 1. [Lab 0: Creating a Personal Linux VM](#lab0)
-2. [Unit 1: Access control / User management](#unit1)
+2. [Unit 1: Access control / User management](#lab05)
 3. [Lab 1: Initial user lockdown](#lab1)
 4. [Unit 2: Databases, schema](#unit2)
 5. [Unit 3: Adding/modifying tables and indexes](#unit3)
@@ -45,8 +45,8 @@ Mary Clair Thompson
 
 
 
-<a name='unit1'></a>
-## Unit 1: Access control / User management
+<a name='lab05'></a>
+## Lab 0.5: Access control / User management
  
   * Change your user to root so that you can install software
 
@@ -311,7 +311,7 @@ Mary Clair Thompson
   * Let's take a look at the results of the manual import. We'll dive straight into the colab_class database by including the db name at the end of our login string. We'll also include the --local-infile tag with value 1 to indicate to mysql that we are going to allow loading data from local files.
 
 	
-    shell>> mysql --local-infile=1 -u root -p colab_class;
+    shell>> mysql --local-infile=1 -u root -p colab_class
 	shell>> Enter password:
     mysql>> show tables;
 	
